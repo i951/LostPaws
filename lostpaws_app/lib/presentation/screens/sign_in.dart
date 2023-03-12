@@ -80,6 +80,7 @@ class SignInScreen extends StatelessWidget {
                                   getProportionateScreenHeight(defaultPadding),
                             ),
                             TextFormField(
+                              obscureText: true,
                               keyboardType: TextInputType.text,
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),

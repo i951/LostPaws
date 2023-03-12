@@ -1,11 +1,16 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:lostpaws_app/presentation/components/custom_bottom_nav_bar.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Scaffold(
+      bottomNavigationBar: CustomBottomNavBar(),
+      body: Center(
+        child: Text("This is the profile page"),
+      ),
+    );
   }
 }

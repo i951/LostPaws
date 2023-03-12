@@ -1,11 +1,7 @@
 import 'package:beamer/beamer.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lostpaws_app/presentation/constants.dart';
 import 'package:lostpaws_app/presentation/routes/home_locations.dart';
-import 'package:lostpaws_app/presentation/screens/create_posting.dart';
-import 'package:lostpaws_app/presentation/screens/home.dart';
-import 'package:lostpaws_app/presentation/screens/map_view.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
   const CustomBottomNavBar({super.key});
@@ -19,19 +15,10 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    MapViewScreen(), // ????
-    CreatePostingScreen(),
-    HomeScreen(),
-    Text(
-      'Index 3: Profile',
-      style: optionStyle,
-    ),
-  ];
-
   void _onItemTapped(int index) {
     setState(() {
       late String route;
+      _selectedIndex = index;
 
       switch (_selectedIndex) {
         case 0:
@@ -47,6 +34,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
           route = HomeLocations.profileRoute;
           break;
       }
+
       Beamer.of(context).beamToNamed(route);
     });
   }

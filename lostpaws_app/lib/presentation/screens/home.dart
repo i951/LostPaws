@@ -1,6 +1,7 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lostpaws_app/presentation/components/custom_app_bar.dart';
 import 'package:lostpaws_app/presentation/components/custom_bottom_nav_bar.dart';
 import 'package:lostpaws_app/presentation/components/info_card.dart';
 import 'package:lostpaws_app/presentation/components/posting_preview.dart';
@@ -82,19 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
       extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
       bottomNavigationBar: const CustomBottomNavBar(),
-      appBar: AppBar(
-        toolbarOpacity: 1.0,
-        toolbarHeight: getProportionateScreenHeight(80),
-        backgroundColor: ConstColors.mediumGreen,
-        foregroundColor: ConstColors.darkOrange,
-        actions: [
-          IconButton(
-            iconSize: 30.0,
-            onPressed: () => print("go to search"),
-            icon: const Icon(Icons.search),
-          ),
-        ],
-      ),
+      appBar: CustomAppBar(),
       body: SingleChildScrollView(
         child: SafeArea(
           bottom: false,

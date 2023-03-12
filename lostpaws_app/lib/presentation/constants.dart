@@ -13,6 +13,7 @@ class ConstColors {
 
   static const Color yellowOrange = Color.fromARGB(208, 245, 196, 0);
   static const Color darkOrange = Color.fromARGB(197, 248, 162, 1);
+  static const Color lightOrange = Color.fromARGB(255, 255, 244, 202);
 
   static const Color babyBlue = Color.fromARGB(206, 234, 242, 255);
   static const Color highlightBlue = Color.fromARGB(197, 40, 151, 255);

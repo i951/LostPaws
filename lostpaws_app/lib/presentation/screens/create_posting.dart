@@ -2,6 +2,7 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:lostpaws_app/presentation/components/custom_toggle_buttons.dart';
 import 'package:lostpaws_app/presentation/constants.dart';
 import 'package:lostpaws_app/presentation/routes/home_locations.dart';
 import 'package:lostpaws_app/presentation/routes/unauthenticated_locations.dart';
@@ -16,8 +17,6 @@ class CreatePostingScreen extends StatefulWidget {
 }
 
 class _CreatePostingScreenState extends State<CreatePostingScreen> {
-  final List<bool> _selectedItems = <bool>[true, false];
-
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -37,7 +36,7 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                   Beamer.of(context).popToNamed(HomeLocations.homeRoute),
               child: Text(
                 "Cancel",
-                style: LostPawsText().primaryOrangeBold,
+                style: const LostPawsText().primaryOrangeBold,
                 softWrap: false,
               ),
             ),
@@ -49,7 +48,7 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
               onPressed: () => print("Clear all outputs"),
               child: Text(
                 "Clear All",
-                style: LostPawsText().primaryOrangeBold,
+                style: const LostPawsText().primaryOrangeBold,
               ),
             ),
           ],
@@ -86,7 +85,7 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                         height: getProportionateScreenHeight(defaultPadding),
                       ),
                       SizedBox(
-                        height: getProportionateScreenHeight(500),
+                        // height: getProportionateScreenHeight(500),
                         width: getProportionateScreenWidth(300),
                         child: Form(
                           child: Column(
@@ -97,54 +96,19 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   "Post Type",
-                                  style: LostPawsText().primaryRegular,
+                                  style: const LostPawsText().primarySemiBold,
                                 ),
                               ),
-                              ToggleButtons(
-                                fillColor: ConstColors.lightGreen,
-                                renderBorder: false,
-                                direction: Axis.horizontal,
-                                onPressed: (int index) {
-                                  setState(() {
-                                    // The button that is tapped is set to true, and the others to false.
-                                    for (int i = 0;
-                                        i < _selectedItems.length;
-                                        i++) {
-                                      _selectedItems[i] = i == index;
-                                    }
-                                  });
-                                },
-                                isSelected: _selectedItems,
-                                children: [
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.all(defaultPadding),
-                                    child: Container(
-                                        decoration: BoxDecoration(
-                                          border: Border.all(),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: ConstColors.yellowOrange,
-                                        ),
-                                        child: Text('Sighting')),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.all(defaultPadding),
-                                    child: Container(
-                                        decoration: BoxDecoration(
-                                          border: Border.all(),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: ConstColors.yellowOrange,
-                                        ),
-                                        child: Text('Lost')),
-                                  ),
-                                ],
+                              const CustomToggleButtons(
+                                multiselect: false,
+                                options: ["LOST", "SIGHTING"],
                               ),
-                              Text(
-                                "Post Title",
-                                style: const LostPawsText().primaryTitle,
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Post Title",
+                                  style: const LostPawsText().primarySemiBold,
+                                ),
                               ),
                               TextFormField(
                                 keyboardType: TextInputType.emailAddress,
@@ -158,16 +122,18 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                     AutovalidateMode.onUserInteraction,
                                 validator: FormBuilderValidators.compose([
                                   FormBuilderValidators.required(),
-                                  FormBuilderValidators.email(),
                                 ]),
                               ),
                               SizedBox(
                                 height: getProportionateScreenHeight(
                                     defaultPadding),
                               ),
-                              Text(
-                                "Colour",
-                                style: const LostPawsText().primaryTitle,
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Colour",
+                                  style: const LostPawsText().primarySemiBold,
+                                ),
                               ),
                               TextFormField(
                                 keyboardType: TextInputType.text,
@@ -186,6 +152,33 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                               SizedBox(
                                 height: getProportionateScreenHeight(
                                     defaultPadding),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Colour",
+                                  style: const LostPawsText().primarySemiBold,
+                                ),
+                              ),
+                              SizedBox(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CustomToggleButtons(
+                                        multiselect: false,
+                                        options: [
+                                          "DOG",
+                                          "CAT",
+                                          "BIRD",
+                                          "BUNNY",
+                                          "REPTILE",
+                                          "AMPHIBIAN",
+                                          "RODENT",
+                                          "OTHER",
+                                        ]),
+                                  ],
+                                ),
                               ),
                               SizedBox(
                                 height: getProportionateScreenHeight(
