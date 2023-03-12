@@ -15,13 +15,20 @@ const postController = {
         console.log('postType: ', postType)
 
         // TODO add filters
-        if (postType) {
-
+        if (petIsFound) {
+            Post
+                .find({ petIsFound: petIsFound })
+                .select({ postTitle: 1, locationLastSeen: 1, dateLastSeen: 1 })
+                .sort({ createdAt: 1 })
+                .exec((err, posts) => {
+                    return res.status(200).json(posts)
+                })
+            return
         }
 
         Post
             .find()
-            .select({ petName: 1, locationLastSeen: 1, dateLastSeen: 1 })
+            .select({ postTitle: 1, locationLastSeen: 1, dateLastSeen: 1 })
             .sort({ createdAt: 1 })
             .exec((err, posts) => {
                 return res.status(200).json(posts)
@@ -34,7 +41,7 @@ const postController = {
         const {
             userID,
             postType,
-            petName,
+            postTitle,
             petType,
             petColour,
             petSize,
@@ -42,12 +49,12 @@ const postController = {
             locationLastSeen,
             contactInfo,
             additionalInfo
-        } = req.body // add petImage? 
+        } = req.body 
 
         let newPost = Post({
             userID,
             postType,
-            petName,
+            postTitle,
             petType,
             petColour,
             petSize,
@@ -73,7 +80,7 @@ const postController = {
         const { userID, postID } = req.params
         const {
             postType,
-            petName,
+            postTitle,
             petType,
             petColour,
             petSize,
@@ -86,7 +93,7 @@ const postController = {
         Post.findOneAndUpdate(
             { userID: userID, _id: postID },
             {
-                postType: postType, petName: petName, petType: petType, petColour: petColour, petSize: petSize,
+                postType: postType, postTitle: postTitle, petType: petType, petColour: petColour, petSize: petSize,
                 dateLastSeen: dateLastSeen, locationLastSeen: locationLastSeen, contactInfo: contactInfo, additionalInfo: additionalInfo
             },
             { new: true },
@@ -97,6 +104,18 @@ const postController = {
                 }
                 console.log('editPost success')
                 return res.status(200).json({ success: true })
+            })
+    }, 
+    getUserPosts: (req, res) => {
+        const { userID } = req.params
+
+        Post
+            .find( { userID: userID })
+            .select({ postTitle: 1, locationLastSeen: 1, dateLastSeen: 1 })
+            .sort({ createdAt: 1 })
+            .exec((err, posts) => {
+                console.log('getUserPosts posts: ', posts)
+                return res.status(200).json(posts)
             })
     }
 }
