@@ -1,6 +1,8 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lostpaws_app/presentation/constants.dart';
+import 'package:lostpaws_app/presentation/routes/home_locations.dart';
 import 'package:lostpaws_app/presentation/screens/create_posting.dart';
 import 'package:lostpaws_app/presentation/screens/home.dart';
 import 'package:lostpaws_app/presentation/screens/map_view.dart';
@@ -29,7 +31,23 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      late String route;
+
+      switch (_selectedIndex) {
+        case 0:
+          route = HomeLocations.mapViewRoute;
+          break;
+        case 1:
+          route = HomeLocations.createPostingRoute;
+          break;
+        case 2:
+          route = HomeLocations.homeRoute;
+          break;
+        case 3:
+          route = HomeLocations.profileRoute;
+          break;
+      }
+      Beamer.of(context).beamToNamed(route);
     });
   }
 
