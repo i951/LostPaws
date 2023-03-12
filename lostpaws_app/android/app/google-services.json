@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "460628686164",
+    "project_id": "lostpaws-cmdf",
+    "storage_bucket": "lostpaws-cmdf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:460628686164:android:c7b45884352322a1d004c1",
+        "android_client_info": {
+          "package_name": "com.example.lostpaws_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "460628686164-db0v1k48n9piv0ni5qmk4kh67tnrrk26.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAv8t0ROnNYOj0xaP6utJGg8Muc3M3vChQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "460628686164-db0v1k48n9piv0ni5qmk4kh67tnrrk26.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

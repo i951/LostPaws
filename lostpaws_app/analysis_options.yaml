@@ -22,8 +22,19 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
+    always_use_package_imports : true # Never use relative imports.
+    use_super_parameters : true # Always use super parameters
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
+
+# Tell the analyzer to ignore generated files, and ignore issues with using @JsonKey annotation
+# inside of constructors. This is to make the freezed and json_serializable packages work together.
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+  errors:
+    invalid_annotation_target: ignore
