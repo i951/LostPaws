@@ -1,6 +1,8 @@
 // Flutter imports:
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:lostpaws_app/presentation/constants.dart';
+import 'package:lostpaws_app/presentation/routes/home_locations.dart';
 import 'package:lostpaws_app/presentation/size_config.dart';
 import 'package:lostpaws_app/presentation/theme/lostpaws_text.dart';
 
@@ -24,7 +26,10 @@ class InfoCard extends StatelessWidget {
       return const SizedBox.shrink();
     }
     return InkWell(
-      onTap: () => print("go to create posting screen"),
+      onTap: () {
+        Beamer.of(context, root: true)
+            .beamToNamed(HomeLocations.createPostingRoute);
+      },
       child: Container(
         width: getProportionateScreenWidth(350),
         margin: EdgeInsets.only(bottom: getProportionateScreenHeight(20)),
