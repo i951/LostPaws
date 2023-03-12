@@ -49,7 +49,7 @@ class HomeLocations extends BeamLocation<BeamState> {
       if (state.uri.path == createPostingRoute) ...[
         LostPawsBeamPage(
           path: createPostingRoute,
-          popToNamed: homeRoute,
+          popToNamed: createPostingRoute,
           child: const CreatePostingScreen(),
         )
       ],

@@ -5,6 +5,7 @@ const router = express.Router()
 router
     .get('/', postController.getPosts)
     .post('/', postController.uploadPost)
+    .get('/:userID', postController.getUserPosts)
     .post('/:userID/:postID', postController.editPost)
 
 module.exports = router

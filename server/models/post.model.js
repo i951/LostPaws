@@ -17,6 +17,10 @@ const postSchema = mongoose.Schema(
             // enum: ['posting', 'sighting'],
             default: 'sighting'
         },
+        postTitle: {
+            type: String,
+            default: 'Post title'
+        },
         petIsFound: {
             type: Boolean,
             default: false
@@ -67,7 +71,7 @@ const postSchema = mongoose.Schema(
 postSchema.path('postType').validate((postType) => {
     let postTypes = ['posting', 'sighting']
     return postTypes.includes(postType.toLowerCase())
-}, 'Invalid postType') 
+}, 'Invalid postType')
 
 postSchema.path('petType').validate((petType) => {
     let petTypes = ['dog', 'bird', 'bunny', 'reptile', 'amphibian', 'cat', 'rodent', 'other']
