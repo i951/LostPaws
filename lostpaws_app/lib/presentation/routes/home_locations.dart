@@ -63,7 +63,7 @@ class HomeLocations extends BeamLocation<BeamState> {
       if (state.uri.path == mapViewRoute) ...[
         LostPawsBeamPage(
           path: mapViewRoute,
-          popToNamed: homeRoute,
+          popToNamed: mapViewRoute,
           child: const MapViewScreen(),
         )
       ],
