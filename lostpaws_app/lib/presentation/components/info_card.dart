@@ -1,6 +1,8 @@
 // Flutter imports:
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:lostpaws_app/presentation/constants.dart';
+import 'package:lostpaws_app/presentation/routes/home_locations.dart';
 import 'package:lostpaws_app/presentation/size_config.dart';
 import 'package:lostpaws_app/presentation/theme/lostpaws_text.dart';
 
@@ -13,10 +15,12 @@ class InfoCard extends StatelessWidget {
     super.key,
     this.title,
     this.text,
+    required this.routeName,
   });
 
   final String? title;
   final String? text;
+  final String routeName;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +28,7 @@ class InfoCard extends StatelessWidget {
       return const SizedBox.shrink();
     }
     return InkWell(
-      onTap: () => print("go to create posting screen"),
+      onTap: () => Beamer.of(context).beamToNamed(routeName),
       child: Container(
         width: getProportionateScreenWidth(350),
         margin: EdgeInsets.only(bottom: getProportionateScreenHeight(20)),

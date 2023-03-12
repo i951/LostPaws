@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lostpaws_app/presentation/components/custom_bottom_nav_bar.dart';
 import 'package:lostpaws_app/presentation/components/info_card.dart';
 import 'package:lostpaws_app/presentation/components/posting_preview.dart';
 import 'package:lostpaws_app/presentation/constants.dart';
+import 'package:lostpaws_app/presentation/routes/home_locations.dart';
 import 'package:lostpaws_app/presentation/size_config.dart';
 import 'package:lostpaws_app/presentation/theme/lostpaws_text.dart';
 
@@ -71,16 +73,6 @@ class _HomeScreenState extends State<HomeScreen> {
     )
   ];
 
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -88,35 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
-      bottomNavigationBar: Theme(
-        data: Theme.of(context).copyWith(
-          canvasColor: ConstColors.mediumGreen,
-        ),
-        child: BottomNavigationBar(
-          backgroundColor: ConstColors.mediumGreen,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.explore),
-              label: "Map View",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.edit_calendar_rounded),
-              label: "Post",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: "Home",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: "Profile",
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: ConstColors.yellowOrange,
-          onTap: _onItemTapped,
-        ),
-      ),
+      bottomNavigationBar: const CustomBottomNavBar(),
       appBar: AppBar(
         toolbarOpacity: 1.0,
         toolbarHeight: getProportionateScreenHeight(80),
@@ -151,6 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const InfoCard(
                   title: "Saw a lost animal but can't find the owner?",
                   text: "Create an Animal Sighting post here!",
+                  routeName: HomeLocations.homeRoute,
                 ),
                 Column(
                   children: [
