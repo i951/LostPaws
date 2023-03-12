@@ -1,3 +1,4 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lostpaws_app/presentation/components/custom_bottom_nav_bar.dart';
@@ -115,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const InfoCard(
                   title: "Saw a lost animal but can't find the owner?",
                   text: "Create an Animal Sighting post here!",
-                  routeName: HomeLocations.homeRoute,
+                  routeName: HomeLocations.createPostingRoute,
                 ),
                 Column(
                   children: [
