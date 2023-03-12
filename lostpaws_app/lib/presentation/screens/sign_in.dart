@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:lostpaws_app/main.dart';
 import 'package:lostpaws_app/presentation/constants.dart';
+import 'package:lostpaws_app/presentation/routes/home_locations.dart';
 import 'package:lostpaws_app/presentation/routes/unauthenticated_locations.dart';
 import 'package:lostpaws_app/presentation/size_config.dart';
 import 'package:lostpaws_app/presentation/theme/lostpaws_text.dart';
@@ -31,12 +32,15 @@ class SignInScreen extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                height: getProportionateScreenHeight(380),
+                height: getProportionateScreenHeight(300),
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage('assets/images/lost-paws.png'),
                       fit: BoxFit.fitWidth),
                 ),
+              ),
+              SizedBox(
+                height: getProportionateScreenHeight(defaultPadding),
               ),
               Expanded(
                 child: Container(
@@ -57,7 +61,6 @@ class SignInScreen extends StatelessWidget {
                             child: Column(
                           children: [
                             TextFormField(
-                              autofocus: true,
                               keyboardType: TextInputType.emailAddress,
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
@@ -77,7 +80,6 @@ class SignInScreen extends StatelessWidget {
                                   getProportionateScreenHeight(defaultPadding),
                             ),
                             TextFormField(
-                              autofocus: true,
                               keyboardType: TextInputType.text,
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
@@ -115,11 +117,24 @@ class SignInScreen extends StatelessWidget {
                               height:
                                   getProportionateScreenHeight(defaultPadding),
                             ),
-                            ElevatedButton(
-                              onPressed: () => print("Logging in"),
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: getProportionateScreenHeight(15),
+                                  horizontal: getProportionateScreenWidth(70),
+                                ),
+                                backgroundColor: ConstColors.darkOrange,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(13),
+                                ),
+                              ),
+                              onPressed: () {
+                                Beamer.of(context, root: true)
+                                    .beamToNamed(HomeLocations.homeRoute);
+                              },
                               child: Text(
-                                "Login",
-                                style: const LostPawsText().caption1SemiBold,
+                                'Login',
+                                style: const LostPawsText().primarySemiBold,
                               ),
                             ),
                           ],

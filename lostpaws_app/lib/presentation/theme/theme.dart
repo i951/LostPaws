@@ -21,7 +21,7 @@ ThemeData get _theme => ThemeData(
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(
-            color: ConstColors.darkOrange,
+            color: ConstColors.lightGrey,
           ),
         ),
         border: OutlineInputBorder(

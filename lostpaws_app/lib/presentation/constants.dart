@@ -7,7 +7,7 @@ const double defaultPadding = 20;
 
 class ConstColors {
   // The colors for the app
-  static const Color lightGreen = Color.fromARGB(194, 231, 244, 232);
+  static const Color lightGreen = Color.fromARGB(237, 231, 244, 232);
   static const Color mediumGreen = Color.fromARGB(195, 0, 124, 95);
   static const Color darkGreen = Color.fromARGB(199, 1, 70, 75);
 
