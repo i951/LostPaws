@@ -74,7 +74,7 @@ const postController = {
   },
   getPost: (req, res) => {
     const { postID } = req.params;
-    
+
     Post.findOne({ _id: postID }).exec((err, post) => {
       if (err) return res.status(400).json({ err: err });
       return res.status(200).json(post);
@@ -117,6 +117,14 @@ const postController = {
         return res.status(200).json({ success: true });
       }
     );
+  },
+  deletePost: (req, res) => {
+    const { userID, postID } = req.params;
+
+    Post.deleteOne({ _id: postID, userID: userID }).exec((err, result) => {
+      if (err) return res.status(400).json({ success: false, error: err });
+      return res.status(200).json({ success: true });
+    });
   },
   getUserPosts: (req, res) => {
     const { userID } = req.params;
