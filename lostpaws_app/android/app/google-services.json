@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "460628686164-db0v1k48n9piv0ni5qmk4kh67tnrrk26.apps.googleusercontent.com",
+          "client_id": "460628686164-hntheisip4036hm72qmg1qg0c386l0ir.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lostpaws_app",
+            "certificate_hash": "d45682d4e0d30dd5374c92fb5fce23df1ac078ff"
+          }
+        },
+        {
+          "client_id": "460628686164-879ukaaum4md2vb7sjj2h090dk9oej0l.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,8 +35,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "460628686164-db0v1k48n9piv0ni5qmk4kh67tnrrk26.apps.googleusercontent.com",
+              "client_id": "460628686164-879ukaaum4md2vb7sjj2h090dk9oej0l.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "460628686164-0o5b36b3br3oqbmf8n7qohidbk8c2fri.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.lostpawsApp"
+              }
             }
           ]
         }

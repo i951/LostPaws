@@ -42,7 +42,7 @@ class UnauthenticatedLocations extends BeamLocation<BeamState> {
       LostPawsBeamPage(
         path: signInRoute,
         popToNamed: null,
-        child: const SignInScreen(),
+        child: SignInScreen(),
       ),
       if (state.uri.path == forgotFormRoute) ...[
         LostPawsBeamPage(

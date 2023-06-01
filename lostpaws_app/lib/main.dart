@@ -1,5 +1,6 @@
 library main;
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:beamer/beamer.dart';
@@ -9,12 +10,23 @@ import 'package:lostpaws_app/presentation/routes/home_locations.dart';
 import 'package:lostpaws_app/presentation/routes/unauthenticated_locations.dart';
 import 'package:lostpaws_app/presentation/theme/lostpaws_text.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 part 'presentation/routes/routes.dart';
 part 'presentation/theme/theme.dart';
 
 void main() async {
   // Make sure Flutter is initialized before calling native code
   WidgetsFlutterBinding.ensureInitialized();
+
+  // TODO: uncomment after. Currently using code below to test with emulator
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // await Firebase.initializeApp();
+  // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
 
   //Lock the orientation to portrait mode only.
   await SystemChrome.setPreferredOrientations([

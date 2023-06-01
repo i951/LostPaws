@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Lost Paws</string>
+    <string name="facebook_app_id">135544499535743</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">59b6afb0a27a6d8e80e1a2e3d75ccf66</string>
+</resources>
