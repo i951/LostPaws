@@ -1,7 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -96,22 +94,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     }
   }
 
-  Future<void> signInFacebook() async {
-    try {
-      // Trigger the sign-in flow
-      final LoginResult loginResult = await FacebookAuth.instance.login();
-
-      // Create a credential from the access token
-      final OAuthCredential facebookAuthCredential =
-          FacebookAuthProvider.credential(loginResult.accessToken!.token);
-
-      // Once signed in, obtain the UserCredential
-      final UserCredential authResult = await FirebaseAuth.instance
-          .signInWithCredential(facebookAuthCredential);
-
-      emit(state.copyWith(status: LoginFormStatus.submissionSuccess));
-    } catch (_) {
-      emit(state.copyWith(status: LoginFormStatus.submissionFailure));
-    }
+  Future<void> signInMicrosoft() async {
+    //TODO
   }
 }

@@ -218,9 +218,9 @@ class SignInScreen extends StatelessWidget {
                                             onPressed: () {
                                               context
                                                   .read<AuthenticationCubit>()
-                                                  .signInFacebook();
+                                                  .signInMicrosoft();
                                             },
-                                            child: Text("Facebook"),
+                                            child: Text("Microsoft"),
                                           ),
                                         ],
                                       ),
