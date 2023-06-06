@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:beamer/beamer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lostpaws_app/business/cubit/authentication_cubit.dart';
 
 import 'package:lostpaws_app/presentation/constants.dart';
 import 'package:lostpaws_app/presentation/routes/home_locations.dart';
@@ -49,16 +51,19 @@ class LostPawsApp extends StatelessWidget {
           WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
         }
       },
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        title: '',
-        theme: _theme,
-        //Routes are detailed in presentation/routes.dart
-        routeInformationParser: BeamerParser(),
-        routerDelegate: _routerDelegate,
-        backButtonDispatcher: BeamerBackButtonDispatcher(
-          delegate: _routerDelegate,
-          fallbackToBeamBack: false,
+      child: BlocProvider(
+        create: (context) => AuthenticationCubit(),
+        child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          title: '',
+          theme: _theme,
+          //Routes are detailed in presentation/routes.dart
+          routeInformationParser: BeamerParser(),
+          routerDelegate: _routerDelegate,
+          backButtonDispatcher: BeamerBackButtonDispatcher(
+            delegate: _routerDelegate,
+            fallbackToBeamBack: false,
+          ),
         ),
       ),
     );

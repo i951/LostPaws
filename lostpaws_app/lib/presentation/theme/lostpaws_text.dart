@@ -17,33 +17,13 @@ class LostPawsText extends ThemeExtension<LostPawsText> {
     return this;
   }
 
-  /// The largest title style used on the login screen, 56pt semiBold.
-  TextStyle get title {
+  /// The primary title style for main titles, 24pt bold.
+  TextStyle get primaryTitleBold {
     return const TextStyle(
-      fontWeight: FontWeight.w400,
-      fontSize: 56,
+      fontWeight: FontWeight.w800,
+      fontSize: 24,
       height: 1.2,
-      color: Colors.black,
-    );
-  }
-
-  /// The 2nd largest title style used on the Create Account screen.
-  TextStyle get title2 {
-    return const TextStyle(
-      fontWeight: FontWeight.w400,
-      fontSize: 40,
-      height: 1.2,
-      color: Colors.black,
-    );
-  }
-
-  /// The 3rd largest title style used on the Forgot Password screen.
-  TextStyle get title3 {
-    return const TextStyle(
-      fontWeight: FontWeight.w400,
-      fontSize: 38,
-      height: 1.2,
-      color: Colors.black,
+      color: ConstColors.darkGreen,
     );
   }
 
@@ -53,7 +33,7 @@ class LostPawsText extends ThemeExtension<LostPawsText> {
       fontWeight: FontWeight.w600,
       fontSize: 24,
       height: 1.2,
-      color: Colors.black,
+      color: ConstColors.darkGreen,
     );
   }
 
@@ -67,6 +47,43 @@ class LostPawsText extends ThemeExtension<LostPawsText> {
     );
   }
 
+  /// Regular text in grey, 16pt normal.
+  TextStyle get primaryRegularGrey {
+    return const TextStyle(
+      fontWeight: FontWeight.w400,
+      fontSize: 14,
+      height: 1.5,
+      color: ConstColors.lightGrey,
+    );
+  }
+
+  /// Regular text in dark green, 16pt normal.
+  TextStyle get primaryRegularGreen {
+    return const TextStyle(
+        fontWeight: FontWeight.w400,
+        fontSize: 14,
+        height: 1.5,
+        color: ConstColors.darkGreen);
+  }
+
+  /// Regular text in orange, 16pt normal.
+  TextStyle get primaryRegularOrange {
+    return const TextStyle(
+        fontWeight: FontWeight.w400,
+        fontSize: 14,
+        height: 1.5,
+        color: ConstColors.darkOrange);
+  }
+
+  /// Error text in red, 16pt normal.
+  TextStyle get error {
+    return const TextStyle(
+        fontWeight: FontWeight.w400,
+        fontSize: 14,
+        height: 1.5,
+        color: ConstColors.red);
+  }
+
   /// Regular semibold text, 16pt semiBold.
   TextStyle get primarySemiBold {
     return const TextStyle(
@@ -75,6 +92,15 @@ class LostPawsText extends ThemeExtension<LostPawsText> {
       height: 1.5,
       color: Colors.black,
     );
+  }
+
+  /// Regular semibold text in dark green, 16pt semiBold.
+  TextStyle get primarySemiBoldGreen {
+    return const TextStyle(
+        fontWeight: FontWeight.w600,
+        fontSize: 12,
+        height: 1.5,
+        color: ConstColors.darkGreen);
   }
 
   /// Regular semibold text with shadow, 18pt semiBold.

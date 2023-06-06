@@ -19,4 +19,5 @@ class ConstColors {
   static const Color highlightBlue = Color.fromARGB(197, 40, 151, 255);
 
   static const Color lightGrey = Color.fromARGB(199, 113, 114, 122);
+  static const Color red = Color.fromARGB(198, 247, 139, 139);
 }

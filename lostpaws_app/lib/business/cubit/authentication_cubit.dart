@@ -8,6 +8,7 @@ part 'authentication_cubit.freezed.dart';
 
 class AuthenticationCubit extends Cubit<AuthenticationState> {
   FirebaseAuth auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   AuthenticationCubit() : super(const AuthenticationState());
 
@@ -38,7 +39,10 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   }
 
   Future<void> signInEmailPassword() async {
-    emit(state.copyWith(status: LoginFormStatus.submissionInProgress));
+    emit(state.copyWith(
+      status: LoginFormStatus.submissionInProgress,
+      errorMessage: null,
+    ));
 
     try {
       final UserCredential authResult = await auth.signInWithEmailAndPassword(
@@ -72,7 +76,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   Future<void> signInGoogle() async {
     try {
       // Trigger the authentication flow
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
       // Obtain the auth details from the request
       final GoogleSignInAuthentication? googleAuth =
@@ -88,13 +92,22 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       final UserCredential authResult =
           await FirebaseAuth.instance.signInWithCredential(credential);
 
-      emit(state.copyWith(status: LoginFormStatus.submissionSuccess));
+      emit(state.copyWith(
+        status: LoginFormStatus.submissionSuccess,
+        errorMessage: null,
+      ));
     } catch (_) {
-      emit(state.copyWith(status: LoginFormStatus.submissionFailure));
+      emit(state.copyWith(
+          status: LoginFormStatus.submissionFailure,
+          errorMessage: "There was an error signing in."));
     }
   }
 
-  Future<void> signInMicrosoft() async {
-    //TODO
+  Future<void> signOutEmailPassword() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
+  Future<void> signOutGoogle() async {
+    await _googleSignIn.signOut();
   }
 }
