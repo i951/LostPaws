@@ -141,6 +141,16 @@ class LostPawsText extends ThemeExtension<LostPawsText> {
     );
   }
 
+  /// Smaller text in grey, 10pt normal.
+  TextStyle get primarySmallerGrey {
+    return const TextStyle(
+      fontWeight: FontWeight.w400,
+      fontSize: 12,
+      height: 1.5,
+      color: ConstColors.lightGrey,
+    );
+  }
+
   /// For really standout numbers, 36pt semiBold.
   TextStyle get titleNumbers {
     return const TextStyle(

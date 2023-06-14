@@ -60,7 +60,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 height: getProportionateScreenHeight(defaultPadding),
               ),
               SizedBox(
-                height: SizeConfig.screenHeight / 2,
+                height: getProportionateScreenHeight(450),
                 child: BlocListener<AuthenticationCubit, AuthenticationState>(
                   listenWhen: (previous, current) =>
                       previous.status != current.status,

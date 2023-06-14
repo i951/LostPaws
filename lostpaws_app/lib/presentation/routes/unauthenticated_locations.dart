@@ -6,7 +6,9 @@ import 'package:beamer/beamer.dart';
 import 'package:lostpaws_app/presentation/routes/lostpaws_beam_page.dart';
 import 'package:lostpaws_app/presentation/screens/create_account.dart';
 import 'package:lostpaws_app/presentation/screens/forgot_password.dart';
+import 'package:lostpaws_app/presentation/screens/privacy_policy.dart';
 import 'package:lostpaws_app/presentation/screens/sign_in.dart';
+import 'package:lostpaws_app/presentation/screens/terms_and_conditions.dart';
 
 /// The [BeamLocation] for the screens visible without logging in.
 ///
@@ -26,6 +28,12 @@ class UnauthenticatedLocations extends BeamLocation<BeamState> {
   /// beamToNamed location for the [CreateAccountScreen]
   static const String createAccountRoute = '/create_account';
 
+  /// beamToNamed location for the [TermsAndConditionsScreen]
+  static const String termsAndConditionsRoute = '/terms_and_conditions';
+
+  /// beamToNamed location for the [PrivacyPolicyScreen]
+  static const String privacyPolicyRoute = '/privacy_policy';
+
   @override
   List<Pattern> get pathPatterns => _pathPatterns;
 
@@ -34,6 +42,8 @@ class UnauthenticatedLocations extends BeamLocation<BeamState> {
     signInRoute,
     forgotFormRoute,
     createAccountRoute,
+    termsAndConditionsRoute,
+    privacyPolicyRoute,
   ];
 
   @override
@@ -49,6 +59,20 @@ class UnauthenticatedLocations extends BeamLocation<BeamState> {
           path: forgotFormRoute,
           popToNamed: null,
           child: const ForgotPasswordScreen(),
+        ),
+      ],
+      if (state.uri.path.contains(termsAndConditionsRoute)) ...[
+        LostPawsBeamPage(
+          path: termsAndConditionsRoute,
+          popToNamed: createAccountRoute,
+          child: const TermsAndConditionsScreen(),
+        ),
+      ],
+      if (state.uri.path.contains(privacyPolicyRoute)) ...[
+        LostPawsBeamPage(
+          path: privacyPolicyRoute,
+          popToNamed: createAccountRoute,
+          child: const PrivacyPolicyScreen(),
         ),
       ],
       if (state.uri.path == createAccountRoute) ...[

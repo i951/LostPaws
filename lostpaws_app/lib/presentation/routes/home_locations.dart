@@ -4,10 +4,13 @@ import 'package:flutter/cupertino.dart';
 // Package imports:
 import 'package:beamer/beamer.dart';
 import 'package:lostpaws_app/presentation/routes/lostpaws_beam_page.dart';
+import 'package:lostpaws_app/presentation/screens/charity.dart';
 import 'package:lostpaws_app/presentation/screens/create_posting.dart';
 import 'package:lostpaws_app/presentation/screens/home.dart';
 import 'package:lostpaws_app/presentation/screens/map_view.dart';
+import 'package:lostpaws_app/presentation/screens/privacy_policy.dart';
 import 'package:lostpaws_app/presentation/screens/profile.dart';
+import 'package:lostpaws_app/presentation/screens/terms_and_conditions.dart';
 import 'package:lostpaws_app/presentation/screens/view_full_posting.dart';
 
 class HomeLocations extends BeamLocation<BeamState> {
@@ -26,6 +29,15 @@ class HomeLocations extends BeamLocation<BeamState> {
   /// beamToNamed location for the [ProfileScreen]
   static const String profileRoute = '/profile';
 
+  /// beamToNamed location for the [CharityScreen]
+  static const String charityRoute = '/charity';
+
+  /// beamToNamed location for the [TermsAndConditionsScreen]
+  static const String termsAndConditionsRoute = '/terms_and_conditions';
+
+  /// beamToNamed location for the [PrivacyPolicyScreen]
+  static const String privacyPolicyRoute = '/privacy_policy';
+
   @override
   List<Pattern> get pathPatterns => _pathPatterns;
 
@@ -36,6 +48,9 @@ class HomeLocations extends BeamLocation<BeamState> {
     viewFullPostingRoute,
     mapViewRoute,
     profileRoute,
+    charityRoute,
+    termsAndConditionsRoute,
+    privacyPolicyRoute,
   ];
 
   @override
@@ -72,6 +87,27 @@ class HomeLocations extends BeamLocation<BeamState> {
           path: profileRoute,
           popToNamed: homeRoute,
           child: const ProfileScreen(),
+        )
+      ],
+      if (state.uri.path == charityRoute) ...[
+        LostPawsBeamPage(
+          path: charityRoute,
+          popToNamed: homeRoute,
+          child: const CharityScreen(),
+        )
+      ],
+      if (state.uri.path == termsAndConditionsRoute) ...[
+        LostPawsBeamPage(
+          path: termsAndConditionsRoute,
+          popToNamed: homeRoute,
+          child: const TermsAndConditionsScreen(),
+        )
+      ],
+      if (state.uri.path == privacyPolicyRoute) ...[
+        LostPawsBeamPage(
+          path: privacyPolicyRoute,
+          popToNamed: homeRoute,
+          child: const PrivacyPolicyScreen(),
         )
       ],
     ];
