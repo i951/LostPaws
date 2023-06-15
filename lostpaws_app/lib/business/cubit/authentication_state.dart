@@ -12,6 +12,9 @@ class AuthenticationState with _$AuthenticationState {
   const AuthenticationState._();
 
   const factory AuthenticationState({
+    /// The currently signed in user.
+    /// Is null if user is not yet successfully logged in.
+    User? user,
     @Default("") String email,
     @Default("") String password,
     @Default(LoginFormStatus.initial) LoginFormStatus status,

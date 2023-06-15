@@ -58,7 +58,10 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
           errorMessage: "The login information you've entered is incorrect.",
         ));
       } else {
-        emit(state.copyWith(status: LoginFormStatus.submissionSuccess));
+        emit(state.copyWith(
+          status: LoginFormStatus.submissionSuccess,
+          user: authResult.user,
+        ));
       }
     } on FirebaseAuthException catch (e) {
       emit(state.copyWith(
@@ -95,6 +98,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       emit(state.copyWith(
         status: LoginFormStatus.submissionSuccess,
         errorMessage: null,
+        user: authResult.user,
       ));
     } catch (_) {
       emit(state.copyWith(

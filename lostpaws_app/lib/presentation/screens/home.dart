@@ -1,6 +1,8 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lostpaws_app/business/cubit/authentication_cubit.dart';
 import 'package:lostpaws_app/presentation/components/custom_app_bar.dart';
 import 'package:lostpaws_app/presentation/components/custom_bottom_nav_bar.dart';
 import 'package:lostpaws_app/presentation/components/info_card.dart';
@@ -102,10 +104,14 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             child: Column(
               children: [
-                const InfoCard(
-                  title: "Saw a lost animal but can't find the owner?",
-                  text: "Create an Animal Sighting post here!",
-                  routeName: HomeLocations.createPostingRoute,
+                BlocBuilder<AuthenticationCubit, AuthenticationState>(
+                  builder: (context, state) {
+                    return const InfoCard(
+                      title: "Saw a lost animal but can't find the owner?",
+                      text: "Create an Animal Sighting post here!",
+                      routeName: HomeLocations.createPostingRoute,
+                    );
+                  },
                 ),
                 Column(
                   children: [

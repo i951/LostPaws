@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:beamer/beamer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lostpaws_app/business/cubit/authentication_cubit.dart';
+import 'package:lostpaws_app/business/cubit/create_account_cubit.dart';
 
 import 'package:lostpaws_app/presentation/constants.dart';
 import 'package:lostpaws_app/presentation/routes/home_locations.dart';
@@ -51,8 +52,15 @@ class LostPawsApp extends StatelessWidget {
           WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
         }
       },
-      child: BlocProvider(
-        create: (context) => AuthenticationCubit(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => AuthenticationCubit(),
+          ),
+          BlocProvider(
+            create: (context) => CreateAccountCubit(),
+          ),
+        ],
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,
           title: '',

@@ -6,6 +6,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lostpaws_app/business/cubit/authentication_cubit.dart';
 import 'package:lostpaws_app/main.dart';
+import 'package:lostpaws_app/presentation/components/error_message.dart';
 import 'package:lostpaws_app/presentation/constants.dart';
 import 'package:lostpaws_app/presentation/routes/home_locations.dart';
 import 'package:lostpaws_app/presentation/routes/unauthenticated_locations.dart';
@@ -156,42 +157,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                           .passwordChanged(password),
                                     ),
                                     state.errorMessage != null
-                                        ? Column(
-                                            children: [
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.all(7),
-                                                decoration: const BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(5)),
-                                                  color: ConstColors.red,
-                                                ),
-                                                child: Row(
-                                                  children: [
-                                                    const SizedBox(width: 3),
-                                                    const Icon(
-                                                      Icons.warning_amber,
-                                                      color:
-                                                          ConstColors.darkGreen,
-                                                    ),
-                                                    const SizedBox(
-                                                        width: defaultPadding),
-                                                    Flexible(
-                                                      child: Text(
-                                                        state.errorMessage!,
-                                                        style: const LostPawsText()
-                                                            .primaryRegularGreen,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          )
+                                        ? ErrorMessage(
+                                            error: state.errorMessage!)
                                         : SizedBox(
                                             height:
                                                 getProportionateScreenHeight(
