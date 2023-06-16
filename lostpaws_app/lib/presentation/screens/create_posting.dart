@@ -1,11 +1,9 @@
 import 'package:beamer/beamer.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:lostpaws_app/presentation/components/custom_toggle_buttons.dart';
 import 'package:lostpaws_app/presentation/constants.dart';
 import 'package:lostpaws_app/presentation/routes/home_locations.dart';
-import 'package:lostpaws_app/presentation/routes/unauthenticated_locations.dart';
 import 'package:lostpaws_app/presentation/size_config.dart';
 import 'package:lostpaws_app/presentation/theme/lostpaws_text.dart';
 
@@ -17,6 +15,8 @@ class CreatePostingScreen extends StatefulWidget {
 }
 
 class _CreatePostingScreenState extends State<CreatePostingScreen> {
+  String? selectedSize;
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -27,36 +27,29 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            TextButton(
-              onPressed: () =>
-                  Beamer.of(context).popToNamed(HomeLocations.homeRoute),
-              child: Text(
-                "Cancel",
-                style: const LostPawsText().primaryOrangeBold,
-                softWrap: false,
-              ),
+        title: Text(
+          "Create a Post",
+          style: const LostPawsText().primaryTitle,
+        ),
+        leadingWidth: getProportionateScreenWidth(70),
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: IconButton(
+            iconSize: getProportionateScreenWidth(defaultPadding),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: Icon(
+              Icons.arrow_back_ios_rounded,
+              size: getProportionateScreenWidth(defaultPadding),
             ),
-            Text(
-              "Create a Post",
-              style: const LostPawsText().primaryTitle,
-            ),
-            TextButton(
-              onPressed: () => print("Clear all outputs"),
-              child: Text(
-                "Clear All",
-                style: const LostPawsText().primaryOrangeBold,
-              ),
-            ),
-          ],
+          ),
         ),
         toolbarOpacity: 1.0,
         toolbarHeight: getProportionateScreenHeight(80),
         backgroundColor: ConstColors.lightGreen,
         foregroundColor: ConstColors.darkOrange,
+        elevation: 0,
       ),
       body: SafeArea(
         bottom: false,
@@ -68,53 +61,38 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                   topLeft: Radius.circular(15), topRight: Radius.circular(15)),
             ),
           ),
-          child: Column(
-            children: [
-              Container(
-                height: getProportionateScreenHeight(0),
-              ),
-              SizedBox(
-                height: getProportionateScreenHeight(defaultPadding),
-              ),
-              Expanded(
-                child: Container(
-                  height: SizeConfig.screenHeight / 2,
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
                   child: Column(
                     children: [
                       SizedBox(
-                        height: getProportionateScreenHeight(defaultPadding),
-                      ),
-                      SizedBox(
-                        // height: getProportionateScreenHeight(500),
                         width: getProportionateScreenWidth(300),
                         child: Form(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Post Type",
-                                  style: const LostPawsText().primarySemiBold,
-                                ),
-                              ),
+                              Text("Post Type",
+                                  style:
+                                      const LostPawsText().primaryRegularGreen),
                               const CustomToggleButtons(
                                 multiselect: false,
                                 options: ["LOST", "SIGHTING"],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Post Title",
-                                  style: const LostPawsText().primarySemiBold,
-                                ),
+                              Text(
+                                "Post Title",
+                                style: const LostPawsText().primaryRegularGreen,
                               ),
                               TextFormField(
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
-                                  labelText: 'Golden Retriever',
+                                  hintText: 'Golden Retriever at Broadmoor',
                                   fillColor: Colors.white,
                                   filled: true,
                                 ),
@@ -125,21 +103,86 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                 ]),
                               ),
                               SizedBox(
-                                height: getProportionateScreenHeight(
-                                    defaultPadding),
+                                  height: getProportionateScreenHeight(
+                                      defaultPadding)),
+                              Text(
+                                "Photos",
+                                style: const LostPawsText().primaryRegularGreen,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Colour",
-                                  style: const LostPawsText().primarySemiBold,
-                                ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.cloud_upload_rounded,
+                                    size: getProportionateScreenWidth(50),
+                                    color: Colors.black,
+                                    shadows: const [
+                                      BoxShadow(
+                                        color: Colors.grey,
+                                        blurRadius: 7,
+                                        spreadRadius: 3,
+                                        offset: Offset(0, 3),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      // TODO: UPLOAD PHOTOS
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: ConstColors.mediumGreen,
+                                      elevation: 7,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      side: const BorderSide(
+                                        color: ConstColors.darkGreen,
+                                        width: 2.5,
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 5),
+                                      child: Text(
+                                        "Upload Photos",
+                                        style: const LostPawsText()
+                                            .primaryRegularWhite,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                "Pet Type",
+                                style: const LostPawsText().primaryRegularGreen,
+                              ),
+                              const CustomToggleButtons(
+                                multiselect: false,
+                                options: [
+                                  "DOG",
+                                  "CAT",
+                                  "BIRD",
+                                  "BUNNY",
+                                  "REPTILE",
+                                  "AMPHIBIAN",
+                                  "RODENT",
+                                  "OTHER",
+                                ],
+                              ),
+                              Text(
+                                "Breed (fill in N/A if unsure)",
+                                style: const LostPawsText().primaryRegularGreen,
                               ),
                               TextFormField(
                                 keyboardType: TextInputType.text,
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
-                                  labelText: 'Light Brown',
+                                  hintText: 'Golden Retriever',
                                   fillColor: Colors.white,
                                   filled: true,
                                 ),
@@ -149,40 +192,133 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                   FormBuilderValidators.required(),
                                 ]),
                               ),
+                              Text(
+                                "Colour",
+                                style: const LostPawsText().primaryRegularGreen,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Expanded(
+                                    child: TextFormField(
+                                      keyboardType: TextInputType.text,
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        hintText: 'Light Brown',
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                      ),
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      validator: FormBuilderValidators.compose([
+                                        FormBuilderValidators.required(),
+                                      ]),
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      // TODO: show colour picker
+                                    },
+                                    icon: const Icon(
+                                      Icons.colorize,
+                                      color: ConstColors.darkOrange,
+                                    ),
+                                  ),
+                                ],
+                              ),
                               SizedBox(
                                 height: getProportionateScreenHeight(
                                     defaultPadding),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Colour",
-                                  style: const LostPawsText().primarySemiBold,
-                                ),
+                              Text(
+                                "Weight",
+                                style: const LostPawsText().primaryRegularGreen,
                               ),
-                              SizedBox(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CustomToggleButtons(
-                                        multiselect: false,
-                                        options: [
-                                          "DOG",
-                                          "CAT",
-                                          "BIRD",
-                                          "BUNNY",
-                                          "REPTILE",
-                                          "AMPHIBIAN",
-                                          "RODENT",
-                                          "OTHER",
-                                        ]),
-                                  ],
-                                ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Expanded(
+                                    child: TextFormField(
+                                      keyboardType: TextInputType.text,
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        hintText: '12.5',
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                      ),
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      validator: FormBuilderValidators.compose([
+                                        FormBuilderValidators.required(),
+                                      ]),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.all(defaultPadding),
+                                    child: Text(
+                                      "kg",
+                                      style: const LostPawsText()
+                                          .primarySemiBoldGreen,
+                                    ),
+                                  )
+                                ],
                               ),
-                              SizedBox(
-                                height: getProportionateScreenHeight(
-                                    defaultPadding),
+                              Text(
+                                "Size",
+                                style: const LostPawsText().primaryRegularGreen,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: getProportionateScreenHeight(50),
+                                    width: getProportionateScreenWidth(160),
+                                    decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color: ConstColors.lightGrey
+                                            .withOpacity(0.5),
+                                      ),
+                                    ),
+                                    child: DropdownButton(
+                                      isExpanded: true,
+                                      value: selectedSize,
+                                      icon: const Icon(Icons.arrow_drop_down),
+                                      iconSize: 42,
+                                      underline: const SizedBox(),
+                                      borderRadius: BorderRadius.circular(10),
+                                      items: const [
+                                        DropdownMenuItem(
+                                          value: "value",
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: defaultPadding),
+                                            child: Text("Small"),
+                                          ),
+                                        ),
+                                      ],
+                                      onChanged: (String? size) {
+                                        setState(() {
+                                          selectedSize = size;
+                                          print("selected $size");
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.info,
+                                      color: ConstColors.darkGreen,
+                                    ),
+                                    onPressed: () {
+                                      // TODO: show info exapmle
+                                    },
+                                  ),
+                                ],
                               ),
                               TextButton(
                                 style: TextButton.styleFrom(
@@ -210,9 +346,9 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                       ),
                     ],
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),
