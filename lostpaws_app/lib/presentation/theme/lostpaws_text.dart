@@ -47,6 +47,16 @@ class LostPawsText extends ThemeExtension<LostPawsText> {
     );
   }
 
+  /// Regular text in white, 16pt normal.
+  TextStyle get primaryRegularWhite {
+    return const TextStyle(
+      fontWeight: FontWeight.w400,
+      fontSize: 14,
+      height: 1.5,
+      color: Colors.white,
+    );
+  }
+
   /// Regular text in grey, 16pt normal.
   TextStyle get primaryRegularGrey {
     return const TextStyle(

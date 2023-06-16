@@ -1,10 +1,8 @@
-import 'package:beamer/beamer.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lostpaws_app/business/cubit/authentication_cubit.dart';
 import 'package:lostpaws_app/presentation/components/custom_app_bar.dart';
-import 'package:lostpaws_app/presentation/components/custom_bottom_nav_bar.dart';
+import 'package:lostpaws_app/presentation/components/custom_navigation_button.dart';
 import 'package:lostpaws_app/presentation/components/info_card.dart';
 import 'package:lostpaws_app/presentation/components/posting_preview.dart';
 import 'package:lostpaws_app/presentation/constants.dart';
@@ -84,8 +82,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
-      bottomNavigationBar: const CustomBottomNavBar(),
       appBar: CustomAppBar(),
+      floatingActionButton: const CustomNavigationButton(),
       body: SingleChildScrollView(
         child: SafeArea(
           bottom: false,

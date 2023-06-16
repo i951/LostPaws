@@ -24,17 +24,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         IconButton(
           iconSize: 30.0,
-          onPressed: () {
-            Beamer.of(context)
-                .beamToNamed(UnauthenticatedLocations.signInRoute);
-            // TODO: implement sign out
-            // context.read<AuthenticationCubit>().signOutEmailPassword();
-            // context.read<AuthenticationCubit>().signOutGoogle();
-          },
-          icon: const Icon(Icons.logout),
-        ),
-        IconButton(
-          iconSize: 30.0,
           onPressed: () => print("go to search"),
           icon: const Icon(Icons.search),
         ),

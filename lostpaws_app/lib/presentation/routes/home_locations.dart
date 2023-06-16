@@ -10,6 +10,7 @@ import 'package:lostpaws_app/presentation/screens/home.dart';
 import 'package:lostpaws_app/presentation/screens/map_view.dart';
 import 'package:lostpaws_app/presentation/screens/privacy_policy.dart';
 import 'package:lostpaws_app/presentation/screens/profile.dart';
+import 'package:lostpaws_app/presentation/screens/saved_posts.dart';
 import 'package:lostpaws_app/presentation/screens/terms_and_conditions.dart';
 import 'package:lostpaws_app/presentation/screens/view_full_posting.dart';
 
@@ -28,6 +29,9 @@ class HomeLocations extends BeamLocation<BeamState> {
 
   /// beamToNamed location for the [ProfileScreen]
   static const String profileRoute = '/profile';
+
+  /// beamToNamed location for the [SavedPostsScreen]
+  static const String savedPostsRoute = '/saved_posts';
 
   /// beamToNamed location for the [CharityScreen]
   static const String charityRoute = '/charity';
@@ -48,6 +52,7 @@ class HomeLocations extends BeamLocation<BeamState> {
     viewFullPostingRoute,
     mapViewRoute,
     profileRoute,
+    savedPostsRoute,
     charityRoute,
     termsAndConditionsRoute,
     privacyPolicyRoute,
@@ -87,6 +92,13 @@ class HomeLocations extends BeamLocation<BeamState> {
           path: profileRoute,
           popToNamed: homeRoute,
           child: const ProfileScreen(),
+        )
+      ],
+      if (state.uri.path == savedPostsRoute) ...[
+        LostPawsBeamPage(
+          path: savedPostsRoute,
+          popToNamed: profileRoute,
+          child: const SavedPostsScreen(),
         )
       ],
       if (state.uri.path == charityRoute) ...[

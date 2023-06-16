@@ -107,11 +107,19 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     }
   }
 
-  Future<void> signOutEmailPassword() async {
-    await FirebaseAuth.instance.signOut();
-  }
+  Future<void> signOut() async {
+    final userData = auth.currentUser?.providerData.first;
+    print(auth.currentUser?.providerData);
 
-  Future<void> signOutGoogle() async {
-    await _googleSignIn.signOut();
+    if (userData?.providerId == "password") {
+      await FirebaseAuth.instance.signOut();
+    } else if (userData?.providerId == "google.com") {
+      await _googleSignIn.signOut();
+    } else {
+      throw UnimplementedError(
+          "Sign out not implemented for other account types");
+    }
+
+    print("signed out successfully");
   }
 }
