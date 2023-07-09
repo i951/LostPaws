@@ -42,3 +42,5 @@ server.on("listening", () => {
 app.get("/", (req, res) => {
   res.send("ʕ ·(エ)· ʔ");
 });
+
+module.exports = app

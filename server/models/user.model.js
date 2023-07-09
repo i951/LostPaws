@@ -1,8 +1,17 @@
 const mongoose = require("mongoose");
+/* 
+  New user is populated when Firebase authentication is used to create new user AFTER email verification.
+*/
 
 const userSchema = mongoose.Schema(
   {
-    username: {
+    // https://firebase.google.com/docs/auth/users#:~:text=Firebase%20users%20have%20a%20fixed,iOS%2C%20Android%2C%20web).
+    __id: {
+      type: String,
+      unique: true,
+      required: [true, "can't be blank"],
+    },
+    name: {
       type: String,
       unique: true,
       required: [true, "can't be blank"],
@@ -12,7 +21,7 @@ const userSchema = mongoose.Schema(
       ],
       index: true,
     },
-    password: {
+    email: {
       type: String,
       required: [true, "can't be blank"],
     },
