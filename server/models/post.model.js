@@ -14,7 +14,7 @@ const postSchema = mongoose.Schema(
     },
     postType: {
       type: String,
-      // enum: ['posting', 'sighting'],
+      enum: ["sighting", "lost", "found"],
       default: "sighting",
     },
     postTitle: {
@@ -31,8 +31,17 @@ const postSchema = mongoose.Schema(
     },
     petType: {
       type: String,
-      // enum: ['dog', 'bird', 'bunny', 'reptile', 'amphibian', 'cat', 'rodent', 'other'],
-      default: "Other",
+      enum: [
+        "dog",
+        "cat",
+        "bird",
+        "rabbit",
+        "rodent",
+        "frog",
+        "turtle",
+        "other",
+      ],
+      default: "other",
     },
     petColour: {
       type: String,
