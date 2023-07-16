@@ -5,44 +5,28 @@ name: Node.js CI
 
 on:
   push:
-    branches: [server]
+    branches: ["**"]
   pull_request:
     branches: ["**"]
+
+defaults:
+  run:
+    working-directory: ./server
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
-    env:
-      working-directory: ./server
-
     strategy:
       matrix:
-        node-version: [14.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [14.x, 16.x, 18.x, 20.x]
 
     steps:
-      - name: Checkout the branch that triggered the action
-        uses: actions/checkout@v3
-
-      - name: Install node
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
-          cache-dependency-path: ./server/package-lock.json
-
-      - name: Install dependencies
-        working-directory: ${{ env.working-directory }}
-        run: npm ci
-
-      - name: Start MongoDB
-        uses: supercharge/mongodb-github-action@1.6.0
-        with:
-          mongodb-port: 27017
-
-      - name: Run tests
-        working-directory: ${{ env.working-directory }}
-        env:
-          CI: true
-        run: npm test
+      - run: npm install
+      - run: npm run build --if-present
+      - run: npm test
