@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lostpaws_app/business/bloc/create_post_bloc.dart';
 import 'package:lostpaws_app/presentation/constants.dart';
 import 'package:lostpaws_app/presentation/size_config.dart';
 import 'package:lostpaws_app/presentation/theme/lostpaws_text.dart';
@@ -53,6 +55,10 @@ class _CustomToggleButtonsState extends State<CustomToggleButtons> {
         renderBorder: false,
         direction: Axis.horizontal,
         onPressed: (int index) {
+          context.read<CreatePostBloc>().add(
+                CreatePostEvent.typeChanged(postType: widget.options[index]),
+              );
+
           setState(() {
             if (!widget.multiselect) {
               // The button that is tapped is set to true, and the others to false.
