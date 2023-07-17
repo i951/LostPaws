@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:lostpaws_app/business/bloc/create_post_bloc.dart';
 import 'package:lostpaws_app/presentation/constants.dart';
 import 'package:lostpaws_app/presentation/theme/lostpaws_text.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -30,10 +32,23 @@ class _DatePickerState extends State<DatePicker> {
           color: ConstColors.mediumGreen,
         ),
         titleCentered: true,
-        titleTextStyle: const LostPawsText().caption1SemiBold,
+        titleTextStyle: const LostPawsText().primarySemiBold,
       ),
       calendarFormat: CalendarFormat.month,
       focusedDay: _focusedDay,
+      availableGestures: AvailableGestures.horizontalSwipe,
+      calendarStyle: CalendarStyle(
+        isTodayHighlighted: false,
+        outsideDaysVisible: false,
+        cellMargin: const EdgeInsets.all(8.0),
+        selectedTextStyle: const LostPawsText().primaryRegularWhite,
+        selectedDecoration: const BoxDecoration(
+          color: ConstColors.darkOrange,
+          shape: BoxShape.circle,
+        ),
+        defaultTextStyle: const LostPawsText().caption1SemiBold,
+        weekendTextStyle: const LostPawsText().caption1SemiBold,
+      ),
       firstDay: DateTime(2020),
       lastDay: DateTime.now(),
       selectedDayPredicate: (day) {
@@ -51,6 +66,9 @@ class _DatePickerState extends State<DatePicker> {
             _selectedDay = selectedDay;
             _focusedDay = focusedDay;
           });
+          context
+              .read<CreatePostBloc>()
+              .add(CreatePostDateChanged(date: selectedDay));
         }
       },
       onPageChanged: (focusedDay) {
@@ -60,11 +78,5 @@ class _DatePickerState extends State<DatePicker> {
     );
   }
 
-  String getSelectedDayString() {
-    DateFormat formatter = DateFormat('dd MM, yyyy');
-
-    return _selectedDay == null
-        ? formatter.format(DateTime.now())
-        : formatter.format(_selectedDay!);
-  }
+  DateTime getSelectedDay() => _selectedDay ?? DateTime.now();
 }

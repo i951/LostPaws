@@ -42,24 +42,39 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   }
 
   void onCreatePostTitleChanged(
-      CreatePostTitleChanged event, Emitter<CreatePostState> emit) {
+    CreatePostTitleChanged event,
+    Emitter<CreatePostState> emit,
+  ) {
     emit(state.copyWith(postTitle: event.title));
 
     print("state's title: ${state.postTitle}");
   }
 
   void onCreatePostPetTypeChanged(
-      CreatePostPetTypeChanged event, Emitter<CreatePostState> emit) {}
+    CreatePostPetTypeChanged event,
+    Emitter<CreatePostState> emit,
+  ) {}
 
   void onCreatePostBreedChanged(
-      CreatePostBreedChanged event, Emitter<CreatePostState> emit) {}
+    CreatePostBreedChanged event,
+    Emitter<CreatePostState> emit,
+  ) {}
 
   void onCreatePostColourChanged(
-      CreatePostColourChanged event, Emitter<CreatePostState> emit) {}
+    CreatePostColourChanged event,
+    Emitter<CreatePostState> emit,
+  ) {}
 
   void onCreatePostWeightChanged(
-      CreatePostWeightChanged event, Emitter<CreatePostState> emit) {}
+    CreatePostWeightChanged event,
+    Emitter<CreatePostState> emit,
+  ) {}
 
   void onCreatePostDateChanged(
-      CreatePostDateChanged event, Emitter<CreatePostState> emit) {}
+    CreatePostDateChanged event,
+    Emitter<CreatePostState> emit,
+  ) {
+    emit(state.copyWith(dateLastSeen: event.date));
+    print("Date last seen: ${state.dateLastSeen}");
+  }
 }

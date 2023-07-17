@@ -100,7 +100,7 @@ class LostPawsText extends ThemeExtension<LostPawsText> {
       fontWeight: FontWeight.w600,
       fontSize: 16,
       height: 1.5,
-      color: Colors.black,
+      color: ConstColors.darkGreen,
     );
   }
 
