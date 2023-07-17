@@ -1,16 +1,21 @@
 const User = require("../models/user.model");
-var validator = require("validator");
+const { validationResult } = require("express-validator");
 
 const userController = {
   createUser: (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
     const { userID, name, email } = req.body;
 
-    if (!validator.isAlpha(name)) {
-      return res.status(400).json({ error: "Name must contain letters only" });
-    }
-    if (!validator.isEmail(email)) {
-      return res.status(400).json({ error: "Invalid email" });
-    }
+    // if (!validator.isAlpha(name)) {
+    //   return res.status(400).json({ error: "Name must contain letters only" });
+    // }
+    // if (!validator.isEmail(email)) {
+    //   return res.status(400).json({ error: "Invalid email" });
+    // }
 
     let newUser = User({
       __id: userID,

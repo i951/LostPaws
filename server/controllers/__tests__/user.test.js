@@ -10,9 +10,9 @@ describe("createUser", () => {
     };
 
     const res = await supertest(app).post("/users/").send(payload);
-    expect(res.status).toEqual(400);
+    expect(res.status).toEqual(422);
     expect(res.type).toEqual(expect.stringContaining("json"));
-    expect(res.body).toHaveProperty("error");
+    expect(res.body).toHaveProperty("errors");
   });
   test("empty name", async () => {
     const payload = {
@@ -22,9 +22,9 @@ describe("createUser", () => {
     };
 
     const res = await supertest(app).post("/users/").send(payload);
-    expect(res.status).toEqual(400);
+    expect(res.status).toEqual(422);
     expect(res.type).toEqual(expect.stringContaining("json"));
-    expect(res.body).toHaveProperty("error");
+    expect(res.body).toHaveProperty("errors");
   });
   test("invalid name", async () => {
     const payload = {
@@ -34,9 +34,9 @@ describe("createUser", () => {
     };
 
     const res = await supertest(app).post("/users/").send(payload);
-    expect(res.status).toEqual(400);
+    expect(res.status).toEqual(422);
     expect(res.type).toEqual(expect.stringContaining("json"));
-    expect(res.body).toHaveProperty("error");
+    expect(res.body).toHaveProperty("errors");
   });
   test("empty email", async () => {
     const payload = {
@@ -46,9 +46,9 @@ describe("createUser", () => {
     };
 
     const res = await supertest(app).post("/users/").send(payload);
-    expect(res.status).toEqual(400);
+    expect(res.status).toEqual(422);
     expect(res.type).toEqual(expect.stringContaining("json"));
-    expect(res.body).toHaveProperty("error");
+    expect(res.body).toHaveProperty("errors");
   });
   test("invalid email", async () => {
     const payload = {
@@ -58,8 +58,8 @@ describe("createUser", () => {
     };
 
     const res = await supertest(app).post("/users/").send(payload);
-    expect(res.status).toEqual(400);
+    expect(res.status).toEqual(422);
     expect(res.type).toEqual(expect.stringContaining("json"));
-    expect(res.body).toHaveProperty("error");
+    expect(res.body).toHaveProperty("errors");
   });
 });
