@@ -6,10 +6,8 @@ const mongoose = require("mongoose");
 const userSchema = mongoose.Schema(
   {
     // https://firebase.google.com/docs/auth/users#:~:text=Firebase%20users%20have%20a%20fixed,iOS%2C%20Android%2C%20web).
-    __id: {
+    _id: {
       type: String,
-      unique: true,
-      required: [true, "can't be blank"],
     },
     name: {
       type: String,

@@ -1,6 +1,6 @@
 const Post = require("../models/post.model");
 
-const postController = {
+const PostController = {
   getPosts: (req, res) => {
     const postType = req.query.postType;
     const petIsFound = req.query.petIsFound;
@@ -139,4 +139,4 @@ const postController = {
   },
 };
 
-module.exports = postController;
+module.exports = PostController;
