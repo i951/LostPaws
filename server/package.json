@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --forceExit",
+    "test": "mocha 'controllers/__tests__/*.js' --recursive --exit --timeout 10000",
     "start": "nodemon server/index.js",
     "start:server": "node server/index.js"
   },
@@ -19,6 +19,8 @@
     "uuid-v4": "^0.1.0"
   },
   "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
     "nodemon": "^2.0.20"
   },
   "author": "",

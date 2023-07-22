@@ -1,8 +1,17 @@
-const app = require("../../index");
+require("dotenv").config();
+// const app = require("../../index");
 const supertest = require("supertest");
+const expect = require("chai").expect;
+// const mongoose = require("mongoose");
 
-describe("createUser", () => {
-  test("empty userID", async () => {
+before(async () => {
+  console.log("before")
+  app = await require("../../index");
+  console.log("here")
+});
+
+describe("POST: /users route to create user", () => {
+  it("empty userID", async () => {
     const payload = {
       userID: "",
       name: "abc",
@@ -10,13 +19,13 @@ describe("createUser", () => {
     };
 
     const res = await supertest(app).post("/users/").send(payload);
-    expect(res.status).toEqual(422);
-    expect(res.type).toEqual(expect.stringContaining("json"));
-    expect(res.body).toHaveProperty("errors");
-    expect(res.body.errors).toHaveLength(1);
-    expect(res.body.errors[0].path).toEqual("userID");
+    expect(res.status).to.equal(422);
+    expect(res.headers["content-type"]).to.have.string("json");
+    expect(res.body).to.have.property("errors");
+    expect(res.body.errors).to.have.length(1);
+    expect(res.body.errors[0].path).to.equal("userID");
   });
-  test("empty name", async () => {
+  it("empty name", async () => {
     const payload = {
       userID: "aaaaa",
       name: "",
@@ -24,13 +33,13 @@ describe("createUser", () => {
     };
 
     const res = await supertest(app).post("/users/").send(payload);
-    expect(res.status).toEqual(422);
-    expect(res.type).toEqual(expect.stringContaining("json"));
-    expect(res.body).toHaveProperty("errors");
-    expect(res.body.errors).toHaveLength(1);
-    expect(res.body.errors[0].path).toEqual("name");
+    expect(res.status).to.equal(422);
+    expect(res.headers["content-type"]).to.have.string("json");
+    expect(res.body).to.have.property("errors");
+    expect(res.body.errors).to.have.length(1);
+    expect(res.body.errors[0].path).to.equal("name");
   });
-  test("invalid name", async () => {
+  it("invalid name", async () => {
     const payload = {
       userID: "aaaaa",
       name: "%%$#(@!",
@@ -38,13 +47,13 @@ describe("createUser", () => {
     };
 
     const res = await supertest(app).post("/users/").send(payload);
-    expect(res.status).toEqual(422);
-    expect(res.type).toEqual(expect.stringContaining("json"));
-    expect(res.body).toHaveProperty("errors");
-    expect(res.body.errors).toHaveLength(1);
-    expect(res.body.errors[0].path).toEqual("name");
+    expect(res.status).to.equal(422);
+    expect(res.headers["content-type"]).to.have.string("json");
+    expect(res.body).to.have.property("errors");
+    expect(res.body.errors).to.have.length(1);
+    expect(res.body.errors[0].path).to.equal("name");
   });
-  test("empty email", async () => {
+  it("empty email", async () => {
     const payload = {
       userID: "aaaaa",
       name: "aaaaa",
@@ -52,13 +61,13 @@ describe("createUser", () => {
     };
 
     const res = await supertest(app).post("/users/").send(payload);
-    expect(res.status).toEqual(422);
-    expect(res.type).toEqual(expect.stringContaining("json"));
-    expect(res.body).toHaveProperty("errors");
-    expect(res.body.errors).toHaveLength(1);
-    expect(res.body.errors[0].path).toEqual("email");
+    expect(res.status).to.equal(422);
+    expect(res.headers["content-type"]).to.have.string("json");
+    expect(res.body).to.have.property("errors");
+    expect(res.body.errors).to.have.length(1);
+    expect(res.body.errors[0].path).to.equal("email");
   });
-  test("invalid email", async () => {
+  it("invalid email", async () => {
     const payload = {
       userID: "aaaaa",
       name: "aaaaa",
@@ -66,10 +75,10 @@ describe("createUser", () => {
     };
 
     const res = await supertest(app).post("/users/").send(payload);
-    expect(res.status).toEqual(422);
-    expect(res.type).toEqual(expect.stringContaining("json"));
-    expect(res.body).toHaveProperty("errors");
-    expect(res.body.errors).toHaveLength(1);
-    expect(res.body.errors[0].path).toEqual("email");
+    expect(res.status).to.equal(422);
+    expect(res.headers["content-type"]).to.have.string("json");
+    expect(res.body).to.have.property("errors");
+    expect(res.body.errors).to.have.length(1);
+    expect(res.body.errors[0].path).to.equal("email");
   });
 });
