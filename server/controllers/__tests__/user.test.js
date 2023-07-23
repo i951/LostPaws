@@ -1,13 +1,32 @@
-require("dotenv").config();
-// const app = require("../../index");
+const app = require("../../index");
 const supertest = require("supertest");
 const expect = require("chai").expect;
-// const mongoose = require("mongoose");
+const mongooseConnect = require("../../utils/mongoose");
 
-before(async () => {
-  console.log("before")
-  app = await require("../../index");
-  console.log("here")
+before((done) => {
+  mongooseConnect
+    .dbconnect() 
+    .once("open", () => {
+      console.log("Test: Mongodb connected!");
+      done();
+    })
+    .on("error", (error) => {
+      console.log("Test: Mongodb connection error!");
+      done(error);
+    });
+});
+
+after((done) => {
+  mongooseConnect
+    .dbclose()
+    .then(() => {
+      console.log("Test: Mongodb disconnected!");
+      done();
+    })
+    .catch((err) => {
+      console.log("Test: Mongodb disconnection error!");
+      done(err);
+    });
 });
 
 describe("POST: /users route to create user", () => {
