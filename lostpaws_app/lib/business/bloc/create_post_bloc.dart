@@ -2,10 +2,35 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:geolocator/geolocator.dart';
 
 part 'create_post_event.dart';
 part 'create_post_state.dart';
 part 'create_post_bloc.freezed.dart';
+
+enum PostTypeOption {
+  lost("LOST"),
+  sighting("SIGHTING");
+
+  final String value;
+
+  const PostTypeOption(this.value);
+}
+
+enum PetTypeOption {
+  dog("DOG"),
+  cat("CAT"),
+  bird("BIRD"),
+  bunny("BUNNY"),
+  reptile("REPTILE"),
+  amphibian("AMPHIBIAN"),
+  rodent("RODENT"),
+  other("OTHER");
+
+  final String value;
+
+  const PetTypeOption(this.value);
+}
 
 class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   CreatePostBloc() : super(const CreatePostState()) {
@@ -17,6 +42,8 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     on<CreatePostColourChanged>(onCreatePostColourChanged);
     on<CreatePostWeightChanged>(onCreatePostWeightChanged);
     on<CreatePostDateChanged>(onCreatePostDateChanged);
+    on<CreatePostGetCurrentLocation>(onCreatePostGetCurrentLocation);
+    on<CreatePostLocationChanged>(onCreatePostLocationChanged);
   }
 
   void onCreatePostInitial(
@@ -30,10 +57,10 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     CreatePostTypeChanged event,
     Emitter<CreatePostState> emit,
   ) {
-    if (event.postType == "SIGHTING") {
-      emit(state.copyWith(postType: PostType.sighting));
-    } else if (event.postType == "LOST") {
-      emit(state.copyWith(postType: PostType.lost));
+    if (event.postType == PostTypeOption.sighting.value) {
+      emit(state.copyWith(postType: PostTypeOption.sighting));
+    } else if (event.postType == PostTypeOption.lost.value) {
+      emit(state.copyWith(postType: PostTypeOption.lost));
     } else {
       throw UnimplementedError("Post type not supported");
     }
@@ -53,7 +80,29 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   void onCreatePostPetTypeChanged(
     CreatePostPetTypeChanged event,
     Emitter<CreatePostState> emit,
-  ) {}
+  ) {
+    if (event.petType == PetTypeOption.dog.value) {
+      emit(state.copyWith(petType: PetTypeOption.dog));
+    } else if (event.petType == PetTypeOption.cat.value) {
+      emit(state.copyWith(petType: PetTypeOption.cat));
+    } else if (event.petType == PetTypeOption.bird.value) {
+      emit(state.copyWith(petType: PetTypeOption.bird));
+    } else if (event.petType == PetTypeOption.bunny.value) {
+      emit(state.copyWith(petType: PetTypeOption.bunny));
+    } else if (event.petType == PetTypeOption.reptile.value) {
+      emit(state.copyWith(petType: PetTypeOption.reptile));
+    } else if (event.petType == PetTypeOption.amphibian.value) {
+      emit(state.copyWith(petType: PetTypeOption.amphibian));
+    } else if (event.petType == PetTypeOption.rodent.value) {
+      emit(state.copyWith(petType: PetTypeOption.rodent));
+    } else if (event.petType == PetTypeOption.other.value) {
+      emit(state.copyWith(petType: PetTypeOption.other));
+    } else {
+      throw UnimplementedError("Post type not supported");
+    }
+
+    print("state's pet type: ${state.petType}");
+  }
 
   void onCreatePostBreedChanged(
     CreatePostBreedChanged event,
@@ -77,4 +126,14 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     emit(state.copyWith(dateLastSeen: event.date));
     print("Date last seen: ${state.dateLastSeen}");
   }
+
+  Future<void> onCreatePostGetCurrentLocation(
+    CreatePostGetCurrentLocation event,
+    Emitter<CreatePostState> emit,
+  ) async {}
 }
+
+void onCreatePostLocationChanged(
+  CreatePostLocationChanged event,
+  Emitter<CreatePostState> emit,
+) {}

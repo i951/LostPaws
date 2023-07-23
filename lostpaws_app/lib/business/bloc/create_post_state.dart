@@ -1,28 +1,12 @@
 part of 'create_post_bloc.dart';
 
-enum PostType {
-  sighting,
-  lost,
-}
-
-enum PetType {
-  dog,
-  cat,
-  bird,
-  bunny,
-  reptile,
-  amphibian,
-  rodent,
-  other,
-}
-
 @freezed
 class CreatePostState with _$CreatePostState {
   const factory CreatePostState({
-    PostType? postType,
+    PostTypeOption? postType,
     @Default("") String postTitle,
     @Default([]) List<String> photos,
-    PetType? petType,
+    PetTypeOption? petType,
     String? breed,
     String? colour,
     double? weight,

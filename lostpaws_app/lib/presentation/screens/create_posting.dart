@@ -7,6 +7,7 @@ import 'package:lostpaws_app/business/bloc/create_post_bloc.dart';
 import 'package:lostpaws_app/presentation/components/custom_text_field.dart';
 import 'package:lostpaws_app/presentation/components/custom_toggle_buttons.dart';
 import 'package:lostpaws_app/presentation/components/date_picker.dart';
+import 'package:lostpaws_app/presentation/components/location_picker.dart';
 import 'package:lostpaws_app/presentation/constants.dart';
 import 'package:lostpaws_app/presentation/routes/home_locations.dart';
 import 'package:lostpaws_app/presentation/size_config.dart';
@@ -88,9 +89,13 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                 Text("Post Type",
                                     style: const LostPawsText()
                                         .primaryRegularGreen),
-                                const CustomToggleButtons(
+                                CustomToggleButtons(
+                                  toggleType: ToggleType.post,
                                   multiselect: false,
-                                  options: ["LOST", "SIGHTING"],
+                                  options: [
+                                    PostTypeOption.lost.value,
+                                    PostTypeOption.sighting.value,
+                                  ],
                                 ),
                                 Text(
                                   "Post Title",
@@ -178,17 +183,18 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                   style:
                                       const LostPawsText().primaryRegularGreen,
                                 ),
-                                const CustomToggleButtons(
+                                CustomToggleButtons(
+                                  toggleType: ToggleType.pet,
                                   multiselect: false,
                                   options: [
-                                    "DOG",
-                                    "CAT",
-                                    "BIRD",
-                                    "BUNNY",
-                                    "REPTILE",
-                                    "AMPHIBIAN",
-                                    "RODENT",
-                                    "OTHER",
+                                    PetTypeOption.dog.value,
+                                    PetTypeOption.cat.value,
+                                    PetTypeOption.bird.value,
+                                    PetTypeOption.bunny.value,
+                                    PetTypeOption.reptile.value,
+                                    PetTypeOption.amphibian.value,
+                                    PetTypeOption.rodent.value,
+                                    PetTypeOption.other.value,
                                   ],
                                 ),
                                 Text(
@@ -413,7 +419,7 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                                                 .height -
                                                             (defaultPadding *
                                                                 18),
-                                                    child: Padding(
+                                                    child: const Padding(
                                                       padding:
                                                           EdgeInsets.all(8.0),
                                                       child: DatePicker(),
@@ -439,15 +445,75 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                       style: const LostPawsText()
                                           .primaryRegularGreen,
                                     ),
-                                    IconButton(
-                                      onPressed: () {
-                                        // TODO: show colour picker
-                                        print("getting location");
-                                      },
-                                      icon: const Icon(
-                                        Icons.add_location_alt_outlined,
-                                        color: ConstColors.darkOrange,
-                                      ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          DateFormat(DateFormat.YEAR_MONTH_DAY)
+                                              .format(
+                                            state.dateLastSeen ??
+                                                DateTime.now(),
+                                          ),
+                                          style: const LostPawsText()
+                                              .primarySemiBold,
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            final dialogWidth =
+                                                MediaQuery.of(context)
+                                                        .size
+                                                        .width -
+                                                    (defaultPadding * 2);
+
+                                            final dialogHeight =
+                                                MediaQuery.of(context)
+                                                        .size
+                                                        .height -
+                                                    (defaultPadding * 12);
+
+                                            // Notify Bloc to request location
+                                            context.read<CreatePostBloc>().add(
+                                                const CreatePostEvent
+                                                    .getCurrentLocation());
+                                            showDialog(
+                                              context: context,
+                                              builder: (_) =>
+                                                  BlocProvider.value(
+                                                value: context
+                                                    .read<CreatePostBloc>(),
+                                                child: Dialog(
+                                                  insetPadding:
+                                                      const EdgeInsets.all(
+                                                          defaultPadding),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                  ),
+                                                  child: SizedBox(
+                                                    width: dialogWidth,
+                                                    height: dialogHeight,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: LocationPicker(
+                                                        dialogWidth:
+                                                            dialogWidth,
+                                                        dialogHeight:
+                                                            dialogHeight,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          icon: const Icon(
+                                            Icons.add_location_alt_outlined,
+                                            color: ConstColors.darkOrange,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),

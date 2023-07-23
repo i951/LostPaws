@@ -5,14 +5,18 @@ import 'package:lostpaws_app/presentation/constants.dart';
 import 'package:lostpaws_app/presentation/size_config.dart';
 import 'package:lostpaws_app/presentation/theme/lostpaws_text.dart';
 
+enum ToggleType { post, pet }
+
 class CustomToggleButtons extends StatefulWidget {
   final bool multiselect;
   final List<String> options;
+  final ToggleType toggleType;
 
   const CustomToggleButtons({
     super.key,
     required this.multiselect,
     required this.options,
+    required this.toggleType,
   });
 
   @override
@@ -55,9 +59,15 @@ class _CustomToggleButtonsState extends State<CustomToggleButtons> {
         renderBorder: false,
         direction: Axis.horizontal,
         onPressed: (int index) {
-          context.read<CreatePostBloc>().add(
-                CreatePostEvent.typeChanged(postType: widget.options[index]),
-              );
+          widget.toggleType == ToggleType.post
+              ? context.read<CreatePostBloc>().add(
+                    CreatePostEvent.typeChanged(
+                        postType: widget.options[index]),
+                  )
+              : context.read<CreatePostBloc>().add(
+                    CreatePostEvent.petTypeChanged(
+                        petType: widget.options[index]),
+                  );
 
           setState(() {
             if (!widget.multiselect) {
