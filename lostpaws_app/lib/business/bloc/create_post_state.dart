@@ -1,8 +1,11 @@
 part of 'create_post_bloc.dart';
 
+enum Status { initial, loading, complete, failure }
+
 @freezed
 class CreatePostState with _$CreatePostState {
   const factory CreatePostState({
+    @Default(Status.initial) Status status,
     PostTypeOption? postType,
     @Default("") String postTitle,
     @Default([]) List<String> photos,
@@ -12,5 +15,6 @@ class CreatePostState with _$CreatePostState {
     double? weight,
     String? size,
     DateTime? dateLastSeen,
+    LatLng? userLocation,
   }) = _CreatePostState;
 }

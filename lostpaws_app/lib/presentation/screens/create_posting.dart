@@ -474,6 +474,7 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                             context.read<CreatePostBloc>().add(
                                                 const CreatePostEvent
                                                     .getCurrentLocation());
+
                                             showDialog(
                                               context: context,
                                               builder: (_) =>
@@ -501,6 +502,8 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                                             dialogWidth,
                                                         dialogHeight:
                                                             dialogHeight,
+                                                        userLocation:
+                                                            state.userLocation,
                                                       ),
                                                     ),
                                                   ),

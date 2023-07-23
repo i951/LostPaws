@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:lostpaws_app/business/bloc/create_post_bloc.dart';
 import 'package:lostpaws_app/presentation/constants.dart';
 import 'package:lostpaws_app/presentation/theme/lostpaws_text.dart';

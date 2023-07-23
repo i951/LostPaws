@@ -27,7 +27,7 @@ mixin _$CreatePostEvent {
     required TResult Function(double weight) weightChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function() getCurrentLocation,
-    required TResult Function(Position location) locationChanged,
+    required TResult Function(LatLng location) locationChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -41,7 +41,7 @@ mixin _$CreatePostEvent {
     TResult? Function(double weight)? weightChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function()? getCurrentLocation,
-    TResult? Function(Position location)? locationChanged,
+    TResult? Function(LatLng location)? locationChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,7 +55,7 @@ mixin _$CreatePostEvent {
     TResult Function(double weight)? weightChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function()? getCurrentLocation,
-    TResult Function(Position location)? locationChanged,
+    TResult Function(LatLng location)? locationChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -170,7 +170,7 @@ class _$CreatePostInitial implements CreatePostInitial {
     required TResult Function(double weight) weightChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function() getCurrentLocation,
-    required TResult Function(Position location) locationChanged,
+    required TResult Function(LatLng location) locationChanged,
   }) {
     return initial();
   }
@@ -187,7 +187,7 @@ class _$CreatePostInitial implements CreatePostInitial {
     TResult? Function(double weight)? weightChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function()? getCurrentLocation,
-    TResult? Function(Position location)? locationChanged,
+    TResult? Function(LatLng location)? locationChanged,
   }) {
     return initial?.call();
   }
@@ -204,7 +204,7 @@ class _$CreatePostInitial implements CreatePostInitial {
     TResult Function(double weight)? weightChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function()? getCurrentLocation,
-    TResult Function(Position location)? locationChanged,
+    TResult Function(LatLng location)? locationChanged,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -349,7 +349,7 @@ class _$CreatePostTypeChanged implements CreatePostTypeChanged {
     required TResult Function(double weight) weightChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function() getCurrentLocation,
-    required TResult Function(Position location) locationChanged,
+    required TResult Function(LatLng location) locationChanged,
   }) {
     return typeChanged(postType);
   }
@@ -366,7 +366,7 @@ class _$CreatePostTypeChanged implements CreatePostTypeChanged {
     TResult? Function(double weight)? weightChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function()? getCurrentLocation,
-    TResult? Function(Position location)? locationChanged,
+    TResult? Function(LatLng location)? locationChanged,
   }) {
     return typeChanged?.call(postType);
   }
@@ -383,7 +383,7 @@ class _$CreatePostTypeChanged implements CreatePostTypeChanged {
     TResult Function(double weight)? weightChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function()? getCurrentLocation,
-    TResult Function(Position location)? locationChanged,
+    TResult Function(LatLng location)? locationChanged,
     required TResult orElse(),
   }) {
     if (typeChanged != null) {
@@ -533,7 +533,7 @@ class _$CreatePostTitleChanged implements CreatePostTitleChanged {
     required TResult Function(double weight) weightChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function() getCurrentLocation,
-    required TResult Function(Position location) locationChanged,
+    required TResult Function(LatLng location) locationChanged,
   }) {
     return titleChanged(title);
   }
@@ -550,7 +550,7 @@ class _$CreatePostTitleChanged implements CreatePostTitleChanged {
     TResult? Function(double weight)? weightChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function()? getCurrentLocation,
-    TResult? Function(Position location)? locationChanged,
+    TResult? Function(LatLng location)? locationChanged,
   }) {
     return titleChanged?.call(title);
   }
@@ -567,7 +567,7 @@ class _$CreatePostTitleChanged implements CreatePostTitleChanged {
     TResult Function(double weight)? weightChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function()? getCurrentLocation,
-    TResult Function(Position location)? locationChanged,
+    TResult Function(LatLng location)? locationChanged,
     required TResult orElse(),
   }) {
     if (titleChanged != null) {
@@ -718,7 +718,7 @@ class _$CreatePostPetTypeChanged implements CreatePostPetTypeChanged {
     required TResult Function(double weight) weightChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function() getCurrentLocation,
-    required TResult Function(Position location) locationChanged,
+    required TResult Function(LatLng location) locationChanged,
   }) {
     return petTypeChanged(petType);
   }
@@ -735,7 +735,7 @@ class _$CreatePostPetTypeChanged implements CreatePostPetTypeChanged {
     TResult? Function(double weight)? weightChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function()? getCurrentLocation,
-    TResult? Function(Position location)? locationChanged,
+    TResult? Function(LatLng location)? locationChanged,
   }) {
     return petTypeChanged?.call(petType);
   }
@@ -752,7 +752,7 @@ class _$CreatePostPetTypeChanged implements CreatePostPetTypeChanged {
     TResult Function(double weight)? weightChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function()? getCurrentLocation,
-    TResult Function(Position location)? locationChanged,
+    TResult Function(LatLng location)? locationChanged,
     required TResult orElse(),
   }) {
     if (petTypeChanged != null) {
@@ -902,7 +902,7 @@ class _$CreatePostBreedChanged implements CreatePostBreedChanged {
     required TResult Function(double weight) weightChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function() getCurrentLocation,
-    required TResult Function(Position location) locationChanged,
+    required TResult Function(LatLng location) locationChanged,
   }) {
     return breedChanged(breed);
   }
@@ -919,7 +919,7 @@ class _$CreatePostBreedChanged implements CreatePostBreedChanged {
     TResult? Function(double weight)? weightChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function()? getCurrentLocation,
-    TResult? Function(Position location)? locationChanged,
+    TResult? Function(LatLng location)? locationChanged,
   }) {
     return breedChanged?.call(breed);
   }
@@ -936,7 +936,7 @@ class _$CreatePostBreedChanged implements CreatePostBreedChanged {
     TResult Function(double weight)? weightChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function()? getCurrentLocation,
-    TResult Function(Position location)? locationChanged,
+    TResult Function(LatLng location)? locationChanged,
     required TResult orElse(),
   }) {
     if (breedChanged != null) {
@@ -1086,7 +1086,7 @@ class _$CreatePostColourChanged implements CreatePostColourChanged {
     required TResult Function(double weight) weightChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function() getCurrentLocation,
-    required TResult Function(Position location) locationChanged,
+    required TResult Function(LatLng location) locationChanged,
   }) {
     return colourChanged(colour);
   }
@@ -1103,7 +1103,7 @@ class _$CreatePostColourChanged implements CreatePostColourChanged {
     TResult? Function(double weight)? weightChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function()? getCurrentLocation,
-    TResult? Function(Position location)? locationChanged,
+    TResult? Function(LatLng location)? locationChanged,
   }) {
     return colourChanged?.call(colour);
   }
@@ -1120,7 +1120,7 @@ class _$CreatePostColourChanged implements CreatePostColourChanged {
     TResult Function(double weight)? weightChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function()? getCurrentLocation,
-    TResult Function(Position location)? locationChanged,
+    TResult Function(LatLng location)? locationChanged,
     required TResult orElse(),
   }) {
     if (colourChanged != null) {
@@ -1270,7 +1270,7 @@ class _$CreatePostWeightChanged implements CreatePostWeightChanged {
     required TResult Function(double weight) weightChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function() getCurrentLocation,
-    required TResult Function(Position location) locationChanged,
+    required TResult Function(LatLng location) locationChanged,
   }) {
     return weightChanged(weight);
   }
@@ -1287,7 +1287,7 @@ class _$CreatePostWeightChanged implements CreatePostWeightChanged {
     TResult? Function(double weight)? weightChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function()? getCurrentLocation,
-    TResult? Function(Position location)? locationChanged,
+    TResult? Function(LatLng location)? locationChanged,
   }) {
     return weightChanged?.call(weight);
   }
@@ -1304,7 +1304,7 @@ class _$CreatePostWeightChanged implements CreatePostWeightChanged {
     TResult Function(double weight)? weightChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function()? getCurrentLocation,
-    TResult Function(Position location)? locationChanged,
+    TResult Function(LatLng location)? locationChanged,
     required TResult orElse(),
   }) {
     if (weightChanged != null) {
@@ -1454,7 +1454,7 @@ class _$CreatePostDateChanged implements CreatePostDateChanged {
     required TResult Function(double weight) weightChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function() getCurrentLocation,
-    required TResult Function(Position location) locationChanged,
+    required TResult Function(LatLng location) locationChanged,
   }) {
     return dateChanged(date);
   }
@@ -1471,7 +1471,7 @@ class _$CreatePostDateChanged implements CreatePostDateChanged {
     TResult? Function(double weight)? weightChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function()? getCurrentLocation,
-    TResult? Function(Position location)? locationChanged,
+    TResult? Function(LatLng location)? locationChanged,
   }) {
     return dateChanged?.call(date);
   }
@@ -1488,7 +1488,7 @@ class _$CreatePostDateChanged implements CreatePostDateChanged {
     TResult Function(double weight)? weightChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function()? getCurrentLocation,
-    TResult Function(Position location)? locationChanged,
+    TResult Function(LatLng location)? locationChanged,
     required TResult orElse(),
   }) {
     if (dateChanged != null) {
@@ -1614,7 +1614,7 @@ class _$CreatePostGetCurrentLocation implements CreatePostGetCurrentLocation {
     required TResult Function(double weight) weightChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function() getCurrentLocation,
-    required TResult Function(Position location) locationChanged,
+    required TResult Function(LatLng location) locationChanged,
   }) {
     return getCurrentLocation();
   }
@@ -1631,7 +1631,7 @@ class _$CreatePostGetCurrentLocation implements CreatePostGetCurrentLocation {
     TResult? Function(double weight)? weightChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function()? getCurrentLocation,
-    TResult? Function(Position location)? locationChanged,
+    TResult? Function(LatLng location)? locationChanged,
   }) {
     return getCurrentLocation?.call();
   }
@@ -1648,7 +1648,7 @@ class _$CreatePostGetCurrentLocation implements CreatePostGetCurrentLocation {
     TResult Function(double weight)? weightChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function()? getCurrentLocation,
-    TResult Function(Position location)? locationChanged,
+    TResult Function(LatLng location)? locationChanged,
     required TResult orElse(),
   }) {
     if (getCurrentLocation != null) {
@@ -1725,7 +1725,7 @@ abstract class _$$CreatePostLocationChangedCopyWith<$Res> {
           $Res Function(_$CreatePostLocationChanged) then) =
       __$$CreatePostLocationChangedCopyWithImpl<$Res>;
   @useResult
-  $Res call({Position location});
+  $Res call({LatLng location});
 }
 
 /// @nodoc
@@ -1745,7 +1745,7 @@ class __$$CreatePostLocationChangedCopyWithImpl<$Res>
       location: null == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
-              as Position,
+              as LatLng,
     ));
   }
 }
@@ -1756,7 +1756,7 @@ class _$CreatePostLocationChanged implements CreatePostLocationChanged {
   const _$CreatePostLocationChanged({required this.location});
 
   @override
-  final Position location;
+  final LatLng location;
 
   @override
   String toString() {
@@ -1794,7 +1794,7 @@ class _$CreatePostLocationChanged implements CreatePostLocationChanged {
     required TResult Function(double weight) weightChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function() getCurrentLocation,
-    required TResult Function(Position location) locationChanged,
+    required TResult Function(LatLng location) locationChanged,
   }) {
     return locationChanged(location);
   }
@@ -1811,7 +1811,7 @@ class _$CreatePostLocationChanged implements CreatePostLocationChanged {
     TResult? Function(double weight)? weightChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function()? getCurrentLocation,
-    TResult? Function(Position location)? locationChanged,
+    TResult? Function(LatLng location)? locationChanged,
   }) {
     return locationChanged?.call(location);
   }
@@ -1828,7 +1828,7 @@ class _$CreatePostLocationChanged implements CreatePostLocationChanged {
     TResult Function(double weight)? weightChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function()? getCurrentLocation,
-    TResult Function(Position location)? locationChanged,
+    TResult Function(LatLng location)? locationChanged,
     required TResult orElse(),
   }) {
     if (locationChanged != null) {
@@ -1895,10 +1895,10 @@ class _$CreatePostLocationChanged implements CreatePostLocationChanged {
 }
 
 abstract class CreatePostLocationChanged implements CreatePostEvent {
-  const factory CreatePostLocationChanged({required final Position location}) =
+  const factory CreatePostLocationChanged({required final LatLng location}) =
       _$CreatePostLocationChanged;
 
-  Position get location;
+  LatLng get location;
   @JsonKey(ignore: true)
   _$$CreatePostLocationChangedCopyWith<_$CreatePostLocationChanged>
       get copyWith => throw _privateConstructorUsedError;
@@ -1906,6 +1906,7 @@ abstract class CreatePostLocationChanged implements CreatePostEvent {
 
 /// @nodoc
 mixin _$CreatePostState {
+  Status get status => throw _privateConstructorUsedError;
   PostTypeOption? get postType => throw _privateConstructorUsedError;
   String get postTitle => throw _privateConstructorUsedError;
   List<String> get photos => throw _privateConstructorUsedError;
@@ -1915,6 +1916,7 @@ mixin _$CreatePostState {
   double? get weight => throw _privateConstructorUsedError;
   String? get size => throw _privateConstructorUsedError;
   DateTime? get dateLastSeen => throw _privateConstructorUsedError;
+  LatLng? get userLocation => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CreatePostStateCopyWith<CreatePostState> get copyWith =>
@@ -1928,7 +1930,8 @@ abstract class $CreatePostStateCopyWith<$Res> {
       _$CreatePostStateCopyWithImpl<$Res, CreatePostState>;
   @useResult
   $Res call(
-      {PostTypeOption? postType,
+      {Status status,
+      PostTypeOption? postType,
       String postTitle,
       List<String> photos,
       PetTypeOption? petType,
@@ -1936,7 +1939,8 @@ abstract class $CreatePostStateCopyWith<$Res> {
       String? colour,
       double? weight,
       String? size,
-      DateTime? dateLastSeen});
+      DateTime? dateLastSeen,
+      LatLng? userLocation});
 }
 
 /// @nodoc
@@ -1952,6 +1956,7 @@ class _$CreatePostStateCopyWithImpl<$Res, $Val extends CreatePostState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? status = null,
     Object? postType = freezed,
     Object? postTitle = null,
     Object? photos = null,
@@ -1961,8 +1966,13 @@ class _$CreatePostStateCopyWithImpl<$Res, $Val extends CreatePostState>
     Object? weight = freezed,
     Object? size = freezed,
     Object? dateLastSeen = freezed,
+    Object? userLocation = freezed,
   }) {
     return _then(_value.copyWith(
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as Status,
       postType: freezed == postType
           ? _value.postType
           : postType // ignore: cast_nullable_to_non_nullable
@@ -1999,6 +2009,10 @@ class _$CreatePostStateCopyWithImpl<$Res, $Val extends CreatePostState>
           ? _value.dateLastSeen
           : dateLastSeen // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      userLocation: freezed == userLocation
+          ? _value.userLocation
+          : userLocation // ignore: cast_nullable_to_non_nullable
+              as LatLng?,
     ) as $Val);
   }
 }
@@ -2012,7 +2026,8 @@ abstract class _$$_CreatePostStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {PostTypeOption? postType,
+      {Status status,
+      PostTypeOption? postType,
       String postTitle,
       List<String> photos,
       PetTypeOption? petType,
@@ -2020,7 +2035,8 @@ abstract class _$$_CreatePostStateCopyWith<$Res>
       String? colour,
       double? weight,
       String? size,
-      DateTime? dateLastSeen});
+      DateTime? dateLastSeen,
+      LatLng? userLocation});
 }
 
 /// @nodoc
@@ -2034,6 +2050,7 @@ class __$$_CreatePostStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? status = null,
     Object? postType = freezed,
     Object? postTitle = null,
     Object? photos = null,
@@ -2043,8 +2060,13 @@ class __$$_CreatePostStateCopyWithImpl<$Res>
     Object? weight = freezed,
     Object? size = freezed,
     Object? dateLastSeen = freezed,
+    Object? userLocation = freezed,
   }) {
     return _then(_$_CreatePostState(
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as Status,
       postType: freezed == postType
           ? _value.postType
           : postType // ignore: cast_nullable_to_non_nullable
@@ -2081,6 +2103,10 @@ class __$$_CreatePostStateCopyWithImpl<$Res>
           ? _value.dateLastSeen
           : dateLastSeen // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      userLocation: freezed == userLocation
+          ? _value.userLocation
+          : userLocation // ignore: cast_nullable_to_non_nullable
+              as LatLng?,
     ));
   }
 }
@@ -2089,7 +2115,8 @@ class __$$_CreatePostStateCopyWithImpl<$Res>
 
 class _$_CreatePostState implements _CreatePostState {
   const _$_CreatePostState(
-      {this.postType,
+      {this.status = Status.initial,
+      this.postType,
       this.postTitle = "",
       final List<String> photos = const [],
       this.petType,
@@ -2097,9 +2124,13 @@ class _$_CreatePostState implements _CreatePostState {
       this.colour,
       this.weight,
       this.size,
-      this.dateLastSeen})
+      this.dateLastSeen,
+      this.userLocation})
       : _photos = photos;
 
+  @override
+  @JsonKey()
+  final Status status;
   @override
   final PostTypeOption? postType;
   @override
@@ -2125,10 +2156,12 @@ class _$_CreatePostState implements _CreatePostState {
   final String? size;
   @override
   final DateTime? dateLastSeen;
+  @override
+  final LatLng? userLocation;
 
   @override
   String toString() {
-    return 'CreatePostState(postType: $postType, postTitle: $postTitle, photos: $photos, petType: $petType, breed: $breed, colour: $colour, weight: $weight, size: $size, dateLastSeen: $dateLastSeen)';
+    return 'CreatePostState(status: $status, postType: $postType, postTitle: $postTitle, photos: $photos, petType: $petType, breed: $breed, colour: $colour, weight: $weight, size: $size, dateLastSeen: $dateLastSeen, userLocation: $userLocation)';
   }
 
   @override
@@ -2136,6 +2169,7 @@ class _$_CreatePostState implements _CreatePostState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CreatePostState &&
+            (identical(other.status, status) || other.status == status) &&
             (identical(other.postType, postType) ||
                 other.postType == postType) &&
             (identical(other.postTitle, postTitle) ||
@@ -2147,12 +2181,15 @@ class _$_CreatePostState implements _CreatePostState {
             (identical(other.weight, weight) || other.weight == weight) &&
             (identical(other.size, size) || other.size == size) &&
             (identical(other.dateLastSeen, dateLastSeen) ||
-                other.dateLastSeen == dateLastSeen));
+                other.dateLastSeen == dateLastSeen) &&
+            (identical(other.userLocation, userLocation) ||
+                other.userLocation == userLocation));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      status,
       postType,
       postTitle,
       const DeepCollectionEquality().hash(_photos),
@@ -2161,7 +2198,8 @@ class _$_CreatePostState implements _CreatePostState {
       colour,
       weight,
       size,
-      dateLastSeen);
+      dateLastSeen,
+      userLocation);
 
   @JsonKey(ignore: true)
   @override
@@ -2172,7 +2210,8 @@ class _$_CreatePostState implements _CreatePostState {
 
 abstract class _CreatePostState implements CreatePostState {
   const factory _CreatePostState(
-      {final PostTypeOption? postType,
+      {final Status status,
+      final PostTypeOption? postType,
       final String postTitle,
       final List<String> photos,
       final PetTypeOption? petType,
@@ -2180,8 +2219,11 @@ abstract class _CreatePostState implements CreatePostState {
       final String? colour,
       final double? weight,
       final String? size,
-      final DateTime? dateLastSeen}) = _$_CreatePostState;
+      final DateTime? dateLastSeen,
+      final LatLng? userLocation}) = _$_CreatePostState;
 
+  @override
+  Status get status;
   @override
   PostTypeOption? get postType;
   @override
@@ -2200,6 +2242,8 @@ abstract class _CreatePostState implements CreatePostState {
   String? get size;
   @override
   DateTime? get dateLastSeen;
+  @override
+  LatLng? get userLocation;
   @override
   @JsonKey(ignore: true)
   _$$_CreatePostStateCopyWith<_$_CreatePostState> get copyWith =>

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 part 'create_post_event.dart';
 part 'create_post_state.dart';
@@ -50,7 +51,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     CreatePostInitial event,
     Emitter<CreatePostState> emit,
   ) {
-    print("create post bloc initialized");
+    emit(state.copyWith(status: Status.initial));
   }
 
   void onCreatePostTypeChanged(
@@ -130,10 +131,65 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   Future<void> onCreatePostGetCurrentLocation(
     CreatePostGetCurrentLocation event,
     Emitter<CreatePostState> emit,
-  ) async {}
-}
+  ) async {
+    emit(state.copyWith(status: Status.loading));
 
-void onCreatePostLocationChanged(
-  CreatePostLocationChanged event,
-  Emitter<CreatePostState> emit,
-) {}
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    try {
+      serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        // Location services are not enabled don't continue
+        // accessing the position and request users of the
+        // App to enable the location services.
+        return Future.error('Location services are disabled.');
+      }
+
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          // Permissions are denied, next time you could try
+          // requesting permissions again (this is also where
+          // Android's shouldShowRequestPermissionRationale
+          // returned true. According to Android guidelines
+          // your App should show an explanatory UI now.
+          return Future.error('Location permissions are denied');
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        // Permissions are denied forever, handle appropriately.
+        return Future.error(
+            'Location permissions are permanently denied, we cannot request permissions.');
+      }
+
+      final position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+
+      emit(
+        state.copyWith(
+          userLocation: LatLng(position.latitude, position.longitude),
+          status: Status.complete,
+        ),
+      );
+    } catch (_) {
+      emit(
+        state.copyWith(
+          userLocation: LatLng(49.2346212, -123.1635604),
+          status: Status.complete,
+        ),
+      );
+    }
+
+    print(state.userLocation);
+  }
+
+  void onCreatePostLocationChanged(
+    CreatePostLocationChanged event,
+    Emitter<CreatePostState> emit,
+  ) {
+    // emit(state.copyWith(location: event.location));
+  }
+}

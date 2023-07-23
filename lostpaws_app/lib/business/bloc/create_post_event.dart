@@ -40,6 +40,6 @@ class CreatePostEvent with _$CreatePostEvent {
       CreatePostGetCurrentLocation;
 
   const factory CreatePostEvent.locationChanged({
-    required Position location,
+    required LatLng location,
   }) = CreatePostLocationChanged;
 }
