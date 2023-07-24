@@ -1,10 +1,10 @@
 const app = require("../../index");
 const supertest = require("supertest");
 const expect = require("chai").expect;
-const mongooseConnect = require("../../utils/mongoose");
+const mongooseSetup = require("../../utils/mongoose");
 
 before((done) => {
-  mongooseConnect
+  mongooseSetup
     .dbconnect() 
     .once("open", () => {
       console.log("Test: Mongodb connected!");
@@ -17,7 +17,7 @@ before((done) => {
 });
 
 after((done) => {
-  mongooseConnect
+  mongooseSetup
     .dbclose()
     .then(() => {
       console.log("Test: Mongodb disconnected!");
