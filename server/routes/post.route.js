@@ -8,7 +8,6 @@ router
   .get("/:postID", PostController.getPost)
   .post("/:userID/:postID", PostController.editPost)
   .delete("/:userID/:postID", PostController.deletePost) // TODO check correct userID 
-  .get("/:userID", PostController.getUserPosts);
-
+  .get("/:userID", PostController.getUserPosts); 
 
 module.exports = router;
