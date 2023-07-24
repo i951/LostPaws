@@ -8,7 +8,8 @@ const mongoose = require("mongoose");
 // const postRouter = require("./routes/post.route.js");
 
 // MongoDB
-const uri = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.qafmunu.mongodb.net/?retryWrites=true&w=majority`;
+const uri = process.env.MONGODB_URI;
+// const uri = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.qafmunu.mongodb.net/?retryWrites=true&w=majority`;
 mongoose.set("strictQuery", false);
 
 const app = express();
