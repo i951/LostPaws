@@ -10,5 +10,4 @@ router
   .delete("/:userID/:postID", PostController.deletePost) // TODO check correct userID 
   .get("/:userID", PostController.getUserPosts); 
 
-
 module.exports = router;
