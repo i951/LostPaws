@@ -1,13 +1,19 @@
 require("dotenv").config();
-const http = require("http");
+const https = require("https");
+const fs = require('fs');
 const express = require("express");
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const options = {
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+};
+
 const port = 5205;
-const server = http.createServer(app);
+const server = https.createServer(options, app);
 
 // Routes
 const userRouter = require("./routes/user.route.js");
