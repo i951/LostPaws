@@ -8,8 +8,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const options = {
-  key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem')
+  key: process.env.KEY.replace(/\\n/g, '\n'),
+  cert: process.env.CERT.replace(/\\n/g, '\n')
 };
 
 const port = 5205;
