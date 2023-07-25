@@ -5,6 +5,8 @@ const UserValidator = require("../middlewares/user.validator");
 
 router
   .post("/", UserValidator.validateCreateUser, UserController.createUser)
+  .post("/login", UserValidator.validateLogin, UserController.login)
+  .get("/:uid", UserController.getUserProfile)
   .get("/", UserController.getPet);
 
 module.exports = router;

@@ -53,6 +53,32 @@ const UserValidator = {
       next();
     },
   ],
+  validateLogin: [
+    check("userID")
+      .not()
+      .isEmpty()
+      .withMessage("User ID cannot be empty!")
+      .bail()
+      .isLength({ min: 3 })
+      .withMessage("Minimum 3 characters required!")
+      .bail()
+      .custom(async (userID) => {
+        const isDuplicate = await UserUtils.isDuplicateUserID(userID);
+        if (!isDuplicate) {
+          throw new Error();
+        }
+      })
+      .withMessage(
+        "This userID is not associated with any user in the database!"
+      )
+      .bail(),
+    (req, res, next) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty())
+        return res.status(422).json({ errors: errors.array() });
+      next();
+    },
+  ],
 };
 
 module.exports = UserValidator;

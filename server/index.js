@@ -1,4 +1,5 @@
 require("dotenv").config();
+require("./utils/firebase");
 const https = require("https");
 const express = require("express");
 const app = express();
@@ -7,8 +8,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const options = {
-  key: process.env.KEY.replace(/\\n/g, '\n'),
-  cert: process.env.CERT.replace(/\\n/g, '\n')
+  key: process.env.KEY.replace(/\\n/g, "\n"),
+  cert: process.env.CERT.replace(/\\n/g, "\n"),
 };
 
 const port = 5205;
