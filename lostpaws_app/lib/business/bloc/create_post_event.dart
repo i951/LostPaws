@@ -36,9 +36,6 @@ class CreatePostEvent with _$CreatePostEvent {
     required DateTime date,
   }) = CreatePostDateChanged;
 
-  const factory CreatePostEvent.getCurrentLocation() =
-      CreatePostGetCurrentLocation;
-
   const factory CreatePostEvent.locationChanged({
     required LatLng location,
   }) = CreatePostLocationChanged;

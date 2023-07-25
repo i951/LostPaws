@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lostpaws_app/business/bloc/create_post_bloc.dart';
 import 'package:lostpaws_app/presentation/constants.dart';
 import 'package:lostpaws_app/presentation/theme/lostpaws_text.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class LocationPicker extends StatefulWidget {
   final double dialogWidth;
@@ -26,7 +24,7 @@ class LocationPicker extends StatefulWidget {
 class _LocationPickerState extends State<LocationPicker> {
   late GoogleMapController mapController;
 
-  Future<void> _onMapCreated(GoogleMapController controller) async {
+  void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
 
@@ -68,36 +66,30 @@ class _LocationPickerState extends State<LocationPicker> {
                         width: 2,
                       ),
                     ),
-                    child: state.userLocation == null
-                        ? const SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: CircularProgressIndicator(),
-                          )
-                        : ClipRRect(
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(45),
-                            ),
-                            child: GoogleMap(
-                              scrollGesturesEnabled: true,
-                              rotateGesturesEnabled: true,
-                              myLocationEnabled: true,
-                              myLocationButtonEnabled: true,
-                              onMapCreated: _onMapCreated,
-                              initialCameraPosition: CameraPosition(
-                                target: LatLng(
-                                  widget.userLocation!.latitude,
-                                  widget.userLocation!.longitude,
-                                ),
-                                zoom: 15.0,
-                              ),
-                              onTap: (LatLng argument) {
-                                context.read<CreatePostBloc>().add(
-                                    CreatePostEvent.locationChanged(
-                                        location: argument));
-                              },
-                            ),
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(45),
+                      ),
+                      child: GoogleMap(
+                        scrollGesturesEnabled: true,
+                        rotateGesturesEnabled: true,
+                        myLocationEnabled: true,
+                        myLocationButtonEnabled: true,
+                        onMapCreated: _onMapCreated,
+                        initialCameraPosition: CameraPosition(
+                          target: LatLng(
+                            widget.userLocation!.latitude,
+                            widget.userLocation!.longitude,
                           ),
+                          zoom: 15.0,
+                        ),
+                        onTap: (LatLng argument) {
+                          context.read<CreatePostBloc>().add(
+                              CreatePostEvent.locationChanged(
+                                  location: argument));
+                        },
+                      ),
+                    ),
                   );
                 },
               ),

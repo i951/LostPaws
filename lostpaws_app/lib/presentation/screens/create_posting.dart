@@ -2,6 +2,8 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:lostpaws_app/business/bloc/create_post_bloc.dart';
 import 'package:lostpaws_app/presentation/components/custom_text_field.dart';
@@ -12,6 +14,7 @@ import 'package:lostpaws_app/presentation/constants.dart';
 import 'package:lostpaws_app/presentation/routes/home_locations.dart';
 import 'package:lostpaws_app/presentation/size_config.dart';
 import 'package:lostpaws_app/presentation/theme/lostpaws_text.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class CreatePostingScreen extends StatefulWidget {
   const CreatePostingScreen({super.key});
@@ -21,6 +24,7 @@ class CreatePostingScreen extends StatefulWidget {
 }
 
 class _CreatePostingScreenState extends State<CreatePostingScreen> {
+  bool isLoading = false;
   String? selectedSize;
   final datePicker = const DatePicker();
 
@@ -439,6 +443,8 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                   ],
                                 ),
                                 Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       "Location Last Seen",
@@ -448,73 +454,197 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                     Row(
                                       children: [
                                         Text(
-                                          DateFormat(DateFormat.YEAR_MONTH_DAY)
-                                              .format(
-                                            state.dateLastSeen ??
-                                                DateTime.now(),
-                                          ),
+                                          "Richmond",
                                           style: const LostPawsText()
                                               .primarySemiBold,
                                         ),
                                         IconButton(
-                                          onPressed: () {
-                                            final dialogWidth =
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .width -
-                                                    (defaultPadding * 2);
+                                          onPressed: () async {
+                                            setState(() {
+                                              isLoading = true;
+                                            });
 
-                                            final dialogHeight =
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .height -
-                                                    (defaultPadding * 12);
+                                            // Check if location services are enabled
+                                            bool serviceEnabled;
+                                            LocationPermission permission;
 
-                                            // Notify Bloc to request location
-                                            context.read<CreatePostBloc>().add(
-                                                const CreatePostEvent
-                                                    .getCurrentLocation());
+                                            permission = await Geolocator
+                                                .checkPermission();
 
-                                            showDialog(
-                                              context: context,
-                                              builder: (_) =>
-                                                  BlocProvider.value(
-                                                value: context
-                                                    .read<CreatePostBloc>(),
-                                                child: Dialog(
-                                                  insetPadding:
-                                                      const EdgeInsets.all(
-                                                          defaultPadding),
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
+                                            if (permission ==
+                                                LocationPermission.denied) {
+                                              permission = await Geolocator
+                                                  .requestPermission();
+                                              if (permission ==
+                                                  LocationPermission.denied) {
+                                                print(
+                                                    'Location permissions are denied');
+                                                if (mounted) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(
+                                                        'Location permissions are denied, please '
+                                                        'allow location access to continue.',
+                                                        style: LostPawsText()
+                                                            .primaryRegularWhite,
+                                                      ),
+                                                    ),
+                                                  );
+                                                }
+                                              }
+                                            }
+
+                                            if (permission ==
+                                                LocationPermission
+                                                    .deniedForever) {
+                                              print(
+                                                  'Location permissions are permanently denied, '
+                                                  'we cannot request permissions.');
+                                              if (mounted) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                      'Location permissions are permanently denied, '
+                                                      'please go to settings and allow location access.',
+                                                      style: const LostPawsText()
+                                                          .primaryRegularWhite,
+                                                    ),
+                                                    action: SnackBarAction(
+                                                      label: 'GO TO SETTINGS',
+                                                      onPressed: () async {
+                                                        await openAppSettings();
+
+                                                        setState(() {
+                                                          isLoading = false;
+                                                        });
+                                                      },
+                                                    ),
                                                   ),
-                                                  child: SizedBox(
-                                                    width: dialogWidth,
-                                                    height: dialogHeight,
-                                                    child: Padding(
-                                                      padding:
+                                                );
+                                              }
+                                            } else {
+                                              serviceEnabled = await Geolocator
+                                                  .isLocationServiceEnabled();
+
+                                              if (!serviceEnabled) {
+                                                print(
+                                                    'Location services are disabled.');
+
+                                                if (mounted) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(
+                                                        'Location services are disabled, please enable '
+                                                        'location services to continue.',
+                                                        style: const LostPawsText()
+                                                            .primaryRegularWhite,
+                                                      ),
+                                                      action: SnackBarAction(
+                                                        label: 'GO TO SETTINGS',
+                                                        onPressed: () async {
+                                                          await Geolocator
+                                                              .openLocationSettings();
+
+                                                          setState(() {
+                                                            isLoading = false;
+                                                          });
+                                                        },
+                                                      ),
+                                                    ),
+                                                  );
+                                                }
+                                              }
+
+                                              final position = await Geolocator
+                                                  .getCurrentPosition(
+                                                      desiredAccuracy:
+                                                          LocationAccuracy
+                                                              .high);
+
+                                              final userLocation = LatLng(
+                                                  position.latitude,
+                                                  position.longitude);
+
+                                              if (mounted) {
+                                                // Notify Bloc to request location
+                                                context
+                                                    .read<CreatePostBloc>()
+                                                    .add(CreatePostEvent
+                                                        .locationChanged(
+                                                            location:
+                                                                userLocation));
+                                                final dialogWidth =
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .width -
+                                                        (defaultPadding * 2);
+
+                                                final dialogHeight =
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .height -
+                                                        (defaultPadding * 12);
+
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (_) =>
+                                                      BlocProvider.value(
+                                                    value: context
+                                                        .read<CreatePostBloc>(),
+                                                    child: Dialog(
+                                                      insetPadding:
                                                           const EdgeInsets.all(
-                                                              8.0),
-                                                      child: LocationPicker(
-                                                        dialogWidth:
-                                                            dialogWidth,
-                                                        dialogHeight:
-                                                            dialogHeight,
-                                                        userLocation:
-                                                            state.userLocation,
+                                                              defaultPadding),
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                      ),
+                                                      child: SizedBox(
+                                                        width: dialogWidth,
+                                                        height: dialogHeight,
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: LocationPicker(
+                                                            dialogWidth:
+                                                                dialogWidth,
+                                                            dialogHeight:
+                                                                dialogHeight,
+                                                            userLocation:
+                                                                userLocation,
+                                                          ),
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                              ),
-                                            );
+                                                );
+
+                                                setState(() {
+                                                  isLoading = false;
+                                                });
+                                              }
+                                            }
                                           },
-                                          icon: const Icon(
-                                            Icons.add_location_alt_outlined,
-                                            color: ConstColors.darkOrange,
-                                          ),
+                                          icon: isLoading
+                                              ? const SizedBox.square(
+                                                  dimension: 20,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    color:
+                                                        ConstColors.darkOrange,
+                                                  ),
+                                                )
+                                              : const Icon(
+                                                  Icons
+                                                      .add_location_alt_outlined,
+                                                  color: ConstColors.darkOrange,
+                                                ),
                                         ),
                                       ],
                                     ),
