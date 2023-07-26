@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lostpaws_app/business/bloc/create_post_bloc.dart';
@@ -23,6 +27,7 @@ class LocationPicker extends StatefulWidget {
 
 class _LocationPickerState extends State<LocationPicker> {
   late GoogleMapController mapController;
+  final Set<Marker> _markers = {};
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
@@ -45,7 +50,7 @@ class _LocationPickerState extends State<LocationPicker> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              "Drag the map around to place the pin on the location where you last saw the animal",
+              "Tap on the map to place a pin on the location where you last saw the animal",
               style: const LostPawsText().primaryRegularGrey,
             ),
           ),
@@ -73,8 +78,10 @@ class _LocationPickerState extends State<LocationPicker> {
                       child: GoogleMap(
                         scrollGesturesEnabled: true,
                         rotateGesturesEnabled: true,
+                        zoomControlsEnabled: false,
+                        zoomGesturesEnabled: true,
                         myLocationEnabled: true,
-                        myLocationButtonEnabled: true,
+                        myLocationButtonEnabled: false,
                         onMapCreated: _onMapCreated,
                         initialCameraPosition: CameraPosition(
                           target: LatLng(
@@ -83,32 +90,58 @@ class _LocationPickerState extends State<LocationPicker> {
                           ),
                           zoom: 15.0,
                         ),
-                        onTap: (LatLng argument) {
+                        onTap: (LatLng latlng) async {
                           context.read<CreatePostBloc>().add(
                               CreatePostEvent.locationChanged(
-                                  location: argument));
+                                  location: latlng));
+
+                          ByteData byteData = await rootBundle
+                              .load('assets/images/location-pin.png');
+
+                          Uint8List locationPinBytes = byteData.buffer
+                              .asUint8List(byteData.offsetInBytes,
+                                  byteData.lengthInBytes);
+
+                          setState(() {
+                            if (_markers.isNotEmpty) {
+                              _markers.clear();
+                            }
+
+                            _markers.add(Marker(
+                              markerId: MarkerId(latlng.latitude.toString() +
+                                  latlng.longitude.toString()),
+                              position: latlng,
+                              icon: BitmapDescriptor.fromBytes(locationPinBytes,
+                                  size: const Size.square(20)),
+                            ));
+                          });
                         },
+                        markers: _markers,
                       ),
                     ),
                   );
                 },
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12.0,
-                      vertical: 8.0,
-                    ),
-                    child: Text(
-                      "Location: AREA, CITY",
-                      style: LostPawsText().primaryRegularGreen,
-                    ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                child: BlocBuilder<CreatePostBloc, CreatePostState>(
+                  buildWhen: (previous, current) =>
+                      previous.locationLastSeen != current.locationLastSeen,
+                  builder: (context, state) => Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          state.locationLastSeen == null
+                              ? '\n'
+                              : '${state.locationLastSeen!.street}, ${state.locationLastSeen!.city}, ${state.locationLastSeen!.province} (${state.locationLastSeen!.postalCode})',
+                          style: const LostPawsText().primarySemiBoldGreen,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-              const SizedBox(height: defaultPadding),
               SizedBox(
                 width: widget.dialogWidth / 3,
                 child: TextButton(

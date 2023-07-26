@@ -43,6 +43,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_signin_button: ^2.0.0
+  geocoding: ^2.1.0
   geolocator: ^9.0.2
   google_maps_flutter: ^2.3.0
   google_sign_in: ^6.1.3

@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:lostpaws_app/data/models/location_last_seen.dart';
 
 part 'create_post_event.dart';
 part 'create_post_state.dart';
@@ -127,10 +129,33 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     print("Date last seen: ${state.dateLastSeen}");
   }
 
-  void onCreatePostLocationChanged(
+  Future<void> onCreatePostLocationChanged(
     CreatePostLocationChanged event,
     Emitter<CreatePostState> emit,
-  ) {
-    emit(state.copyWith(location: event.location));
+  ) async {
+    // This method might return more than one result, but we will keep the
+    // first one, which is the most accurate address based on the coordinates
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+      event.location.latitude,
+      event.location.longitude,
+    );
+
+    final address = placemarks.first;
+
+    // If any fields are null, set it as an empty string
+    emit(
+      state.copyWith(
+        locationLastSeen: LocationLastSeen(
+          latitude: event.location.latitude,
+          longitude: event.location.longitude,
+          street: address.street ?? '',
+          city: address.locality ?? '',
+          regionalDistrict: address.subAdministrativeArea ?? '',
+          province: address.administrativeArea ?? '',
+          country: address.country ?? '',
+          postalCode: address.postalCode ?? '',
+        ),
+      ),
+    );
   }
 }

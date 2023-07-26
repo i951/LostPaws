@@ -1692,7 +1692,7 @@ mixin _$CreatePostState {
   double? get weight => throw _privateConstructorUsedError;
   String? get size => throw _privateConstructorUsedError;
   DateTime? get dateLastSeen => throw _privateConstructorUsedError;
-  LatLng? get location => throw _privateConstructorUsedError;
+  LocationLastSeen? get locationLastSeen => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CreatePostStateCopyWith<CreatePostState> get copyWith =>
@@ -1716,7 +1716,7 @@ abstract class $CreatePostStateCopyWith<$Res> {
       double? weight,
       String? size,
       DateTime? dateLastSeen,
-      LatLng? location});
+      LocationLastSeen? locationLastSeen});
 }
 
 /// @nodoc
@@ -1742,7 +1742,7 @@ class _$CreatePostStateCopyWithImpl<$Res, $Val extends CreatePostState>
     Object? weight = freezed,
     Object? size = freezed,
     Object? dateLastSeen = freezed,
-    Object? location = freezed,
+    Object? locationLastSeen = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -1785,10 +1785,10 @@ class _$CreatePostStateCopyWithImpl<$Res, $Val extends CreatePostState>
           ? _value.dateLastSeen
           : dateLastSeen // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      location: freezed == location
-          ? _value.location
-          : location // ignore: cast_nullable_to_non_nullable
-              as LatLng?,
+      locationLastSeen: null == locationLastSeen
+          ? _value.locationLastSeen
+          : locationLastSeen // ignore: cast_nullable_to_non_nullable
+              as LocationLastSeen?,
     ) as $Val);
   }
 }
@@ -1812,7 +1812,7 @@ abstract class _$$_CreatePostStateCopyWith<$Res>
       double? weight,
       String? size,
       DateTime? dateLastSeen,
-      LatLng? location});
+      LocationLastSeen? locationLastSeen});
 }
 
 /// @nodoc
@@ -1836,7 +1836,7 @@ class __$$_CreatePostStateCopyWithImpl<$Res>
     Object? weight = freezed,
     Object? size = freezed,
     Object? dateLastSeen = freezed,
-    Object? location = freezed,
+    Object? locationLastSeen = null,
   }) {
     return _then(_$_CreatePostState(
       status: null == status
@@ -1879,10 +1879,10 @@ class __$$_CreatePostStateCopyWithImpl<$Res>
           ? _value.dateLastSeen
           : dateLastSeen // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      location: freezed == location
-          ? _value.location
-          : location // ignore: cast_nullable_to_non_nullable
-              as LatLng?,
+      locationLastSeen: null == locationLastSeen
+          ? _value.locationLastSeen
+          : locationLastSeen // ignore: cast_nullable_to_non_nullable
+              as LocationLastSeen?,
     ));
   }
 }
@@ -1901,7 +1901,7 @@ class _$_CreatePostState implements _CreatePostState {
       this.weight,
       this.size,
       this.dateLastSeen,
-      this.location})
+      this.locationLastSeen})
       : _photos = photos;
 
   @override
@@ -1933,11 +1933,11 @@ class _$_CreatePostState implements _CreatePostState {
   @override
   final DateTime? dateLastSeen;
   @override
-  final LatLng? location;
+  final LocationLastSeen? locationLastSeen;
 
   @override
   String toString() {
-    return 'CreatePostState(status: $status, postType: $postType, postTitle: $postTitle, photos: $photos, petType: $petType, breed: $breed, colour: $colour, weight: $weight, size: $size, dateLastSeen: $dateLastSeen, location: $location)';
+    return 'CreatePostState(status: $status, postType: $postType, postTitle: $postTitle, photos: $photos, petType: $petType, breed: $breed, colour: $colour, weight: $weight, size: $size, dateLastSeen: $dateLastSeen, locationLastSeen: $locationLastSeen)';
   }
 
   @override
@@ -1958,8 +1958,8 @@ class _$_CreatePostState implements _CreatePostState {
             (identical(other.size, size) || other.size == size) &&
             (identical(other.dateLastSeen, dateLastSeen) ||
                 other.dateLastSeen == dateLastSeen) &&
-            (identical(other.location, location) ||
-                other.location == location));
+            const DeepCollectionEquality()
+                .equals(other.locationLastSeen, locationLastSeen));
   }
 
   @override
@@ -1975,7 +1975,7 @@ class _$_CreatePostState implements _CreatePostState {
       weight,
       size,
       dateLastSeen,
-      location);
+      const DeepCollectionEquality().hash(locationLastSeen));
 
   @JsonKey(ignore: true)
   @override
@@ -1996,7 +1996,7 @@ abstract class _CreatePostState implements CreatePostState {
       final double? weight,
       final String? size,
       final DateTime? dateLastSeen,
-      final LatLng? location}) = _$_CreatePostState;
+      final LocationLastSeen? locationLastSeen}) = _$_CreatePostState;
 
   @override
   Status get status;
@@ -2019,7 +2019,7 @@ abstract class _CreatePostState implements CreatePostState {
   @override
   DateTime? get dateLastSeen;
   @override
-  LatLng? get location;
+  LocationLastSeen? get locationLastSeen;
   @override
   @JsonKey(ignore: true)
   _$$_CreatePostStateCopyWith<_$_CreatePostState> get copyWith =>

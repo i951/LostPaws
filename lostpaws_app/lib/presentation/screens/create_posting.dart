@@ -377,86 +377,86 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      "Date Last Seen",
-                                      style: const LostPawsText()
-                                          .primaryRegularGreen,
-                                    ),
-                                    Row(
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          DateFormat(DateFormat.YEAR_MONTH_DAY)
-                                              .format(
-                                            state.dateLastSeen ??
-                                                DateTime.now(),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
+                                          child: Text(
+                                            "Date Last Seen",
+                                            style: const LostPawsText()
+                                                .primaryRegularGreen,
                                           ),
-                                          style: const LostPawsText()
-                                              .primarySemiBold,
                                         ),
-                                        IconButton(
-                                          onPressed: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (_) =>
-                                                  BlocProvider.value(
-                                                value: context
-                                                    .read<CreatePostBloc>(),
-                                                child: Dialog(
-                                                  insetPadding:
-                                                      const EdgeInsets.all(
-                                                          defaultPadding),
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                  ),
-                                                  child: SizedBox(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width -
-                                                            (defaultPadding *
-                                                                2),
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height -
-                                                            (defaultPadding *
-                                                                18),
-                                                    child: const Padding(
-                                                      padding:
-                                                          EdgeInsets.all(8.0),
-                                                      child: DatePicker(),
-                                                    ),
-                                                  ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              DateFormat(
+                                                      DateFormat.YEAR_MONTH_DAY)
+                                                  .format(
+                                                state.dateLastSeen ??
+                                                    DateTime.now(),
+                                              ),
+                                              style: const LostPawsText()
+                                                  .primarySemiBold,
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (_) => BlocProvider.value(
+                                            value:
+                                                context.read<CreatePostBloc>(),
+                                            child: Dialog(
+                                              insetPadding:
+                                                  const EdgeInsets.all(
+                                                      defaultPadding),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                              ),
+                                              child: SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width -
+                                                    (defaultPadding * 2),
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height -
+                                                    (defaultPadding * 18),
+                                                child: const Padding(
+                                                  padding: EdgeInsets.all(8.0),
+                                                  child: DatePicker(),
                                                 ),
                                               ),
-                                            );
-                                          },
-                                          icon: const Icon(
-                                            Icons.calendar_month_rounded,
-                                            color: ConstColors.darkOrange,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    )
+                                        );
+                                      },
+                                      icon: const Icon(
+                                        Icons.calendar_month_rounded,
+                                        color: ConstColors.darkOrange,
+                                      ),
+                                    ),
                                   ],
                                 ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      "Location Last Seen",
-                                      style: const LostPawsText()
-                                          .primaryRegularGreen,
-                                    ),
                                     Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          "Richmond",
+                                          "Location Last Seen",
                                           style: const LostPawsText()
-                                              .primarySemiBold,
+                                              .primaryRegularGreen,
                                         ),
                                         IconButton(
                                           onPressed: () async {
@@ -569,13 +569,6 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                                   position.longitude);
 
                                               if (mounted) {
-                                                // Notify Bloc to request location
-                                                context
-                                                    .read<CreatePostBloc>()
-                                                    .add(CreatePostEvent
-                                                        .locationChanged(
-                                                            location:
-                                                                userLocation));
                                                 final dialogWidth =
                                                     MediaQuery.of(context)
                                                             .size
@@ -586,7 +579,7 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                                     MediaQuery.of(context)
                                                             .size
                                                             .height -
-                                                        (defaultPadding * 12);
+                                                        (defaultPadding * 8);
 
                                                 showDialog(
                                                   context: context,
@@ -645,6 +638,19 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                                       .add_location_alt_outlined,
                                                   color: ConstColors.darkOrange,
                                                 ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            state.locationLastSeen == null
+                                                ? ''
+                                                : '${state.locationLastSeen!.street}, ${state.locationLastSeen!.city}, ${state.locationLastSeen!.province}, ${state.locationLastSeen!.postalCode}',
+                                            style: const LostPawsText()
+                                                .primarySemiBold,
+                                          ),
                                         ),
                                       ],
                                     ),

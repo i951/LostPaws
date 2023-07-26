@@ -15,6 +15,6 @@ class CreatePostState with _$CreatePostState {
     double? weight,
     String? size,
     DateTime? dateLastSeen,
-    LatLng? location,
+    LocationLastSeen? locationLastSeen,
   }) = _CreatePostState;
 }
