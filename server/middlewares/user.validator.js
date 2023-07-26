@@ -54,23 +54,10 @@ const UserValidator = {
     },
   ],
   validateLogin: [
-    check("userID")
+    check("idToken")
       .not()
       .isEmpty()
-      .withMessage("User ID cannot be empty!")
-      .bail()
-      .isLength({ min: 3 })
-      .withMessage("Minimum 3 characters required!")
-      .bail()
-      .custom(async (userID) => {
-        const isDuplicate = await UserUtils.isDuplicateUserID(userID);
-        if (!isDuplicate) {
-          throw new Error();
-        }
-      })
-      .withMessage(
-        "This userID is not associated with any user in the database!"
-      )
+      .withMessage("idToken cannot be empty!")
       .bail(),
     (req, res, next) => {
       const errors = validationResult(req);

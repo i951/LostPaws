@@ -25,8 +25,11 @@ const UserController = {
   login: (req, res) => {
     const { idToken } = req.body;
     // idToken comes from the client app
+    // Verify the ID token while checking if the token is revoked by passing
+    // checkRevoked true.
+    let checkRevoked = true;
     getAuth()
-      .verifyIdToken(idToken)
+      .verifyIdToken(idToken, checkRevoked)
       .then((decodedToken) => {
         const uid = decodedToken.uid;
         getAuth()
@@ -44,10 +47,16 @@ const UserController = {
             console.log("Error fetching user data:", error);
             return res.status(400).json({ success: false, error: error });
           });
-        // ...
       })
       .catch((error) => {
-        // Handle error
+        return res.status(400).json({ success: false, error: error });
+        // if (error.code == "auth/id-token-revoked") {
+        //   // Token has been revoked. Inform the user to reauthenticate or signOut() the user.
+        //   return res.status(400).json({ success: false, error: error });
+        // } else {
+        //   // Token is invalid.
+        //   return res.status(400).json({ success: false, error: error });
+        // }
       });
   },
   getUserProfile: (req, res) => {
