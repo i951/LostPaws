@@ -102,7 +102,43 @@ describe("POST: /users route to create user", () => {
   });
 });
 
-// TODO: add tests 
+// TODO: add tests
+describe("GET: /users/:uid route to get a user profile", () => {
+  it("empty uid", async () => {
+    const uid = "";
+
+    const res = await supertest(app).get("/users/" + uid);
+
+    expect(res.status).to.equal(404);
+    expect(res.headers["content-type"]).to.have.string("text/html");
+  });
+
+  it("invalid uid", async () => {
+    const uid = "$((";
+
+    const res = await supertest(app).get("/users/" + uid);
+
+    expect(res.status).to.equal(422);
+    expect(res.headers["content-type"]).to.have.string("json");
+    expect(res.body).to.have.property("errors");
+    expect(res.body.errors).to.have.length(1);
+    expect(res.body.errors[0].path).to.equal("uid");
+  });
+
+  it("non-existent uid", async () => {
+    const uid = "bsfglo8dflshdfn";
+
+    const res = await supertest(app).get("/users/" + uid);
+
+    expect(res.status).to.equal(422);
+    expect(res.headers["content-type"]).to.have.string("json");
+    expect(res.body).to.have.property("errors");
+    expect(res.body.errors).to.have.length(1);
+    expect(res.body.errors[0].path).to.equal("uid");
+  });
+});
+
+// TODO: add tests
 describe("POST: /users/edit route to edit profile", () => {
   it("empty uid", async () => {
     const payload = {
@@ -111,7 +147,7 @@ describe("POST: /users/edit route to edit profile", () => {
       email: "a@b.com",
     };
 
-    const res = await supertest(app).post("/users/").send(payload);
+    const res = await supertest(app).post("/users/edit").send(payload);
     expect(res.status).to.equal(422);
     expect(res.headers["content-type"]).to.have.string("json");
     expect(res.body).to.have.property("errors");

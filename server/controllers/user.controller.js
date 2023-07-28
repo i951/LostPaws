@@ -60,7 +60,7 @@ const UserController = {
         // }
       });
   },
-  getUserProfile: (req, res) => {
+  getProfile: (req, res) => {
     const { uid } = req.params;
 
     getAuth()

@@ -66,6 +66,35 @@ const UserValidator = {
       next();
     },
   ],
+  validateGetProfle: [
+    check("uid")
+      // .not()
+      // .isEmpty()
+      // .withMessage("uid cannot be empty!")
+      // .bail()
+      // .not()
+      .isAlpha()
+      .withMessage("uid must be alphabetic!")
+      .bail()
+      .isLength({ min: 5 })
+      .withMessage("Minimum  characters required!")
+      .bail()
+      .custom(async (uid) => {
+        const isDuplicate = await UserUtils.isDuplicateUid(uid);
+        if (!isDuplicate) {
+          // Will use the below as the error message
+          throw new Error(); //("A user already exists with this user ID");
+        }
+      })
+      .withMessage("This user does not exist!")
+      .bail(),
+    (req, res, next) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty())
+        return res.status(422).json({ errors: errors.array() });
+      next();
+    },
+  ],
   validateEditProfile: [
     check("uid")
       .not()
