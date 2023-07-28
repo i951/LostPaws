@@ -1,5 +1,6 @@
 const User = require("../models/user.model");
 const { getAuth } = require("firebase-admin/auth");
+const UserUtils = require("../utils/user.utils");
 
 const UserController = {
   createUser: (req, res) => {
@@ -73,6 +74,54 @@ const UserController = {
         console.log("Error fetching user data:", error);
         return res.status(400).json({ success: false, error: error });
       });
+  },
+  // TODO integration test with idToken from frontend 
+  editProfile: (req, res) => {
+    // let { idToken, name, email } = req.body;
+    let { uid, name, email } = req.body;
+    // decide if frontend should update userrecord in firebase and then call server api to update userrecord in our db
+    // or if frontend makes single api to server, and server updates userrecord in both firebase and own db ==> better
+    // general: frontend should only do createuser call directly to firebase, rest is thru server apis and server will do rest of work
+    // let checkRevoked = true;
+    // getAuth()
+    //   .verifyIdToken(idToken, checkRevoked)
+    //   .then((decodedToken) => {
+    //     const uid = decodedToken.uid;
+
+        getAuth()
+          .updateUser(uid, {
+            email: email,
+            displayName: name,
+          })
+          .then(async (userRecord) => {
+            // See the UserRecord reference doc for the contents of userRecord.
+            console.log("Successfully updated user", userRecord.toJSON());
+
+            let editSuccessfully = await UserUtils.editProfileInDB(
+              uid,
+              name,
+              email
+            );
+            if (editSuccessfully) {
+              return res
+                .status(200)
+                .json({ success: true, userRecord: userRecord });
+            } else {
+              return res.status(400).json({
+                success: false,
+                error: "Unable to update user profile in database",
+              });
+            }
+          })
+          .catch((error) => {
+            console.log("Error updating user:", error);
+            return res.status(400).json({ success: false, error: error });
+          });
+      // })
+      // .catch((error) => {
+      //   console.log("Error updating user:", error);
+      //   return res.status(400).json({ success: false, error: error });
+      // });
   },
   getPet: (req, res) => {
     return res.status(200).json("(ⓛ ω ⓛ *)");
