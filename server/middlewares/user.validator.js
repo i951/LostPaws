@@ -3,7 +3,7 @@ const { check, validationResult } = require("express-validator");
 
 const UserValidator = {
   validateCreateUser: [
-    check("userID")
+    check("uid")
       .not()
       .isEmpty()
       .withMessage("User ID cannot be empty!")
@@ -11,8 +11,8 @@ const UserValidator = {
       .isLength({ min: 3 })
       .withMessage("Minimum 3 characters required!")
       .bail()
-      .custom(async (userID) => {
-        const isDuplicate = await UserUtils.isDuplicateUserID(userID);
+      .custom(async (uid) => {
+        const isDuplicate = await UserUtils.isDuplicateUid(uid);
         if (isDuplicate) {
           // Will use the below as the error message
           throw new Error(); //("A user already exists with this user ID");
@@ -76,7 +76,7 @@ const UserValidator = {
       .withMessage("Minimum 3 characters required!")
       .bail()
       .custom(async (uid) => {
-        const isDuplicate = await UserUtils.isDuplicateUserID(uid);
+        const isDuplicate = await UserUtils.isDuplicateUid(uid);
         if (isDuplicate) {
           // Will use the below as the error message
           throw new Error(); //("A user already exists with this user ID");

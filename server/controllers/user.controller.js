@@ -4,10 +4,10 @@ const UserUtils = require("../utils/user.utils");
 
 const UserController = {
   createUser: (req, res) => {
-    const { userID, name, email } = req.body;
+    const { uid, name, email } = req.body;
 
     let newUser = User({
-      _id: userID,
+      _id: uid,
       name,
       email,
     });
@@ -75,7 +75,7 @@ const UserController = {
         return res.status(400).json({ success: false, error: error });
       });
   },
-  // TODO integration test with idToken from frontend 
+  // TODO: integration test with idToken from frontend 
   editProfile: (req, res) => {
     // let { idToken, name, email } = req.body;
     let { uid, name, email } = req.body;

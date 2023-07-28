@@ -5,7 +5,7 @@ const mongooseSetup = require("../../utils/mongoose");
 
 before((done) => {
   mongooseSetup
-    .dbconnect() 
+    .dbconnect()
     .once("open", () => {
       console.log("Test: Mongodb connected!");
       done();
@@ -30,9 +30,9 @@ after((done) => {
 });
 
 describe("POST: /users route to create user", () => {
-  it("empty userID", async () => {
+  it("empty uid", async () => {
     const payload = {
-      userID: "",
+      uid: "",
       name: "abc",
       email: "a@b.com",
     };
@@ -42,11 +42,11 @@ describe("POST: /users route to create user", () => {
     expect(res.headers["content-type"]).to.have.string("json");
     expect(res.body).to.have.property("errors");
     expect(res.body.errors).to.have.length(1);
-    expect(res.body.errors[0].path).to.equal("userID");
+    expect(res.body.errors[0].path).to.equal("uid");
   });
   it("empty name", async () => {
     const payload = {
-      userID: "aaaaa",
+      uid: "aaaaa",
       name: "",
       email: "a@b.com",
     };
@@ -60,7 +60,7 @@ describe("POST: /users route to create user", () => {
   });
   it("invalid name", async () => {
     const payload = {
-      userID: "aaaaa",
+      uid: "aaaaa",
       name: "%%$#(@!",
       email: "a@b.com",
     };
@@ -74,7 +74,7 @@ describe("POST: /users route to create user", () => {
   });
   it("empty email", async () => {
     const payload = {
-      userID: "aaaaa",
+      uid: "aaaaa",
       name: "aaaaa",
       email: "",
     };
@@ -88,7 +88,7 @@ describe("POST: /users route to create user", () => {
   });
   it("invalid email", async () => {
     const payload = {
-      userID: "aaaaa",
+      uid: "aaaaa",
       name: "aaaaa",
       email: "sdfsdf",
     };
@@ -99,5 +99,23 @@ describe("POST: /users route to create user", () => {
     expect(res.body).to.have.property("errors");
     expect(res.body.errors).to.have.length(1);
     expect(res.body.errors[0].path).to.equal("email");
+  });
+});
+
+// TODO: add tests 
+describe("POST: /users/edit route to edit profile", () => {
+  it("empty uid", async () => {
+    const payload = {
+      uid: "",
+      name: "abc",
+      email: "a@b.com",
+    };
+
+    const res = await supertest(app).post("/users/").send(payload);
+    expect(res.status).to.equal(422);
+    expect(res.headers["content-type"]).to.have.string("json");
+    expect(res.body).to.have.property("errors");
+    expect(res.body.errors).to.have.length(1);
+    expect(res.body.errors[0].path).to.equal("uid");
   });
 });

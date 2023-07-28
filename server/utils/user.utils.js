@@ -1,8 +1,8 @@
 const User = require("../models/user.model");
 
 const UserUtils = {
-  isDuplicateUserID: async (userID) => {
-    let user = await User.findOne({ _id: userID }).exec();
+  isDuplicateUid: async (uid) => {
+    let user = await User.findOne({ _id: uid }).exec();
     if (user) return true;
     return false;
   },

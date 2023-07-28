@@ -6,8 +6,8 @@ router
   .get("/", PostController.getPosts)
   .post("/", PostController.uploadPost)
   .get("/:postID", PostController.getPost)
-  .post("/:userID/:postID", PostController.editPost)
-  .delete("/:userID/:postID", PostController.deletePost) // TODO check correct userID 
-  .get("/:userID", PostController.getUserPosts); 
+  .post("/:uid/:postID", PostController.editPost)
+  .delete("/:uid/:postID", PostController.deletePost) // TODO check correct uid 
+  .get("/:uid", PostController.getUserPosts); 
 
 module.exports = router;

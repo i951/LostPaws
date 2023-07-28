@@ -36,7 +36,7 @@ const PostController = {
   },
   uploadPost: (req, res) => {
     const {
-      userID,
+      uid,
       postType,
       postTitle,
       petType,
@@ -49,7 +49,7 @@ const PostController = {
     } = req.body;
 
     let newPost = Post({
-      userID,
+      uid,
       postType,
       postTitle,
       petType,
@@ -81,7 +81,7 @@ const PostController = {
     });
   },
   editPost: (req, res) => {
-    const { userID, postID } = req.params;
+    const { uid, postID } = req.params;
     const {
       postType,
       postTitle,
@@ -95,7 +95,7 @@ const PostController = {
     } = req.body;
 
     Post.findOneAndUpdate(
-      { userID: userID, _id: postID },
+      { uid: uid, _id: postID },
       {
         postType: postType,
         postTitle: postTitle,
@@ -119,17 +119,17 @@ const PostController = {
     );
   },
   deletePost: (req, res) => {
-    const { userID, postID } = req.params;
+    const { uid, postID } = req.params;
 
-    Post.deleteOne({ _id: postID, userID: userID }).exec((err, result) => {
+    Post.deleteOne({ _id: postID, uid: uid }).exec((err, result) => {
       if (err) return res.status(400).json({ success: false, error: err });
       return res.status(200).json({ success: true });
     });
   },
   getUserPosts: (req, res) => {
-    const { userID } = req.params;
+    const { uid } = req.params;
 
-    Post.find({ userID: userID })
+    Post.find({ uid: uid })
       .select({ postTitle: 1, locationLastSeen: 1, dateLastSeen: 1 })
       .sort({ createdAt: 1 })
       .exec((err, posts) => {
