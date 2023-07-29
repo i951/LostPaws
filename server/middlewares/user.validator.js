@@ -8,14 +8,14 @@ const UserValidator = {
       .escape()
       .not()
       .isEmpty()
-      .withMessage("User ID cannot be empty!")
+      .withMessage("Uid cannot be empty!")
       .bail()
       .isLength({ min: 3 })
       .withMessage("Minimum 3 characters required!")
       .bail()
       .custom(async (uid) => {
-        const isDuplicate = await UserUtils.isDuplicateUid(uid);
-        if (isDuplicate) {
+        const existsInDb = await UserUtils.existsInDb(uid);
+        if (existsInDb) {
           // Will use the below as the error message
           throw new Error(); //("A user already exists with this user ID");
         }
@@ -79,8 +79,8 @@ const UserValidator = {
       .withMessage("Minimum 5 characters required!")
       .bail()
       .custom(async (uid) => {
-        const isDuplicate = await UserUtils.isDuplicateUid(uid);
-        if (!isDuplicate) {
+        const existsInDb = await UserUtils.existsInDb(uid);
+        if (!existsInDb) {
           // Will use the below as the error message
           throw new Error(); //("A user already exists with this user ID");
         }
@@ -106,13 +106,12 @@ const UserValidator = {
       .withMessage("Minimum 3 characters required!")
       .bail()
       .custom(async (uid) => {
-        const isDuplicate = await UserUtils.isDuplicateUid(uid);
-        if (isDuplicate) {
-          // Will use the below as the error message
+        const existsInDb = await UserUtils.existsInDb(uid);
+        if (!existsInDb) {
           throw new Error(); //("A user already exists with this user ID");
         }
       })
-      .withMessage("A user already exists with this user ID!")
+      .withMessage("A user with this uid does not exist in the database!")
       .bail(),
     check("name")
       .trim()

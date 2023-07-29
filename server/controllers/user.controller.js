@@ -3,7 +3,7 @@ const { getAuth } = require("firebase-admin/auth");
 const UserUtils = require("../utils/user.utils");
 
 const UserController = {
-  createUser: (req, res) => {
+  createUser: async (req, res) => {
     const { uid, name, email } = req.body;
 
     let newUser = User({
@@ -12,16 +12,26 @@ const UserController = {
       email,
     });
 
-    newUser.save((err) => {
-      if (err) {
-        console.log("createUser error: " + err);
-        if (err.name === "ValidationError") {
-          return res.status(400).json({ error: err.message });
-        }
-      }
+    try {
+      await newUser.save();
       console.log("createUser success");
       return res.status(200).json({ success: true });
-    });
+    } catch (err) {
+      console.log("createUser error: " + err);
+      if (err.name === "ValidationError") {
+        return res.status(400).json({ error: err.message });
+      }
+    }
+    // newUser.save((err) => {
+    //   if (err) {
+    //     console.log("createUser error: " + err);
+    //     if (err.name === "ValidationError") {
+    //       return res.status(400).json({ error: err.message });
+    //     }
+    //   }
+    //   console.log("createUser success");
+    //   return res.status(200).json({ success: true });
+    // });
   },
   login: (req, res) => {
     const { idToken } = req.body;
@@ -75,7 +85,7 @@ const UserController = {
         return res.status(400).json({ success: false, error: error });
       });
   },
-  // TODO: integration test with idToken from frontend 
+  // TODO: integration test with idToken from frontend
   editProfile: (req, res) => {
     // let { idToken, name, email } = req.body;
     let { uid, name, email } = req.body;
@@ -88,40 +98,35 @@ const UserController = {
     //   .then((decodedToken) => {
     //     const uid = decodedToken.uid;
 
-        getAuth()
-          .updateUser(uid, {
-            email: email,
-            displayName: name,
-          })
-          .then(async (userRecord) => {
-            // See the UserRecord reference doc for the contents of userRecord.
-            console.log("Successfully updated user", userRecord.toJSON());
+    getAuth()
+      .updateUser(uid, {
+        email: email,
+        displayName: name,
+      })
+      .then(async (userRecord) => {
+        // See the UserRecord reference doc for the contents of userRecord.
+        console.log("Successfully updated user", userRecord.toJSON());
 
-            let editSuccessfully = await UserUtils.editProfileInDB(
-              uid,
-              name,
-              email
-            );
-            if (editSuccessfully) {
-              return res
-                .status(200)
-                .json({ success: true, userRecord: userRecord });
-            } else {
-              return res.status(400).json({
-                success: false,
-                error: "Unable to update user profile in database",
-              });
-            }
-          })
-          .catch((error) => {
-            console.log("Error updating user:", error);
-            return res.status(400).json({ success: false, error: error });
+        let editSuccessfully = await UserUtils.editProfileInDB(
+          uid,
+          name,
+          email
+        );
+        if (editSuccessfully) {
+          return res
+            .status(200)
+            .json({ success: true, userRecord: userRecord });
+        } else {
+          return res.status(400).json({
+            success: false,
+            error: "Unable to update user profile in database",
           });
-      // })
-      // .catch((error) => {
-      //   console.log("Error updating user:", error);
-      //   return res.status(400).json({ success: false, error: error });
-      // });
+        }
+      })
+      .catch((error) => {
+        console.log("Error updating user:", error);
+        return res.status(400).json({ success: false, error: error });
+      });
   },
   getPet: (req, res) => {
     return res.status(200).json("(ⓛ ω ⓛ *)");
