@@ -4,6 +4,8 @@ const { check, validationResult } = require("express-validator");
 const UserValidator = {
   validateCreateUser: [
     check("uid")
+      .trim()
+      .escape()
       .not()
       .isEmpty()
       .withMessage("User ID cannot be empty!")
@@ -68,16 +70,13 @@ const UserValidator = {
   ],
   validateGetProfle: [
     check("uid")
-      // .not()
-      // .isEmpty()
-      // .withMessage("uid cannot be empty!")
-      // .bail()
-      // .not()
+      .trim()
+      .escape()
       .isAlpha()
       .withMessage("uid must be alphabetic!")
       .bail()
       .isLength({ min: 5 })
-      .withMessage("Minimum  characters required!")
+      .withMessage("Minimum 5 characters required!")
       .bail()
       .custom(async (uid) => {
         const isDuplicate = await UserUtils.isDuplicateUid(uid);
@@ -97,6 +96,8 @@ const UserValidator = {
   ],
   validateEditProfile: [
     check("uid")
+      .trim()
+      .escape()
       .not()
       .isEmpty()
       .withMessage("uid cannot be empty!")
