@@ -1,11 +1,13 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:lostpaws_app/business/bloc/create_post_bloc.dart';
+import 'package:lostpaws_app/data/models/pet_colour.dart';
 import 'package:lostpaws_app/presentation/components/custom_text_field.dart';
 import 'package:lostpaws_app/presentation/components/custom_toggle_buttons.dart';
 import 'package:lostpaws_app/presentation/components/date_picker.dart';
@@ -27,6 +29,16 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
   bool isLoading = false;
   String? selectedSize;
   final datePicker = const DatePicker();
+  Color pickerColor = Color(PetColours.values.first.hexValue);
+
+  List<Color> getAvailableColors() {
+    final List<Color> colors = [];
+    for (var color in PetColours.values) {
+      colors.add(Color(color.hexValue));
+    }
+
+    return colors;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -220,6 +232,9 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                     FormBuilderValidators.required(),
                                   ]),
                                 ),
+                                const SizedBox(
+                                  height: defaultPadding,
+                                ),
                                 Text(
                                   "Colour",
                                   style:
@@ -227,28 +242,121 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                 ),
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Expanded(
-                                      child: TextFormField(
-                                        keyboardType: TextInputType.text,
-                                        decoration: const InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          hintText: 'Light Brown',
-                                          fillColor: Colors.white,
-                                          filled: true,
-                                        ),
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        validator:
-                                            FormBuilderValidators.compose([
-                                          FormBuilderValidators.required(),
-                                        ]),
-                                      ),
+                                    Text(
+                                      state.colour != null
+                                          ? state.colour!.name
+                                          : '',
+                                      style:
+                                          const LostPawsText().primarySemiBold,
                                     ),
                                     IconButton(
                                       onPressed: () {
-                                        // TODO: show colour picker
+                                        showDialog(
+                                          context: context,
+                                          builder: (_) => BlocProvider.value(
+                                            value:
+                                                context.read<CreatePostBloc>(),
+                                            child: AlertDialog(
+                                              backgroundColor:
+                                                  ConstColors.lightGreen,
+                                              title: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      'What colour was the animal?',
+                                                      style:
+                                                          const LostPawsText()
+                                                              .primarySemiBold,
+                                                    ),
+                                                    Text(
+                                                      'Choose a colour that best describes the animal. '
+                                                      'You can always add more in the description.',
+                                                      style: const LostPawsText()
+                                                          .primarySmallerGrey,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              content: SingleChildScrollView(
+                                                child: Column(
+                                                  children: [
+                                                    SizedBox(
+                                                      height: 280,
+                                                      child: BlockPicker(
+                                                        pickerColor:
+                                                            pickerColor,
+                                                        onColorChanged:
+                                                            (Color color) {
+                                                          setState(() =>
+                                                              pickerColor =
+                                                                  color);
+
+                                                          for (var petColor
+                                                              in PetColours
+                                                                  .values) {
+                                                            if (petColor
+                                                                    .hexValue ==
+                                                                color.value) {
+                                                              context.read<CreatePostBloc>().add(CreatePostColourChanged(
+                                                                  colour: PetColour(
+                                                                      hexValue:
+                                                                          petColor
+                                                                              .hexValue,
+                                                                      name: petColor
+                                                                          .name)));
+                                                            }
+                                                          }
+                                                        },
+                                                        availableColors:
+                                                            getAvailableColors(),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 120,
+                                                      child: TextButton(
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        style: TextButton
+                                                            .styleFrom(
+                                                          backgroundColor:
+                                                              ConstColors
+                                                                  .darkGreen,
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        14),
+                                                          ),
+                                                        ),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(3.0),
+                                                          child: Text(
+                                                            "Done",
+                                                            style: const LostPawsText()
+                                                                .primaryRegularWhite,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        );
                                       },
                                       icon: const Icon(
                                         Icons.colorize,
@@ -256,10 +364,6 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                       ),
                                     ),
                                   ],
-                                ),
-                                SizedBox(
-                                  height: getProportionateScreenHeight(
-                                      defaultPadding),
                                 ),
                                 CustomTextField(
                                   title: "Weight",
@@ -287,7 +391,7 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                         keyboardType: TextInputType.text,
                                         decoration: const InputDecoration(
                                           border: OutlineInputBorder(),
-                                          hintText: '12.5',
+                                          hintText: '4.5',
                                           fillColor: Colors.white,
                                           filled: true,
                                         ),
@@ -486,7 +590,7 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                                       content: Text(
                                                         'Location permissions are denied, please '
                                                         'allow location access to continue.',
-                                                        style: LostPawsText()
+                                                        style: const LostPawsText()
                                                             .primaryRegularWhite,
                                                       ),
                                                     ),

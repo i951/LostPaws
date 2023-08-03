@@ -23,7 +23,7 @@ class CreatePostEvent with _$CreatePostEvent {
   }) = CreatePostBreedChanged;
 
   const factory CreatePostEvent.colourChanged({
-    required String colour,
+    required PetColour colour,
   }) = CreatePostColourChanged;
 
   const factory CreatePostEvent.weightChanged({

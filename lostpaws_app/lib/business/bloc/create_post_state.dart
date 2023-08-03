@@ -11,7 +11,7 @@ class CreatePostState with _$CreatePostState {
     @Default([]) List<String> photos,
     PetTypeOption? petType,
     String? breed,
-    String? colour,
+    PetColour? colour,
     double? weight,
     String? size,
     DateTime? dateLastSeen,

@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lostpaws_app/data/models/location_last_seen.dart';
+import 'package:lostpaws_app/data/models/pet_colour.dart';
 
 part 'create_post_event.dart';
 part 'create_post_state.dart';
@@ -114,7 +115,9 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   void onCreatePostColourChanged(
     CreatePostColourChanged event,
     Emitter<CreatePostState> emit,
-  ) {}
+  ) {
+    emit(state.copyWith(colour: event.colour));
+  }
 
   void onCreatePostWeightChanged(
     CreatePostWeightChanged event,
@@ -126,7 +129,6 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     Emitter<CreatePostState> emit,
   ) {
     emit(state.copyWith(dateLastSeen: event.date));
-    print("Date last seen: ${state.dateLastSeen}");
   }
 
   Future<void> onCreatePostLocationChanged(

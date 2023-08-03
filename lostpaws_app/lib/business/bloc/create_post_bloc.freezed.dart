@@ -23,7 +23,7 @@ mixin _$CreatePostEvent {
     required TResult Function(String title) titleChanged,
     required TResult Function(String petType) petTypeChanged,
     required TResult Function(String breed) breedChanged,
-    required TResult Function(String colour) colourChanged,
+    required TResult Function(PetColour colour) colourChanged,
     required TResult Function(double weight) weightChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
@@ -36,7 +36,7 @@ mixin _$CreatePostEvent {
     TResult? Function(String title)? titleChanged,
     TResult? Function(String petType)? petTypeChanged,
     TResult? Function(String breed)? breedChanged,
-    TResult? Function(String colour)? colourChanged,
+    TResult? Function(PetColour colour)? colourChanged,
     TResult? Function(double weight)? weightChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
@@ -49,7 +49,7 @@ mixin _$CreatePostEvent {
     TResult Function(String title)? titleChanged,
     TResult Function(String petType)? petTypeChanged,
     TResult Function(String breed)? breedChanged,
-    TResult Function(String colour)? colourChanged,
+    TResult Function(PetColour colour)? colourChanged,
     TResult Function(double weight)? weightChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
@@ -159,7 +159,7 @@ class _$CreatePostInitial implements CreatePostInitial {
     required TResult Function(String title) titleChanged,
     required TResult Function(String petType) petTypeChanged,
     required TResult Function(String breed) breedChanged,
-    required TResult Function(String colour) colourChanged,
+    required TResult Function(PetColour colour) colourChanged,
     required TResult Function(double weight) weightChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
@@ -175,7 +175,7 @@ class _$CreatePostInitial implements CreatePostInitial {
     TResult? Function(String title)? titleChanged,
     TResult? Function(String petType)? petTypeChanged,
     TResult? Function(String breed)? breedChanged,
-    TResult? Function(String colour)? colourChanged,
+    TResult? Function(PetColour colour)? colourChanged,
     TResult? Function(double weight)? weightChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
@@ -191,7 +191,7 @@ class _$CreatePostInitial implements CreatePostInitial {
     TResult Function(String title)? titleChanged,
     TResult Function(String petType)? petTypeChanged,
     TResult Function(String breed)? breedChanged,
-    TResult Function(String colour)? colourChanged,
+    TResult Function(PetColour colour)? colourChanged,
     TResult Function(double weight)? weightChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
@@ -331,7 +331,7 @@ class _$CreatePostTypeChanged implements CreatePostTypeChanged {
     required TResult Function(String title) titleChanged,
     required TResult Function(String petType) petTypeChanged,
     required TResult Function(String breed) breedChanged,
-    required TResult Function(String colour) colourChanged,
+    required TResult Function(PetColour colour) colourChanged,
     required TResult Function(double weight) weightChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
@@ -347,7 +347,7 @@ class _$CreatePostTypeChanged implements CreatePostTypeChanged {
     TResult? Function(String title)? titleChanged,
     TResult? Function(String petType)? petTypeChanged,
     TResult? Function(String breed)? breedChanged,
-    TResult? Function(String colour)? colourChanged,
+    TResult? Function(PetColour colour)? colourChanged,
     TResult? Function(double weight)? weightChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
@@ -363,7 +363,7 @@ class _$CreatePostTypeChanged implements CreatePostTypeChanged {
     TResult Function(String title)? titleChanged,
     TResult Function(String petType)? petTypeChanged,
     TResult Function(String breed)? breedChanged,
-    TResult Function(String colour)? colourChanged,
+    TResult Function(PetColour colour)? colourChanged,
     TResult Function(double weight)? weightChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
@@ -508,7 +508,7 @@ class _$CreatePostTitleChanged implements CreatePostTitleChanged {
     required TResult Function(String title) titleChanged,
     required TResult Function(String petType) petTypeChanged,
     required TResult Function(String breed) breedChanged,
-    required TResult Function(String colour) colourChanged,
+    required TResult Function(PetColour colour) colourChanged,
     required TResult Function(double weight) weightChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
@@ -524,7 +524,7 @@ class _$CreatePostTitleChanged implements CreatePostTitleChanged {
     TResult? Function(String title)? titleChanged,
     TResult? Function(String petType)? petTypeChanged,
     TResult? Function(String breed)? breedChanged,
-    TResult? Function(String colour)? colourChanged,
+    TResult? Function(PetColour colour)? colourChanged,
     TResult? Function(double weight)? weightChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
@@ -540,7 +540,7 @@ class _$CreatePostTitleChanged implements CreatePostTitleChanged {
     TResult Function(String title)? titleChanged,
     TResult Function(String petType)? petTypeChanged,
     TResult Function(String breed)? breedChanged,
-    TResult Function(String colour)? colourChanged,
+    TResult Function(PetColour colour)? colourChanged,
     TResult Function(double weight)? weightChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
@@ -686,7 +686,7 @@ class _$CreatePostPetTypeChanged implements CreatePostPetTypeChanged {
     required TResult Function(String title) titleChanged,
     required TResult Function(String petType) petTypeChanged,
     required TResult Function(String breed) breedChanged,
-    required TResult Function(String colour) colourChanged,
+    required TResult Function(PetColour colour) colourChanged,
     required TResult Function(double weight) weightChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
@@ -702,7 +702,7 @@ class _$CreatePostPetTypeChanged implements CreatePostPetTypeChanged {
     TResult? Function(String title)? titleChanged,
     TResult? Function(String petType)? petTypeChanged,
     TResult? Function(String breed)? breedChanged,
-    TResult? Function(String colour)? colourChanged,
+    TResult? Function(PetColour colour)? colourChanged,
     TResult? Function(double weight)? weightChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
@@ -718,7 +718,7 @@ class _$CreatePostPetTypeChanged implements CreatePostPetTypeChanged {
     TResult Function(String title)? titleChanged,
     TResult Function(String petType)? petTypeChanged,
     TResult Function(String breed)? breedChanged,
-    TResult Function(String colour)? colourChanged,
+    TResult Function(PetColour colour)? colourChanged,
     TResult Function(double weight)? weightChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
@@ -863,7 +863,7 @@ class _$CreatePostBreedChanged implements CreatePostBreedChanged {
     required TResult Function(String title) titleChanged,
     required TResult Function(String petType) petTypeChanged,
     required TResult Function(String breed) breedChanged,
-    required TResult Function(String colour) colourChanged,
+    required TResult Function(PetColour colour) colourChanged,
     required TResult Function(double weight) weightChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
@@ -879,7 +879,7 @@ class _$CreatePostBreedChanged implements CreatePostBreedChanged {
     TResult? Function(String title)? titleChanged,
     TResult? Function(String petType)? petTypeChanged,
     TResult? Function(String breed)? breedChanged,
-    TResult? Function(String colour)? colourChanged,
+    TResult? Function(PetColour colour)? colourChanged,
     TResult? Function(double weight)? weightChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
@@ -895,7 +895,7 @@ class _$CreatePostBreedChanged implements CreatePostBreedChanged {
     TResult Function(String title)? titleChanged,
     TResult Function(String petType)? petTypeChanged,
     TResult Function(String breed)? breedChanged,
-    TResult Function(String colour)? colourChanged,
+    TResult Function(PetColour colour)? colourChanged,
     TResult Function(double weight)? weightChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
@@ -976,7 +976,9 @@ abstract class _$$CreatePostColourChangedCopyWith<$Res> {
           $Res Function(_$CreatePostColourChanged) then) =
       __$$CreatePostColourChangedCopyWithImpl<$Res>;
   @useResult
-  $Res call({String colour});
+  $Res call({PetColour colour});
+
+  $PetColourCopyWith<$Res> get colour;
 }
 
 /// @nodoc
@@ -996,8 +998,16 @@ class __$$CreatePostColourChangedCopyWithImpl<$Res>
       colour: null == colour
           ? _value.colour
           : colour // ignore: cast_nullable_to_non_nullable
-              as String,
+              as PetColour,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PetColourCopyWith<$Res> get colour {
+    return $PetColourCopyWith<$Res>(_value.colour, (value) {
+      return _then(_value.copyWith(colour: value));
+    });
   }
 }
 
@@ -1007,7 +1017,7 @@ class _$CreatePostColourChanged implements CreatePostColourChanged {
   const _$CreatePostColourChanged({required this.colour});
 
   @override
-  final String colour;
+  final PetColour colour;
 
   @override
   String toString() {
@@ -1040,7 +1050,7 @@ class _$CreatePostColourChanged implements CreatePostColourChanged {
     required TResult Function(String title) titleChanged,
     required TResult Function(String petType) petTypeChanged,
     required TResult Function(String breed) breedChanged,
-    required TResult Function(String colour) colourChanged,
+    required TResult Function(PetColour colour) colourChanged,
     required TResult Function(double weight) weightChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
@@ -1056,7 +1066,7 @@ class _$CreatePostColourChanged implements CreatePostColourChanged {
     TResult? Function(String title)? titleChanged,
     TResult? Function(String petType)? petTypeChanged,
     TResult? Function(String breed)? breedChanged,
-    TResult? Function(String colour)? colourChanged,
+    TResult? Function(PetColour colour)? colourChanged,
     TResult? Function(double weight)? weightChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
@@ -1072,7 +1082,7 @@ class _$CreatePostColourChanged implements CreatePostColourChanged {
     TResult Function(String title)? titleChanged,
     TResult Function(String petType)? petTypeChanged,
     TResult Function(String breed)? breedChanged,
-    TResult Function(String colour)? colourChanged,
+    TResult Function(PetColour colour)? colourChanged,
     TResult Function(double weight)? weightChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
@@ -1138,10 +1148,10 @@ class _$CreatePostColourChanged implements CreatePostColourChanged {
 }
 
 abstract class CreatePostColourChanged implements CreatePostEvent {
-  const factory CreatePostColourChanged({required final String colour}) =
+  const factory CreatePostColourChanged({required final PetColour colour}) =
       _$CreatePostColourChanged;
 
-  String get colour;
+  PetColour get colour;
   @JsonKey(ignore: true)
   _$$CreatePostColourChangedCopyWith<_$CreatePostColourChanged> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1217,7 +1227,7 @@ class _$CreatePostWeightChanged implements CreatePostWeightChanged {
     required TResult Function(String title) titleChanged,
     required TResult Function(String petType) petTypeChanged,
     required TResult Function(String breed) breedChanged,
-    required TResult Function(String colour) colourChanged,
+    required TResult Function(PetColour colour) colourChanged,
     required TResult Function(double weight) weightChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
@@ -1233,7 +1243,7 @@ class _$CreatePostWeightChanged implements CreatePostWeightChanged {
     TResult? Function(String title)? titleChanged,
     TResult? Function(String petType)? petTypeChanged,
     TResult? Function(String breed)? breedChanged,
-    TResult? Function(String colour)? colourChanged,
+    TResult? Function(PetColour colour)? colourChanged,
     TResult? Function(double weight)? weightChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
@@ -1249,7 +1259,7 @@ class _$CreatePostWeightChanged implements CreatePostWeightChanged {
     TResult Function(String title)? titleChanged,
     TResult Function(String petType)? petTypeChanged,
     TResult Function(String breed)? breedChanged,
-    TResult Function(String colour)? colourChanged,
+    TResult Function(PetColour colour)? colourChanged,
     TResult Function(double weight)? weightChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
@@ -1394,7 +1404,7 @@ class _$CreatePostDateChanged implements CreatePostDateChanged {
     required TResult Function(String title) titleChanged,
     required TResult Function(String petType) petTypeChanged,
     required TResult Function(String breed) breedChanged,
-    required TResult Function(String colour) colourChanged,
+    required TResult Function(PetColour colour) colourChanged,
     required TResult Function(double weight) weightChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
@@ -1410,7 +1420,7 @@ class _$CreatePostDateChanged implements CreatePostDateChanged {
     TResult? Function(String title)? titleChanged,
     TResult? Function(String petType)? petTypeChanged,
     TResult? Function(String breed)? breedChanged,
-    TResult? Function(String colour)? colourChanged,
+    TResult? Function(PetColour colour)? colourChanged,
     TResult? Function(double weight)? weightChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
@@ -1426,7 +1436,7 @@ class _$CreatePostDateChanged implements CreatePostDateChanged {
     TResult Function(String title)? titleChanged,
     TResult Function(String petType)? petTypeChanged,
     TResult Function(String breed)? breedChanged,
-    TResult Function(String colour)? colourChanged,
+    TResult Function(PetColour colour)? colourChanged,
     TResult Function(double weight)? weightChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
@@ -1573,7 +1583,7 @@ class _$CreatePostLocationChanged implements CreatePostLocationChanged {
     required TResult Function(String title) titleChanged,
     required TResult Function(String petType) petTypeChanged,
     required TResult Function(String breed) breedChanged,
-    required TResult Function(String colour) colourChanged,
+    required TResult Function(PetColour colour) colourChanged,
     required TResult Function(double weight) weightChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
@@ -1589,7 +1599,7 @@ class _$CreatePostLocationChanged implements CreatePostLocationChanged {
     TResult? Function(String title)? titleChanged,
     TResult? Function(String petType)? petTypeChanged,
     TResult? Function(String breed)? breedChanged,
-    TResult? Function(String colour)? colourChanged,
+    TResult? Function(PetColour colour)? colourChanged,
     TResult? Function(double weight)? weightChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
@@ -1605,7 +1615,7 @@ class _$CreatePostLocationChanged implements CreatePostLocationChanged {
     TResult Function(String title)? titleChanged,
     TResult Function(String petType)? petTypeChanged,
     TResult Function(String breed)? breedChanged,
-    TResult Function(String colour)? colourChanged,
+    TResult Function(PetColour colour)? colourChanged,
     TResult Function(double weight)? weightChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
@@ -1688,7 +1698,7 @@ mixin _$CreatePostState {
   List<String> get photos => throw _privateConstructorUsedError;
   PetTypeOption? get petType => throw _privateConstructorUsedError;
   String? get breed => throw _privateConstructorUsedError;
-  String? get colour => throw _privateConstructorUsedError;
+  PetColour? get colour => throw _privateConstructorUsedError;
   double? get weight => throw _privateConstructorUsedError;
   String? get size => throw _privateConstructorUsedError;
   DateTime? get dateLastSeen => throw _privateConstructorUsedError;
@@ -1712,11 +1722,14 @@ abstract class $CreatePostStateCopyWith<$Res> {
       List<String> photos,
       PetTypeOption? petType,
       String? breed,
-      String? colour,
+      PetColour? colour,
       double? weight,
       String? size,
       DateTime? dateLastSeen,
       LocationLastSeen? locationLastSeen});
+
+  $PetColourCopyWith<$Res>? get colour;
+  $LocationLastSeenCopyWith<$Res>? get locationLastSeen;
 }
 
 /// @nodoc
@@ -1742,7 +1755,7 @@ class _$CreatePostStateCopyWithImpl<$Res, $Val extends CreatePostState>
     Object? weight = freezed,
     Object? size = freezed,
     Object? dateLastSeen = freezed,
-    Object? locationLastSeen = null,
+    Object? locationLastSeen = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -1772,7 +1785,7 @@ class _$CreatePostStateCopyWithImpl<$Res, $Val extends CreatePostState>
       colour: freezed == colour
           ? _value.colour
           : colour // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as PetColour?,
       weight: freezed == weight
           ? _value.weight
           : weight // ignore: cast_nullable_to_non_nullable
@@ -1785,11 +1798,35 @@ class _$CreatePostStateCopyWithImpl<$Res, $Val extends CreatePostState>
           ? _value.dateLastSeen
           : dateLastSeen // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      locationLastSeen: null == locationLastSeen
+      locationLastSeen: freezed == locationLastSeen
           ? _value.locationLastSeen
           : locationLastSeen // ignore: cast_nullable_to_non_nullable
               as LocationLastSeen?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PetColourCopyWith<$Res>? get colour {
+    if (_value.colour == null) {
+      return null;
+    }
+
+    return $PetColourCopyWith<$Res>(_value.colour!, (value) {
+      return _then(_value.copyWith(colour: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $LocationLastSeenCopyWith<$Res>? get locationLastSeen {
+    if (_value.locationLastSeen == null) {
+      return null;
+    }
+
+    return $LocationLastSeenCopyWith<$Res>(_value.locationLastSeen!, (value) {
+      return _then(_value.copyWith(locationLastSeen: value) as $Val);
+    });
   }
 }
 
@@ -1808,11 +1845,16 @@ abstract class _$$_CreatePostStateCopyWith<$Res>
       List<String> photos,
       PetTypeOption? petType,
       String? breed,
-      String? colour,
+      PetColour? colour,
       double? weight,
       String? size,
       DateTime? dateLastSeen,
       LocationLastSeen? locationLastSeen});
+
+  @override
+  $PetColourCopyWith<$Res>? get colour;
+  @override
+  $LocationLastSeenCopyWith<$Res>? get locationLastSeen;
 }
 
 /// @nodoc
@@ -1836,7 +1878,7 @@ class __$$_CreatePostStateCopyWithImpl<$Res>
     Object? weight = freezed,
     Object? size = freezed,
     Object? dateLastSeen = freezed,
-    Object? locationLastSeen = null,
+    Object? locationLastSeen = freezed,
   }) {
     return _then(_$_CreatePostState(
       status: null == status
@@ -1866,7 +1908,7 @@ class __$$_CreatePostStateCopyWithImpl<$Res>
       colour: freezed == colour
           ? _value.colour
           : colour // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as PetColour?,
       weight: freezed == weight
           ? _value.weight
           : weight // ignore: cast_nullable_to_non_nullable
@@ -1879,7 +1921,7 @@ class __$$_CreatePostStateCopyWithImpl<$Res>
           ? _value.dateLastSeen
           : dateLastSeen // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      locationLastSeen: null == locationLastSeen
+      locationLastSeen: freezed == locationLastSeen
           ? _value.locationLastSeen
           : locationLastSeen // ignore: cast_nullable_to_non_nullable
               as LocationLastSeen?,
@@ -1925,7 +1967,7 @@ class _$_CreatePostState implements _CreatePostState {
   @override
   final String? breed;
   @override
-  final String? colour;
+  final PetColour? colour;
   @override
   final double? weight;
   @override
@@ -1958,8 +2000,8 @@ class _$_CreatePostState implements _CreatePostState {
             (identical(other.size, size) || other.size == size) &&
             (identical(other.dateLastSeen, dateLastSeen) ||
                 other.dateLastSeen == dateLastSeen) &&
-            const DeepCollectionEquality()
-                .equals(other.locationLastSeen, locationLastSeen));
+            (identical(other.locationLastSeen, locationLastSeen) ||
+                other.locationLastSeen == locationLastSeen));
   }
 
   @override
@@ -1975,7 +2017,7 @@ class _$_CreatePostState implements _CreatePostState {
       weight,
       size,
       dateLastSeen,
-      const DeepCollectionEquality().hash(locationLastSeen));
+      locationLastSeen);
 
   @JsonKey(ignore: true)
   @override
@@ -1992,7 +2034,7 @@ abstract class _CreatePostState implements CreatePostState {
       final List<String> photos,
       final PetTypeOption? petType,
       final String? breed,
-      final String? colour,
+      final PetColour? colour,
       final double? weight,
       final String? size,
       final DateTime? dateLastSeen,
@@ -2011,7 +2053,7 @@ abstract class _CreatePostState implements CreatePostState {
   @override
   String? get breed;
   @override
-  String? get colour;
+  PetColour? get colour;
   @override
   double? get weight;
   @override
