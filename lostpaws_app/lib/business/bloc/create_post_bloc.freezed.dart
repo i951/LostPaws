@@ -21,12 +21,16 @@ mixin _$CreatePostEvent {
     required TResult Function() initial,
     required TResult Function(String postType) typeChanged,
     required TResult Function(String title) titleChanged,
+    required TResult Function(List<String> photos) uploadPhotos,
     required TResult Function(String petType) petTypeChanged,
     required TResult Function(String breed) breedChanged,
     required TResult Function(PetColour colour) colourChanged,
     required TResult Function(double weight) weightChanged,
+    required TResult Function(String size) sizeChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
+    required TResult Function(String description) descriptionChanged,
+    required TResult Function(String phone) phoneChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -34,12 +38,16 @@ mixin _$CreatePostEvent {
     TResult? Function()? initial,
     TResult? Function(String postType)? typeChanged,
     TResult? Function(String title)? titleChanged,
+    TResult? Function(List<String> photos)? uploadPhotos,
     TResult? Function(String petType)? petTypeChanged,
     TResult? Function(String breed)? breedChanged,
     TResult? Function(PetColour colour)? colourChanged,
     TResult? Function(double weight)? weightChanged,
+    TResult? Function(String size)? sizeChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
+    TResult? Function(String description)? descriptionChanged,
+    TResult? Function(String phone)? phoneChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,12 +55,16 @@ mixin _$CreatePostEvent {
     TResult Function()? initial,
     TResult Function(String postType)? typeChanged,
     TResult Function(String title)? titleChanged,
+    TResult Function(List<String> photos)? uploadPhotos,
     TResult Function(String petType)? petTypeChanged,
     TResult Function(String breed)? breedChanged,
     TResult Function(PetColour colour)? colourChanged,
     TResult Function(double weight)? weightChanged,
+    TResult Function(String size)? sizeChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
+    TResult Function(String description)? descriptionChanged,
+    TResult Function(String phone)? phoneChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -61,12 +73,17 @@ mixin _$CreatePostEvent {
     required TResult Function(CreatePostInitial value) initial,
     required TResult Function(CreatePostTypeChanged value) typeChanged,
     required TResult Function(CreatePostTitleChanged value) titleChanged,
+    required TResult Function(CreatePostPhotosChanged value) uploadPhotos,
     required TResult Function(CreatePostPetTypeChanged value) petTypeChanged,
     required TResult Function(CreatePostBreedChanged value) breedChanged,
     required TResult Function(CreatePostColourChanged value) colourChanged,
     required TResult Function(CreatePostWeightChanged value) weightChanged,
+    required TResult Function(CreatePostSizeChanged value) sizeChanged,
     required TResult Function(CreatePostDateChanged value) dateChanged,
     required TResult Function(CreatePostLocationChanged value) locationChanged,
+    required TResult Function(CreatePostDescriptionChanged value)
+        descriptionChanged,
+    required TResult Function(CreatePostPhoneChanged value) phoneChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -74,12 +91,16 @@ mixin _$CreatePostEvent {
     TResult? Function(CreatePostInitial value)? initial,
     TResult? Function(CreatePostTypeChanged value)? typeChanged,
     TResult? Function(CreatePostTitleChanged value)? titleChanged,
+    TResult? Function(CreatePostPhotosChanged value)? uploadPhotos,
     TResult? Function(CreatePostPetTypeChanged value)? petTypeChanged,
     TResult? Function(CreatePostBreedChanged value)? breedChanged,
     TResult? Function(CreatePostColourChanged value)? colourChanged,
     TResult? Function(CreatePostWeightChanged value)? weightChanged,
+    TResult? Function(CreatePostSizeChanged value)? sizeChanged,
     TResult? Function(CreatePostDateChanged value)? dateChanged,
     TResult? Function(CreatePostLocationChanged value)? locationChanged,
+    TResult? Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult? Function(CreatePostPhoneChanged value)? phoneChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -87,12 +108,16 @@ mixin _$CreatePostEvent {
     TResult Function(CreatePostInitial value)? initial,
     TResult Function(CreatePostTypeChanged value)? typeChanged,
     TResult Function(CreatePostTitleChanged value)? titleChanged,
+    TResult Function(CreatePostPhotosChanged value)? uploadPhotos,
     TResult Function(CreatePostPetTypeChanged value)? petTypeChanged,
     TResult Function(CreatePostBreedChanged value)? breedChanged,
     TResult Function(CreatePostColourChanged value)? colourChanged,
     TResult Function(CreatePostWeightChanged value)? weightChanged,
+    TResult Function(CreatePostSizeChanged value)? sizeChanged,
     TResult Function(CreatePostDateChanged value)? dateChanged,
     TResult Function(CreatePostLocationChanged value)? locationChanged,
+    TResult Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult Function(CreatePostPhoneChanged value)? phoneChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -157,12 +182,16 @@ class _$CreatePostInitial implements CreatePostInitial {
     required TResult Function() initial,
     required TResult Function(String postType) typeChanged,
     required TResult Function(String title) titleChanged,
+    required TResult Function(List<String> photos) uploadPhotos,
     required TResult Function(String petType) petTypeChanged,
     required TResult Function(String breed) breedChanged,
     required TResult Function(PetColour colour) colourChanged,
     required TResult Function(double weight) weightChanged,
+    required TResult Function(String size) sizeChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
+    required TResult Function(String description) descriptionChanged,
+    required TResult Function(String phone) phoneChanged,
   }) {
     return initial();
   }
@@ -173,12 +202,16 @@ class _$CreatePostInitial implements CreatePostInitial {
     TResult? Function()? initial,
     TResult? Function(String postType)? typeChanged,
     TResult? Function(String title)? titleChanged,
+    TResult? Function(List<String> photos)? uploadPhotos,
     TResult? Function(String petType)? petTypeChanged,
     TResult? Function(String breed)? breedChanged,
     TResult? Function(PetColour colour)? colourChanged,
     TResult? Function(double weight)? weightChanged,
+    TResult? Function(String size)? sizeChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
+    TResult? Function(String description)? descriptionChanged,
+    TResult? Function(String phone)? phoneChanged,
   }) {
     return initial?.call();
   }
@@ -189,12 +222,16 @@ class _$CreatePostInitial implements CreatePostInitial {
     TResult Function()? initial,
     TResult Function(String postType)? typeChanged,
     TResult Function(String title)? titleChanged,
+    TResult Function(List<String> photos)? uploadPhotos,
     TResult Function(String petType)? petTypeChanged,
     TResult Function(String breed)? breedChanged,
     TResult Function(PetColour colour)? colourChanged,
     TResult Function(double weight)? weightChanged,
+    TResult Function(String size)? sizeChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
+    TResult Function(String description)? descriptionChanged,
+    TResult Function(String phone)? phoneChanged,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -209,12 +246,17 @@ class _$CreatePostInitial implements CreatePostInitial {
     required TResult Function(CreatePostInitial value) initial,
     required TResult Function(CreatePostTypeChanged value) typeChanged,
     required TResult Function(CreatePostTitleChanged value) titleChanged,
+    required TResult Function(CreatePostPhotosChanged value) uploadPhotos,
     required TResult Function(CreatePostPetTypeChanged value) petTypeChanged,
     required TResult Function(CreatePostBreedChanged value) breedChanged,
     required TResult Function(CreatePostColourChanged value) colourChanged,
     required TResult Function(CreatePostWeightChanged value) weightChanged,
+    required TResult Function(CreatePostSizeChanged value) sizeChanged,
     required TResult Function(CreatePostDateChanged value) dateChanged,
     required TResult Function(CreatePostLocationChanged value) locationChanged,
+    required TResult Function(CreatePostDescriptionChanged value)
+        descriptionChanged,
+    required TResult Function(CreatePostPhoneChanged value) phoneChanged,
   }) {
     return initial(this);
   }
@@ -225,12 +267,16 @@ class _$CreatePostInitial implements CreatePostInitial {
     TResult? Function(CreatePostInitial value)? initial,
     TResult? Function(CreatePostTypeChanged value)? typeChanged,
     TResult? Function(CreatePostTitleChanged value)? titleChanged,
+    TResult? Function(CreatePostPhotosChanged value)? uploadPhotos,
     TResult? Function(CreatePostPetTypeChanged value)? petTypeChanged,
     TResult? Function(CreatePostBreedChanged value)? breedChanged,
     TResult? Function(CreatePostColourChanged value)? colourChanged,
     TResult? Function(CreatePostWeightChanged value)? weightChanged,
+    TResult? Function(CreatePostSizeChanged value)? sizeChanged,
     TResult? Function(CreatePostDateChanged value)? dateChanged,
     TResult? Function(CreatePostLocationChanged value)? locationChanged,
+    TResult? Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult? Function(CreatePostPhoneChanged value)? phoneChanged,
   }) {
     return initial?.call(this);
   }
@@ -241,12 +287,16 @@ class _$CreatePostInitial implements CreatePostInitial {
     TResult Function(CreatePostInitial value)? initial,
     TResult Function(CreatePostTypeChanged value)? typeChanged,
     TResult Function(CreatePostTitleChanged value)? titleChanged,
+    TResult Function(CreatePostPhotosChanged value)? uploadPhotos,
     TResult Function(CreatePostPetTypeChanged value)? petTypeChanged,
     TResult Function(CreatePostBreedChanged value)? breedChanged,
     TResult Function(CreatePostColourChanged value)? colourChanged,
     TResult Function(CreatePostWeightChanged value)? weightChanged,
+    TResult Function(CreatePostSizeChanged value)? sizeChanged,
     TResult Function(CreatePostDateChanged value)? dateChanged,
     TResult Function(CreatePostLocationChanged value)? locationChanged,
+    TResult Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult Function(CreatePostPhoneChanged value)? phoneChanged,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -329,12 +379,16 @@ class _$CreatePostTypeChanged implements CreatePostTypeChanged {
     required TResult Function() initial,
     required TResult Function(String postType) typeChanged,
     required TResult Function(String title) titleChanged,
+    required TResult Function(List<String> photos) uploadPhotos,
     required TResult Function(String petType) petTypeChanged,
     required TResult Function(String breed) breedChanged,
     required TResult Function(PetColour colour) colourChanged,
     required TResult Function(double weight) weightChanged,
+    required TResult Function(String size) sizeChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
+    required TResult Function(String description) descriptionChanged,
+    required TResult Function(String phone) phoneChanged,
   }) {
     return typeChanged(postType);
   }
@@ -345,12 +399,16 @@ class _$CreatePostTypeChanged implements CreatePostTypeChanged {
     TResult? Function()? initial,
     TResult? Function(String postType)? typeChanged,
     TResult? Function(String title)? titleChanged,
+    TResult? Function(List<String> photos)? uploadPhotos,
     TResult? Function(String petType)? petTypeChanged,
     TResult? Function(String breed)? breedChanged,
     TResult? Function(PetColour colour)? colourChanged,
     TResult? Function(double weight)? weightChanged,
+    TResult? Function(String size)? sizeChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
+    TResult? Function(String description)? descriptionChanged,
+    TResult? Function(String phone)? phoneChanged,
   }) {
     return typeChanged?.call(postType);
   }
@@ -361,12 +419,16 @@ class _$CreatePostTypeChanged implements CreatePostTypeChanged {
     TResult Function()? initial,
     TResult Function(String postType)? typeChanged,
     TResult Function(String title)? titleChanged,
+    TResult Function(List<String> photos)? uploadPhotos,
     TResult Function(String petType)? petTypeChanged,
     TResult Function(String breed)? breedChanged,
     TResult Function(PetColour colour)? colourChanged,
     TResult Function(double weight)? weightChanged,
+    TResult Function(String size)? sizeChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
+    TResult Function(String description)? descriptionChanged,
+    TResult Function(String phone)? phoneChanged,
     required TResult orElse(),
   }) {
     if (typeChanged != null) {
@@ -381,12 +443,17 @@ class _$CreatePostTypeChanged implements CreatePostTypeChanged {
     required TResult Function(CreatePostInitial value) initial,
     required TResult Function(CreatePostTypeChanged value) typeChanged,
     required TResult Function(CreatePostTitleChanged value) titleChanged,
+    required TResult Function(CreatePostPhotosChanged value) uploadPhotos,
     required TResult Function(CreatePostPetTypeChanged value) petTypeChanged,
     required TResult Function(CreatePostBreedChanged value) breedChanged,
     required TResult Function(CreatePostColourChanged value) colourChanged,
     required TResult Function(CreatePostWeightChanged value) weightChanged,
+    required TResult Function(CreatePostSizeChanged value) sizeChanged,
     required TResult Function(CreatePostDateChanged value) dateChanged,
     required TResult Function(CreatePostLocationChanged value) locationChanged,
+    required TResult Function(CreatePostDescriptionChanged value)
+        descriptionChanged,
+    required TResult Function(CreatePostPhoneChanged value) phoneChanged,
   }) {
     return typeChanged(this);
   }
@@ -397,12 +464,16 @@ class _$CreatePostTypeChanged implements CreatePostTypeChanged {
     TResult? Function(CreatePostInitial value)? initial,
     TResult? Function(CreatePostTypeChanged value)? typeChanged,
     TResult? Function(CreatePostTitleChanged value)? titleChanged,
+    TResult? Function(CreatePostPhotosChanged value)? uploadPhotos,
     TResult? Function(CreatePostPetTypeChanged value)? petTypeChanged,
     TResult? Function(CreatePostBreedChanged value)? breedChanged,
     TResult? Function(CreatePostColourChanged value)? colourChanged,
     TResult? Function(CreatePostWeightChanged value)? weightChanged,
+    TResult? Function(CreatePostSizeChanged value)? sizeChanged,
     TResult? Function(CreatePostDateChanged value)? dateChanged,
     TResult? Function(CreatePostLocationChanged value)? locationChanged,
+    TResult? Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult? Function(CreatePostPhoneChanged value)? phoneChanged,
   }) {
     return typeChanged?.call(this);
   }
@@ -413,12 +484,16 @@ class _$CreatePostTypeChanged implements CreatePostTypeChanged {
     TResult Function(CreatePostInitial value)? initial,
     TResult Function(CreatePostTypeChanged value)? typeChanged,
     TResult Function(CreatePostTitleChanged value)? titleChanged,
+    TResult Function(CreatePostPhotosChanged value)? uploadPhotos,
     TResult Function(CreatePostPetTypeChanged value)? petTypeChanged,
     TResult Function(CreatePostBreedChanged value)? breedChanged,
     TResult Function(CreatePostColourChanged value)? colourChanged,
     TResult Function(CreatePostWeightChanged value)? weightChanged,
+    TResult Function(CreatePostSizeChanged value)? sizeChanged,
     TResult Function(CreatePostDateChanged value)? dateChanged,
     TResult Function(CreatePostLocationChanged value)? locationChanged,
+    TResult Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult Function(CreatePostPhoneChanged value)? phoneChanged,
     required TResult orElse(),
   }) {
     if (typeChanged != null) {
@@ -506,12 +581,16 @@ class _$CreatePostTitleChanged implements CreatePostTitleChanged {
     required TResult Function() initial,
     required TResult Function(String postType) typeChanged,
     required TResult Function(String title) titleChanged,
+    required TResult Function(List<String> photos) uploadPhotos,
     required TResult Function(String petType) petTypeChanged,
     required TResult Function(String breed) breedChanged,
     required TResult Function(PetColour colour) colourChanged,
     required TResult Function(double weight) weightChanged,
+    required TResult Function(String size) sizeChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
+    required TResult Function(String description) descriptionChanged,
+    required TResult Function(String phone) phoneChanged,
   }) {
     return titleChanged(title);
   }
@@ -522,12 +601,16 @@ class _$CreatePostTitleChanged implements CreatePostTitleChanged {
     TResult? Function()? initial,
     TResult? Function(String postType)? typeChanged,
     TResult? Function(String title)? titleChanged,
+    TResult? Function(List<String> photos)? uploadPhotos,
     TResult? Function(String petType)? petTypeChanged,
     TResult? Function(String breed)? breedChanged,
     TResult? Function(PetColour colour)? colourChanged,
     TResult? Function(double weight)? weightChanged,
+    TResult? Function(String size)? sizeChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
+    TResult? Function(String description)? descriptionChanged,
+    TResult? Function(String phone)? phoneChanged,
   }) {
     return titleChanged?.call(title);
   }
@@ -538,12 +621,16 @@ class _$CreatePostTitleChanged implements CreatePostTitleChanged {
     TResult Function()? initial,
     TResult Function(String postType)? typeChanged,
     TResult Function(String title)? titleChanged,
+    TResult Function(List<String> photos)? uploadPhotos,
     TResult Function(String petType)? petTypeChanged,
     TResult Function(String breed)? breedChanged,
     TResult Function(PetColour colour)? colourChanged,
     TResult Function(double weight)? weightChanged,
+    TResult Function(String size)? sizeChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
+    TResult Function(String description)? descriptionChanged,
+    TResult Function(String phone)? phoneChanged,
     required TResult orElse(),
   }) {
     if (titleChanged != null) {
@@ -558,12 +645,17 @@ class _$CreatePostTitleChanged implements CreatePostTitleChanged {
     required TResult Function(CreatePostInitial value) initial,
     required TResult Function(CreatePostTypeChanged value) typeChanged,
     required TResult Function(CreatePostTitleChanged value) titleChanged,
+    required TResult Function(CreatePostPhotosChanged value) uploadPhotos,
     required TResult Function(CreatePostPetTypeChanged value) petTypeChanged,
     required TResult Function(CreatePostBreedChanged value) breedChanged,
     required TResult Function(CreatePostColourChanged value) colourChanged,
     required TResult Function(CreatePostWeightChanged value) weightChanged,
+    required TResult Function(CreatePostSizeChanged value) sizeChanged,
     required TResult Function(CreatePostDateChanged value) dateChanged,
     required TResult Function(CreatePostLocationChanged value) locationChanged,
+    required TResult Function(CreatePostDescriptionChanged value)
+        descriptionChanged,
+    required TResult Function(CreatePostPhoneChanged value) phoneChanged,
   }) {
     return titleChanged(this);
   }
@@ -574,12 +666,16 @@ class _$CreatePostTitleChanged implements CreatePostTitleChanged {
     TResult? Function(CreatePostInitial value)? initial,
     TResult? Function(CreatePostTypeChanged value)? typeChanged,
     TResult? Function(CreatePostTitleChanged value)? titleChanged,
+    TResult? Function(CreatePostPhotosChanged value)? uploadPhotos,
     TResult? Function(CreatePostPetTypeChanged value)? petTypeChanged,
     TResult? Function(CreatePostBreedChanged value)? breedChanged,
     TResult? Function(CreatePostColourChanged value)? colourChanged,
     TResult? Function(CreatePostWeightChanged value)? weightChanged,
+    TResult? Function(CreatePostSizeChanged value)? sizeChanged,
     TResult? Function(CreatePostDateChanged value)? dateChanged,
     TResult? Function(CreatePostLocationChanged value)? locationChanged,
+    TResult? Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult? Function(CreatePostPhoneChanged value)? phoneChanged,
   }) {
     return titleChanged?.call(this);
   }
@@ -590,12 +686,16 @@ class _$CreatePostTitleChanged implements CreatePostTitleChanged {
     TResult Function(CreatePostInitial value)? initial,
     TResult Function(CreatePostTypeChanged value)? typeChanged,
     TResult Function(CreatePostTitleChanged value)? titleChanged,
+    TResult Function(CreatePostPhotosChanged value)? uploadPhotos,
     TResult Function(CreatePostPetTypeChanged value)? petTypeChanged,
     TResult Function(CreatePostBreedChanged value)? breedChanged,
     TResult Function(CreatePostColourChanged value)? colourChanged,
     TResult Function(CreatePostWeightChanged value)? weightChanged,
+    TResult Function(CreatePostSizeChanged value)? sizeChanged,
     TResult Function(CreatePostDateChanged value)? dateChanged,
     TResult Function(CreatePostLocationChanged value)? locationChanged,
+    TResult Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult Function(CreatePostPhoneChanged value)? phoneChanged,
     required TResult orElse(),
   }) {
     if (titleChanged != null) {
@@ -612,6 +712,214 @@ abstract class CreatePostTitleChanged implements CreatePostEvent {
   String get title;
   @JsonKey(ignore: true)
   _$$CreatePostTitleChangedCopyWith<_$CreatePostTitleChanged> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$CreatePostPhotosChangedCopyWith<$Res> {
+  factory _$$CreatePostPhotosChangedCopyWith(_$CreatePostPhotosChanged value,
+          $Res Function(_$CreatePostPhotosChanged) then) =
+      __$$CreatePostPhotosChangedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<String> photos});
+}
+
+/// @nodoc
+class __$$CreatePostPhotosChangedCopyWithImpl<$Res>
+    extends _$CreatePostEventCopyWithImpl<$Res, _$CreatePostPhotosChanged>
+    implements _$$CreatePostPhotosChangedCopyWith<$Res> {
+  __$$CreatePostPhotosChangedCopyWithImpl(_$CreatePostPhotosChanged _value,
+      $Res Function(_$CreatePostPhotosChanged) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? photos = null,
+  }) {
+    return _then(_$CreatePostPhotosChanged(
+      photos: null == photos
+          ? _value._photos
+          : photos // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$CreatePostPhotosChanged implements CreatePostPhotosChanged {
+  const _$CreatePostPhotosChanged({required final List<String> photos})
+      : _photos = photos;
+
+  final List<String> _photos;
+  @override
+  List<String> get photos {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_photos);
+  }
+
+  @override
+  String toString() {
+    return 'CreatePostEvent.uploadPhotos(photos: $photos)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CreatePostPhotosChanged &&
+            const DeepCollectionEquality().equals(other._photos, _photos));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_photos));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CreatePostPhotosChangedCopyWith<_$CreatePostPhotosChanged> get copyWith =>
+      __$$CreatePostPhotosChangedCopyWithImpl<_$CreatePostPhotosChanged>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String postType) typeChanged,
+    required TResult Function(String title) titleChanged,
+    required TResult Function(List<String> photos) uploadPhotos,
+    required TResult Function(String petType) petTypeChanged,
+    required TResult Function(String breed) breedChanged,
+    required TResult Function(PetColour colour) colourChanged,
+    required TResult Function(double weight) weightChanged,
+    required TResult Function(String size) sizeChanged,
+    required TResult Function(DateTime date) dateChanged,
+    required TResult Function(LatLng location) locationChanged,
+    required TResult Function(String description) descriptionChanged,
+    required TResult Function(String phone) phoneChanged,
+  }) {
+    return uploadPhotos(photos);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String postType)? typeChanged,
+    TResult? Function(String title)? titleChanged,
+    TResult? Function(List<String> photos)? uploadPhotos,
+    TResult? Function(String petType)? petTypeChanged,
+    TResult? Function(String breed)? breedChanged,
+    TResult? Function(PetColour colour)? colourChanged,
+    TResult? Function(double weight)? weightChanged,
+    TResult? Function(String size)? sizeChanged,
+    TResult? Function(DateTime date)? dateChanged,
+    TResult? Function(LatLng location)? locationChanged,
+    TResult? Function(String description)? descriptionChanged,
+    TResult? Function(String phone)? phoneChanged,
+  }) {
+    return uploadPhotos?.call(photos);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String postType)? typeChanged,
+    TResult Function(String title)? titleChanged,
+    TResult Function(List<String> photos)? uploadPhotos,
+    TResult Function(String petType)? petTypeChanged,
+    TResult Function(String breed)? breedChanged,
+    TResult Function(PetColour colour)? colourChanged,
+    TResult Function(double weight)? weightChanged,
+    TResult Function(String size)? sizeChanged,
+    TResult Function(DateTime date)? dateChanged,
+    TResult Function(LatLng location)? locationChanged,
+    TResult Function(String description)? descriptionChanged,
+    TResult Function(String phone)? phoneChanged,
+    required TResult orElse(),
+  }) {
+    if (uploadPhotos != null) {
+      return uploadPhotos(photos);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CreatePostInitial value) initial,
+    required TResult Function(CreatePostTypeChanged value) typeChanged,
+    required TResult Function(CreatePostTitleChanged value) titleChanged,
+    required TResult Function(CreatePostPhotosChanged value) uploadPhotos,
+    required TResult Function(CreatePostPetTypeChanged value) petTypeChanged,
+    required TResult Function(CreatePostBreedChanged value) breedChanged,
+    required TResult Function(CreatePostColourChanged value) colourChanged,
+    required TResult Function(CreatePostWeightChanged value) weightChanged,
+    required TResult Function(CreatePostSizeChanged value) sizeChanged,
+    required TResult Function(CreatePostDateChanged value) dateChanged,
+    required TResult Function(CreatePostLocationChanged value) locationChanged,
+    required TResult Function(CreatePostDescriptionChanged value)
+        descriptionChanged,
+    required TResult Function(CreatePostPhoneChanged value) phoneChanged,
+  }) {
+    return uploadPhotos(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(CreatePostInitial value)? initial,
+    TResult? Function(CreatePostTypeChanged value)? typeChanged,
+    TResult? Function(CreatePostTitleChanged value)? titleChanged,
+    TResult? Function(CreatePostPhotosChanged value)? uploadPhotos,
+    TResult? Function(CreatePostPetTypeChanged value)? petTypeChanged,
+    TResult? Function(CreatePostBreedChanged value)? breedChanged,
+    TResult? Function(CreatePostColourChanged value)? colourChanged,
+    TResult? Function(CreatePostWeightChanged value)? weightChanged,
+    TResult? Function(CreatePostSizeChanged value)? sizeChanged,
+    TResult? Function(CreatePostDateChanged value)? dateChanged,
+    TResult? Function(CreatePostLocationChanged value)? locationChanged,
+    TResult? Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult? Function(CreatePostPhoneChanged value)? phoneChanged,
+  }) {
+    return uploadPhotos?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CreatePostInitial value)? initial,
+    TResult Function(CreatePostTypeChanged value)? typeChanged,
+    TResult Function(CreatePostTitleChanged value)? titleChanged,
+    TResult Function(CreatePostPhotosChanged value)? uploadPhotos,
+    TResult Function(CreatePostPetTypeChanged value)? petTypeChanged,
+    TResult Function(CreatePostBreedChanged value)? breedChanged,
+    TResult Function(CreatePostColourChanged value)? colourChanged,
+    TResult Function(CreatePostWeightChanged value)? weightChanged,
+    TResult Function(CreatePostSizeChanged value)? sizeChanged,
+    TResult Function(CreatePostDateChanged value)? dateChanged,
+    TResult Function(CreatePostLocationChanged value)? locationChanged,
+    TResult Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult Function(CreatePostPhoneChanged value)? phoneChanged,
+    required TResult orElse(),
+  }) {
+    if (uploadPhotos != null) {
+      return uploadPhotos(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class CreatePostPhotosChanged implements CreatePostEvent {
+  const factory CreatePostPhotosChanged({required final List<String> photos}) =
+      _$CreatePostPhotosChanged;
+
+  List<String> get photos;
+  @JsonKey(ignore: true)
+  _$$CreatePostPhotosChangedCopyWith<_$CreatePostPhotosChanged> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -684,12 +992,16 @@ class _$CreatePostPetTypeChanged implements CreatePostPetTypeChanged {
     required TResult Function() initial,
     required TResult Function(String postType) typeChanged,
     required TResult Function(String title) titleChanged,
+    required TResult Function(List<String> photos) uploadPhotos,
     required TResult Function(String petType) petTypeChanged,
     required TResult Function(String breed) breedChanged,
     required TResult Function(PetColour colour) colourChanged,
     required TResult Function(double weight) weightChanged,
+    required TResult Function(String size) sizeChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
+    required TResult Function(String description) descriptionChanged,
+    required TResult Function(String phone) phoneChanged,
   }) {
     return petTypeChanged(petType);
   }
@@ -700,12 +1012,16 @@ class _$CreatePostPetTypeChanged implements CreatePostPetTypeChanged {
     TResult? Function()? initial,
     TResult? Function(String postType)? typeChanged,
     TResult? Function(String title)? titleChanged,
+    TResult? Function(List<String> photos)? uploadPhotos,
     TResult? Function(String petType)? petTypeChanged,
     TResult? Function(String breed)? breedChanged,
     TResult? Function(PetColour colour)? colourChanged,
     TResult? Function(double weight)? weightChanged,
+    TResult? Function(String size)? sizeChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
+    TResult? Function(String description)? descriptionChanged,
+    TResult? Function(String phone)? phoneChanged,
   }) {
     return petTypeChanged?.call(petType);
   }
@@ -716,12 +1032,16 @@ class _$CreatePostPetTypeChanged implements CreatePostPetTypeChanged {
     TResult Function()? initial,
     TResult Function(String postType)? typeChanged,
     TResult Function(String title)? titleChanged,
+    TResult Function(List<String> photos)? uploadPhotos,
     TResult Function(String petType)? petTypeChanged,
     TResult Function(String breed)? breedChanged,
     TResult Function(PetColour colour)? colourChanged,
     TResult Function(double weight)? weightChanged,
+    TResult Function(String size)? sizeChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
+    TResult Function(String description)? descriptionChanged,
+    TResult Function(String phone)? phoneChanged,
     required TResult orElse(),
   }) {
     if (petTypeChanged != null) {
@@ -736,12 +1056,17 @@ class _$CreatePostPetTypeChanged implements CreatePostPetTypeChanged {
     required TResult Function(CreatePostInitial value) initial,
     required TResult Function(CreatePostTypeChanged value) typeChanged,
     required TResult Function(CreatePostTitleChanged value) titleChanged,
+    required TResult Function(CreatePostPhotosChanged value) uploadPhotos,
     required TResult Function(CreatePostPetTypeChanged value) petTypeChanged,
     required TResult Function(CreatePostBreedChanged value) breedChanged,
     required TResult Function(CreatePostColourChanged value) colourChanged,
     required TResult Function(CreatePostWeightChanged value) weightChanged,
+    required TResult Function(CreatePostSizeChanged value) sizeChanged,
     required TResult Function(CreatePostDateChanged value) dateChanged,
     required TResult Function(CreatePostLocationChanged value) locationChanged,
+    required TResult Function(CreatePostDescriptionChanged value)
+        descriptionChanged,
+    required TResult Function(CreatePostPhoneChanged value) phoneChanged,
   }) {
     return petTypeChanged(this);
   }
@@ -752,12 +1077,16 @@ class _$CreatePostPetTypeChanged implements CreatePostPetTypeChanged {
     TResult? Function(CreatePostInitial value)? initial,
     TResult? Function(CreatePostTypeChanged value)? typeChanged,
     TResult? Function(CreatePostTitleChanged value)? titleChanged,
+    TResult? Function(CreatePostPhotosChanged value)? uploadPhotos,
     TResult? Function(CreatePostPetTypeChanged value)? petTypeChanged,
     TResult? Function(CreatePostBreedChanged value)? breedChanged,
     TResult? Function(CreatePostColourChanged value)? colourChanged,
     TResult? Function(CreatePostWeightChanged value)? weightChanged,
+    TResult? Function(CreatePostSizeChanged value)? sizeChanged,
     TResult? Function(CreatePostDateChanged value)? dateChanged,
     TResult? Function(CreatePostLocationChanged value)? locationChanged,
+    TResult? Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult? Function(CreatePostPhoneChanged value)? phoneChanged,
   }) {
     return petTypeChanged?.call(this);
   }
@@ -768,12 +1097,16 @@ class _$CreatePostPetTypeChanged implements CreatePostPetTypeChanged {
     TResult Function(CreatePostInitial value)? initial,
     TResult Function(CreatePostTypeChanged value)? typeChanged,
     TResult Function(CreatePostTitleChanged value)? titleChanged,
+    TResult Function(CreatePostPhotosChanged value)? uploadPhotos,
     TResult Function(CreatePostPetTypeChanged value)? petTypeChanged,
     TResult Function(CreatePostBreedChanged value)? breedChanged,
     TResult Function(CreatePostColourChanged value)? colourChanged,
     TResult Function(CreatePostWeightChanged value)? weightChanged,
+    TResult Function(CreatePostSizeChanged value)? sizeChanged,
     TResult Function(CreatePostDateChanged value)? dateChanged,
     TResult Function(CreatePostLocationChanged value)? locationChanged,
+    TResult Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult Function(CreatePostPhoneChanged value)? phoneChanged,
     required TResult orElse(),
   }) {
     if (petTypeChanged != null) {
@@ -861,12 +1194,16 @@ class _$CreatePostBreedChanged implements CreatePostBreedChanged {
     required TResult Function() initial,
     required TResult Function(String postType) typeChanged,
     required TResult Function(String title) titleChanged,
+    required TResult Function(List<String> photos) uploadPhotos,
     required TResult Function(String petType) petTypeChanged,
     required TResult Function(String breed) breedChanged,
     required TResult Function(PetColour colour) colourChanged,
     required TResult Function(double weight) weightChanged,
+    required TResult Function(String size) sizeChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
+    required TResult Function(String description) descriptionChanged,
+    required TResult Function(String phone) phoneChanged,
   }) {
     return breedChanged(breed);
   }
@@ -877,12 +1214,16 @@ class _$CreatePostBreedChanged implements CreatePostBreedChanged {
     TResult? Function()? initial,
     TResult? Function(String postType)? typeChanged,
     TResult? Function(String title)? titleChanged,
+    TResult? Function(List<String> photos)? uploadPhotos,
     TResult? Function(String petType)? petTypeChanged,
     TResult? Function(String breed)? breedChanged,
     TResult? Function(PetColour colour)? colourChanged,
     TResult? Function(double weight)? weightChanged,
+    TResult? Function(String size)? sizeChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
+    TResult? Function(String description)? descriptionChanged,
+    TResult? Function(String phone)? phoneChanged,
   }) {
     return breedChanged?.call(breed);
   }
@@ -893,12 +1234,16 @@ class _$CreatePostBreedChanged implements CreatePostBreedChanged {
     TResult Function()? initial,
     TResult Function(String postType)? typeChanged,
     TResult Function(String title)? titleChanged,
+    TResult Function(List<String> photos)? uploadPhotos,
     TResult Function(String petType)? petTypeChanged,
     TResult Function(String breed)? breedChanged,
     TResult Function(PetColour colour)? colourChanged,
     TResult Function(double weight)? weightChanged,
+    TResult Function(String size)? sizeChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
+    TResult Function(String description)? descriptionChanged,
+    TResult Function(String phone)? phoneChanged,
     required TResult orElse(),
   }) {
     if (breedChanged != null) {
@@ -913,12 +1258,17 @@ class _$CreatePostBreedChanged implements CreatePostBreedChanged {
     required TResult Function(CreatePostInitial value) initial,
     required TResult Function(CreatePostTypeChanged value) typeChanged,
     required TResult Function(CreatePostTitleChanged value) titleChanged,
+    required TResult Function(CreatePostPhotosChanged value) uploadPhotos,
     required TResult Function(CreatePostPetTypeChanged value) petTypeChanged,
     required TResult Function(CreatePostBreedChanged value) breedChanged,
     required TResult Function(CreatePostColourChanged value) colourChanged,
     required TResult Function(CreatePostWeightChanged value) weightChanged,
+    required TResult Function(CreatePostSizeChanged value) sizeChanged,
     required TResult Function(CreatePostDateChanged value) dateChanged,
     required TResult Function(CreatePostLocationChanged value) locationChanged,
+    required TResult Function(CreatePostDescriptionChanged value)
+        descriptionChanged,
+    required TResult Function(CreatePostPhoneChanged value) phoneChanged,
   }) {
     return breedChanged(this);
   }
@@ -929,12 +1279,16 @@ class _$CreatePostBreedChanged implements CreatePostBreedChanged {
     TResult? Function(CreatePostInitial value)? initial,
     TResult? Function(CreatePostTypeChanged value)? typeChanged,
     TResult? Function(CreatePostTitleChanged value)? titleChanged,
+    TResult? Function(CreatePostPhotosChanged value)? uploadPhotos,
     TResult? Function(CreatePostPetTypeChanged value)? petTypeChanged,
     TResult? Function(CreatePostBreedChanged value)? breedChanged,
     TResult? Function(CreatePostColourChanged value)? colourChanged,
     TResult? Function(CreatePostWeightChanged value)? weightChanged,
+    TResult? Function(CreatePostSizeChanged value)? sizeChanged,
     TResult? Function(CreatePostDateChanged value)? dateChanged,
     TResult? Function(CreatePostLocationChanged value)? locationChanged,
+    TResult? Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult? Function(CreatePostPhoneChanged value)? phoneChanged,
   }) {
     return breedChanged?.call(this);
   }
@@ -945,12 +1299,16 @@ class _$CreatePostBreedChanged implements CreatePostBreedChanged {
     TResult Function(CreatePostInitial value)? initial,
     TResult Function(CreatePostTypeChanged value)? typeChanged,
     TResult Function(CreatePostTitleChanged value)? titleChanged,
+    TResult Function(CreatePostPhotosChanged value)? uploadPhotos,
     TResult Function(CreatePostPetTypeChanged value)? petTypeChanged,
     TResult Function(CreatePostBreedChanged value)? breedChanged,
     TResult Function(CreatePostColourChanged value)? colourChanged,
     TResult Function(CreatePostWeightChanged value)? weightChanged,
+    TResult Function(CreatePostSizeChanged value)? sizeChanged,
     TResult Function(CreatePostDateChanged value)? dateChanged,
     TResult Function(CreatePostLocationChanged value)? locationChanged,
+    TResult Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult Function(CreatePostPhoneChanged value)? phoneChanged,
     required TResult orElse(),
   }) {
     if (breedChanged != null) {
@@ -1048,12 +1406,16 @@ class _$CreatePostColourChanged implements CreatePostColourChanged {
     required TResult Function() initial,
     required TResult Function(String postType) typeChanged,
     required TResult Function(String title) titleChanged,
+    required TResult Function(List<String> photos) uploadPhotos,
     required TResult Function(String petType) petTypeChanged,
     required TResult Function(String breed) breedChanged,
     required TResult Function(PetColour colour) colourChanged,
     required TResult Function(double weight) weightChanged,
+    required TResult Function(String size) sizeChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
+    required TResult Function(String description) descriptionChanged,
+    required TResult Function(String phone) phoneChanged,
   }) {
     return colourChanged(colour);
   }
@@ -1064,12 +1426,16 @@ class _$CreatePostColourChanged implements CreatePostColourChanged {
     TResult? Function()? initial,
     TResult? Function(String postType)? typeChanged,
     TResult? Function(String title)? titleChanged,
+    TResult? Function(List<String> photos)? uploadPhotos,
     TResult? Function(String petType)? petTypeChanged,
     TResult? Function(String breed)? breedChanged,
     TResult? Function(PetColour colour)? colourChanged,
     TResult? Function(double weight)? weightChanged,
+    TResult? Function(String size)? sizeChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
+    TResult? Function(String description)? descriptionChanged,
+    TResult? Function(String phone)? phoneChanged,
   }) {
     return colourChanged?.call(colour);
   }
@@ -1080,12 +1446,16 @@ class _$CreatePostColourChanged implements CreatePostColourChanged {
     TResult Function()? initial,
     TResult Function(String postType)? typeChanged,
     TResult Function(String title)? titleChanged,
+    TResult Function(List<String> photos)? uploadPhotos,
     TResult Function(String petType)? petTypeChanged,
     TResult Function(String breed)? breedChanged,
     TResult Function(PetColour colour)? colourChanged,
     TResult Function(double weight)? weightChanged,
+    TResult Function(String size)? sizeChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
+    TResult Function(String description)? descriptionChanged,
+    TResult Function(String phone)? phoneChanged,
     required TResult orElse(),
   }) {
     if (colourChanged != null) {
@@ -1100,12 +1470,17 @@ class _$CreatePostColourChanged implements CreatePostColourChanged {
     required TResult Function(CreatePostInitial value) initial,
     required TResult Function(CreatePostTypeChanged value) typeChanged,
     required TResult Function(CreatePostTitleChanged value) titleChanged,
+    required TResult Function(CreatePostPhotosChanged value) uploadPhotos,
     required TResult Function(CreatePostPetTypeChanged value) petTypeChanged,
     required TResult Function(CreatePostBreedChanged value) breedChanged,
     required TResult Function(CreatePostColourChanged value) colourChanged,
     required TResult Function(CreatePostWeightChanged value) weightChanged,
+    required TResult Function(CreatePostSizeChanged value) sizeChanged,
     required TResult Function(CreatePostDateChanged value) dateChanged,
     required TResult Function(CreatePostLocationChanged value) locationChanged,
+    required TResult Function(CreatePostDescriptionChanged value)
+        descriptionChanged,
+    required TResult Function(CreatePostPhoneChanged value) phoneChanged,
   }) {
     return colourChanged(this);
   }
@@ -1116,12 +1491,16 @@ class _$CreatePostColourChanged implements CreatePostColourChanged {
     TResult? Function(CreatePostInitial value)? initial,
     TResult? Function(CreatePostTypeChanged value)? typeChanged,
     TResult? Function(CreatePostTitleChanged value)? titleChanged,
+    TResult? Function(CreatePostPhotosChanged value)? uploadPhotos,
     TResult? Function(CreatePostPetTypeChanged value)? petTypeChanged,
     TResult? Function(CreatePostBreedChanged value)? breedChanged,
     TResult? Function(CreatePostColourChanged value)? colourChanged,
     TResult? Function(CreatePostWeightChanged value)? weightChanged,
+    TResult? Function(CreatePostSizeChanged value)? sizeChanged,
     TResult? Function(CreatePostDateChanged value)? dateChanged,
     TResult? Function(CreatePostLocationChanged value)? locationChanged,
+    TResult? Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult? Function(CreatePostPhoneChanged value)? phoneChanged,
   }) {
     return colourChanged?.call(this);
   }
@@ -1132,12 +1511,16 @@ class _$CreatePostColourChanged implements CreatePostColourChanged {
     TResult Function(CreatePostInitial value)? initial,
     TResult Function(CreatePostTypeChanged value)? typeChanged,
     TResult Function(CreatePostTitleChanged value)? titleChanged,
+    TResult Function(CreatePostPhotosChanged value)? uploadPhotos,
     TResult Function(CreatePostPetTypeChanged value)? petTypeChanged,
     TResult Function(CreatePostBreedChanged value)? breedChanged,
     TResult Function(CreatePostColourChanged value)? colourChanged,
     TResult Function(CreatePostWeightChanged value)? weightChanged,
+    TResult Function(CreatePostSizeChanged value)? sizeChanged,
     TResult Function(CreatePostDateChanged value)? dateChanged,
     TResult Function(CreatePostLocationChanged value)? locationChanged,
+    TResult Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult Function(CreatePostPhoneChanged value)? phoneChanged,
     required TResult orElse(),
   }) {
     if (colourChanged != null) {
@@ -1225,12 +1608,16 @@ class _$CreatePostWeightChanged implements CreatePostWeightChanged {
     required TResult Function() initial,
     required TResult Function(String postType) typeChanged,
     required TResult Function(String title) titleChanged,
+    required TResult Function(List<String> photos) uploadPhotos,
     required TResult Function(String petType) petTypeChanged,
     required TResult Function(String breed) breedChanged,
     required TResult Function(PetColour colour) colourChanged,
     required TResult Function(double weight) weightChanged,
+    required TResult Function(String size) sizeChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
+    required TResult Function(String description) descriptionChanged,
+    required TResult Function(String phone) phoneChanged,
   }) {
     return weightChanged(weight);
   }
@@ -1241,12 +1628,16 @@ class _$CreatePostWeightChanged implements CreatePostWeightChanged {
     TResult? Function()? initial,
     TResult? Function(String postType)? typeChanged,
     TResult? Function(String title)? titleChanged,
+    TResult? Function(List<String> photos)? uploadPhotos,
     TResult? Function(String petType)? petTypeChanged,
     TResult? Function(String breed)? breedChanged,
     TResult? Function(PetColour colour)? colourChanged,
     TResult? Function(double weight)? weightChanged,
+    TResult? Function(String size)? sizeChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
+    TResult? Function(String description)? descriptionChanged,
+    TResult? Function(String phone)? phoneChanged,
   }) {
     return weightChanged?.call(weight);
   }
@@ -1257,12 +1648,16 @@ class _$CreatePostWeightChanged implements CreatePostWeightChanged {
     TResult Function()? initial,
     TResult Function(String postType)? typeChanged,
     TResult Function(String title)? titleChanged,
+    TResult Function(List<String> photos)? uploadPhotos,
     TResult Function(String petType)? petTypeChanged,
     TResult Function(String breed)? breedChanged,
     TResult Function(PetColour colour)? colourChanged,
     TResult Function(double weight)? weightChanged,
+    TResult Function(String size)? sizeChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
+    TResult Function(String description)? descriptionChanged,
+    TResult Function(String phone)? phoneChanged,
     required TResult orElse(),
   }) {
     if (weightChanged != null) {
@@ -1277,12 +1672,17 @@ class _$CreatePostWeightChanged implements CreatePostWeightChanged {
     required TResult Function(CreatePostInitial value) initial,
     required TResult Function(CreatePostTypeChanged value) typeChanged,
     required TResult Function(CreatePostTitleChanged value) titleChanged,
+    required TResult Function(CreatePostPhotosChanged value) uploadPhotos,
     required TResult Function(CreatePostPetTypeChanged value) petTypeChanged,
     required TResult Function(CreatePostBreedChanged value) breedChanged,
     required TResult Function(CreatePostColourChanged value) colourChanged,
     required TResult Function(CreatePostWeightChanged value) weightChanged,
+    required TResult Function(CreatePostSizeChanged value) sizeChanged,
     required TResult Function(CreatePostDateChanged value) dateChanged,
     required TResult Function(CreatePostLocationChanged value) locationChanged,
+    required TResult Function(CreatePostDescriptionChanged value)
+        descriptionChanged,
+    required TResult Function(CreatePostPhoneChanged value) phoneChanged,
   }) {
     return weightChanged(this);
   }
@@ -1293,12 +1693,16 @@ class _$CreatePostWeightChanged implements CreatePostWeightChanged {
     TResult? Function(CreatePostInitial value)? initial,
     TResult? Function(CreatePostTypeChanged value)? typeChanged,
     TResult? Function(CreatePostTitleChanged value)? titleChanged,
+    TResult? Function(CreatePostPhotosChanged value)? uploadPhotos,
     TResult? Function(CreatePostPetTypeChanged value)? petTypeChanged,
     TResult? Function(CreatePostBreedChanged value)? breedChanged,
     TResult? Function(CreatePostColourChanged value)? colourChanged,
     TResult? Function(CreatePostWeightChanged value)? weightChanged,
+    TResult? Function(CreatePostSizeChanged value)? sizeChanged,
     TResult? Function(CreatePostDateChanged value)? dateChanged,
     TResult? Function(CreatePostLocationChanged value)? locationChanged,
+    TResult? Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult? Function(CreatePostPhoneChanged value)? phoneChanged,
   }) {
     return weightChanged?.call(this);
   }
@@ -1309,12 +1713,16 @@ class _$CreatePostWeightChanged implements CreatePostWeightChanged {
     TResult Function(CreatePostInitial value)? initial,
     TResult Function(CreatePostTypeChanged value)? typeChanged,
     TResult Function(CreatePostTitleChanged value)? titleChanged,
+    TResult Function(CreatePostPhotosChanged value)? uploadPhotos,
     TResult Function(CreatePostPetTypeChanged value)? petTypeChanged,
     TResult Function(CreatePostBreedChanged value)? breedChanged,
     TResult Function(CreatePostColourChanged value)? colourChanged,
     TResult Function(CreatePostWeightChanged value)? weightChanged,
+    TResult Function(CreatePostSizeChanged value)? sizeChanged,
     TResult Function(CreatePostDateChanged value)? dateChanged,
     TResult Function(CreatePostLocationChanged value)? locationChanged,
+    TResult Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult Function(CreatePostPhoneChanged value)? phoneChanged,
     required TResult orElse(),
   }) {
     if (weightChanged != null) {
@@ -1331,6 +1739,208 @@ abstract class CreatePostWeightChanged implements CreatePostEvent {
   double get weight;
   @JsonKey(ignore: true)
   _$$CreatePostWeightChangedCopyWith<_$CreatePostWeightChanged> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$CreatePostSizeChangedCopyWith<$Res> {
+  factory _$$CreatePostSizeChangedCopyWith(_$CreatePostSizeChanged value,
+          $Res Function(_$CreatePostSizeChanged) then) =
+      __$$CreatePostSizeChangedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String size});
+}
+
+/// @nodoc
+class __$$CreatePostSizeChangedCopyWithImpl<$Res>
+    extends _$CreatePostEventCopyWithImpl<$Res, _$CreatePostSizeChanged>
+    implements _$$CreatePostSizeChangedCopyWith<$Res> {
+  __$$CreatePostSizeChangedCopyWithImpl(_$CreatePostSizeChanged _value,
+      $Res Function(_$CreatePostSizeChanged) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? size = null,
+  }) {
+    return _then(_$CreatePostSizeChanged(
+      size: null == size
+          ? _value.size
+          : size // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$CreatePostSizeChanged implements CreatePostSizeChanged {
+  const _$CreatePostSizeChanged({required this.size});
+
+  @override
+  final String size;
+
+  @override
+  String toString() {
+    return 'CreatePostEvent.sizeChanged(size: $size)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CreatePostSizeChanged &&
+            (identical(other.size, size) || other.size == size));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, size);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CreatePostSizeChangedCopyWith<_$CreatePostSizeChanged> get copyWith =>
+      __$$CreatePostSizeChangedCopyWithImpl<_$CreatePostSizeChanged>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String postType) typeChanged,
+    required TResult Function(String title) titleChanged,
+    required TResult Function(List<String> photos) uploadPhotos,
+    required TResult Function(String petType) petTypeChanged,
+    required TResult Function(String breed) breedChanged,
+    required TResult Function(PetColour colour) colourChanged,
+    required TResult Function(double weight) weightChanged,
+    required TResult Function(String size) sizeChanged,
+    required TResult Function(DateTime date) dateChanged,
+    required TResult Function(LatLng location) locationChanged,
+    required TResult Function(String description) descriptionChanged,
+    required TResult Function(String phone) phoneChanged,
+  }) {
+    return sizeChanged(size);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String postType)? typeChanged,
+    TResult? Function(String title)? titleChanged,
+    TResult? Function(List<String> photos)? uploadPhotos,
+    TResult? Function(String petType)? petTypeChanged,
+    TResult? Function(String breed)? breedChanged,
+    TResult? Function(PetColour colour)? colourChanged,
+    TResult? Function(double weight)? weightChanged,
+    TResult? Function(String size)? sizeChanged,
+    TResult? Function(DateTime date)? dateChanged,
+    TResult? Function(LatLng location)? locationChanged,
+    TResult? Function(String description)? descriptionChanged,
+    TResult? Function(String phone)? phoneChanged,
+  }) {
+    return sizeChanged?.call(size);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String postType)? typeChanged,
+    TResult Function(String title)? titleChanged,
+    TResult Function(List<String> photos)? uploadPhotos,
+    TResult Function(String petType)? petTypeChanged,
+    TResult Function(String breed)? breedChanged,
+    TResult Function(PetColour colour)? colourChanged,
+    TResult Function(double weight)? weightChanged,
+    TResult Function(String size)? sizeChanged,
+    TResult Function(DateTime date)? dateChanged,
+    TResult Function(LatLng location)? locationChanged,
+    TResult Function(String description)? descriptionChanged,
+    TResult Function(String phone)? phoneChanged,
+    required TResult orElse(),
+  }) {
+    if (sizeChanged != null) {
+      return sizeChanged(size);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CreatePostInitial value) initial,
+    required TResult Function(CreatePostTypeChanged value) typeChanged,
+    required TResult Function(CreatePostTitleChanged value) titleChanged,
+    required TResult Function(CreatePostPhotosChanged value) uploadPhotos,
+    required TResult Function(CreatePostPetTypeChanged value) petTypeChanged,
+    required TResult Function(CreatePostBreedChanged value) breedChanged,
+    required TResult Function(CreatePostColourChanged value) colourChanged,
+    required TResult Function(CreatePostWeightChanged value) weightChanged,
+    required TResult Function(CreatePostSizeChanged value) sizeChanged,
+    required TResult Function(CreatePostDateChanged value) dateChanged,
+    required TResult Function(CreatePostLocationChanged value) locationChanged,
+    required TResult Function(CreatePostDescriptionChanged value)
+        descriptionChanged,
+    required TResult Function(CreatePostPhoneChanged value) phoneChanged,
+  }) {
+    return sizeChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(CreatePostInitial value)? initial,
+    TResult? Function(CreatePostTypeChanged value)? typeChanged,
+    TResult? Function(CreatePostTitleChanged value)? titleChanged,
+    TResult? Function(CreatePostPhotosChanged value)? uploadPhotos,
+    TResult? Function(CreatePostPetTypeChanged value)? petTypeChanged,
+    TResult? Function(CreatePostBreedChanged value)? breedChanged,
+    TResult? Function(CreatePostColourChanged value)? colourChanged,
+    TResult? Function(CreatePostWeightChanged value)? weightChanged,
+    TResult? Function(CreatePostSizeChanged value)? sizeChanged,
+    TResult? Function(CreatePostDateChanged value)? dateChanged,
+    TResult? Function(CreatePostLocationChanged value)? locationChanged,
+    TResult? Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult? Function(CreatePostPhoneChanged value)? phoneChanged,
+  }) {
+    return sizeChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CreatePostInitial value)? initial,
+    TResult Function(CreatePostTypeChanged value)? typeChanged,
+    TResult Function(CreatePostTitleChanged value)? titleChanged,
+    TResult Function(CreatePostPhotosChanged value)? uploadPhotos,
+    TResult Function(CreatePostPetTypeChanged value)? petTypeChanged,
+    TResult Function(CreatePostBreedChanged value)? breedChanged,
+    TResult Function(CreatePostColourChanged value)? colourChanged,
+    TResult Function(CreatePostWeightChanged value)? weightChanged,
+    TResult Function(CreatePostSizeChanged value)? sizeChanged,
+    TResult Function(CreatePostDateChanged value)? dateChanged,
+    TResult Function(CreatePostLocationChanged value)? locationChanged,
+    TResult Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult Function(CreatePostPhoneChanged value)? phoneChanged,
+    required TResult orElse(),
+  }) {
+    if (sizeChanged != null) {
+      return sizeChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class CreatePostSizeChanged implements CreatePostEvent {
+  const factory CreatePostSizeChanged({required final String size}) =
+      _$CreatePostSizeChanged;
+
+  String get size;
+  @JsonKey(ignore: true)
+  _$$CreatePostSizeChangedCopyWith<_$CreatePostSizeChanged> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1402,12 +2012,16 @@ class _$CreatePostDateChanged implements CreatePostDateChanged {
     required TResult Function() initial,
     required TResult Function(String postType) typeChanged,
     required TResult Function(String title) titleChanged,
+    required TResult Function(List<String> photos) uploadPhotos,
     required TResult Function(String petType) petTypeChanged,
     required TResult Function(String breed) breedChanged,
     required TResult Function(PetColour colour) colourChanged,
     required TResult Function(double weight) weightChanged,
+    required TResult Function(String size) sizeChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
+    required TResult Function(String description) descriptionChanged,
+    required TResult Function(String phone) phoneChanged,
   }) {
     return dateChanged(date);
   }
@@ -1418,12 +2032,16 @@ class _$CreatePostDateChanged implements CreatePostDateChanged {
     TResult? Function()? initial,
     TResult? Function(String postType)? typeChanged,
     TResult? Function(String title)? titleChanged,
+    TResult? Function(List<String> photos)? uploadPhotos,
     TResult? Function(String petType)? petTypeChanged,
     TResult? Function(String breed)? breedChanged,
     TResult? Function(PetColour colour)? colourChanged,
     TResult? Function(double weight)? weightChanged,
+    TResult? Function(String size)? sizeChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
+    TResult? Function(String description)? descriptionChanged,
+    TResult? Function(String phone)? phoneChanged,
   }) {
     return dateChanged?.call(date);
   }
@@ -1434,12 +2052,16 @@ class _$CreatePostDateChanged implements CreatePostDateChanged {
     TResult Function()? initial,
     TResult Function(String postType)? typeChanged,
     TResult Function(String title)? titleChanged,
+    TResult Function(List<String> photos)? uploadPhotos,
     TResult Function(String petType)? petTypeChanged,
     TResult Function(String breed)? breedChanged,
     TResult Function(PetColour colour)? colourChanged,
     TResult Function(double weight)? weightChanged,
+    TResult Function(String size)? sizeChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
+    TResult Function(String description)? descriptionChanged,
+    TResult Function(String phone)? phoneChanged,
     required TResult orElse(),
   }) {
     if (dateChanged != null) {
@@ -1454,12 +2076,17 @@ class _$CreatePostDateChanged implements CreatePostDateChanged {
     required TResult Function(CreatePostInitial value) initial,
     required TResult Function(CreatePostTypeChanged value) typeChanged,
     required TResult Function(CreatePostTitleChanged value) titleChanged,
+    required TResult Function(CreatePostPhotosChanged value) uploadPhotos,
     required TResult Function(CreatePostPetTypeChanged value) petTypeChanged,
     required TResult Function(CreatePostBreedChanged value) breedChanged,
     required TResult Function(CreatePostColourChanged value) colourChanged,
     required TResult Function(CreatePostWeightChanged value) weightChanged,
+    required TResult Function(CreatePostSizeChanged value) sizeChanged,
     required TResult Function(CreatePostDateChanged value) dateChanged,
     required TResult Function(CreatePostLocationChanged value) locationChanged,
+    required TResult Function(CreatePostDescriptionChanged value)
+        descriptionChanged,
+    required TResult Function(CreatePostPhoneChanged value) phoneChanged,
   }) {
     return dateChanged(this);
   }
@@ -1470,12 +2097,16 @@ class _$CreatePostDateChanged implements CreatePostDateChanged {
     TResult? Function(CreatePostInitial value)? initial,
     TResult? Function(CreatePostTypeChanged value)? typeChanged,
     TResult? Function(CreatePostTitleChanged value)? titleChanged,
+    TResult? Function(CreatePostPhotosChanged value)? uploadPhotos,
     TResult? Function(CreatePostPetTypeChanged value)? petTypeChanged,
     TResult? Function(CreatePostBreedChanged value)? breedChanged,
     TResult? Function(CreatePostColourChanged value)? colourChanged,
     TResult? Function(CreatePostWeightChanged value)? weightChanged,
+    TResult? Function(CreatePostSizeChanged value)? sizeChanged,
     TResult? Function(CreatePostDateChanged value)? dateChanged,
     TResult? Function(CreatePostLocationChanged value)? locationChanged,
+    TResult? Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult? Function(CreatePostPhoneChanged value)? phoneChanged,
   }) {
     return dateChanged?.call(this);
   }
@@ -1486,12 +2117,16 @@ class _$CreatePostDateChanged implements CreatePostDateChanged {
     TResult Function(CreatePostInitial value)? initial,
     TResult Function(CreatePostTypeChanged value)? typeChanged,
     TResult Function(CreatePostTitleChanged value)? titleChanged,
+    TResult Function(CreatePostPhotosChanged value)? uploadPhotos,
     TResult Function(CreatePostPetTypeChanged value)? petTypeChanged,
     TResult Function(CreatePostBreedChanged value)? breedChanged,
     TResult Function(CreatePostColourChanged value)? colourChanged,
     TResult Function(CreatePostWeightChanged value)? weightChanged,
+    TResult Function(CreatePostSizeChanged value)? sizeChanged,
     TResult Function(CreatePostDateChanged value)? dateChanged,
     TResult Function(CreatePostLocationChanged value)? locationChanged,
+    TResult Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult Function(CreatePostPhoneChanged value)? phoneChanged,
     required TResult orElse(),
   }) {
     if (dateChanged != null) {
@@ -1581,12 +2216,16 @@ class _$CreatePostLocationChanged implements CreatePostLocationChanged {
     required TResult Function() initial,
     required TResult Function(String postType) typeChanged,
     required TResult Function(String title) titleChanged,
+    required TResult Function(List<String> photos) uploadPhotos,
     required TResult Function(String petType) petTypeChanged,
     required TResult Function(String breed) breedChanged,
     required TResult Function(PetColour colour) colourChanged,
     required TResult Function(double weight) weightChanged,
+    required TResult Function(String size) sizeChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
+    required TResult Function(String description) descriptionChanged,
+    required TResult Function(String phone) phoneChanged,
   }) {
     return locationChanged(location);
   }
@@ -1597,12 +2236,16 @@ class _$CreatePostLocationChanged implements CreatePostLocationChanged {
     TResult? Function()? initial,
     TResult? Function(String postType)? typeChanged,
     TResult? Function(String title)? titleChanged,
+    TResult? Function(List<String> photos)? uploadPhotos,
     TResult? Function(String petType)? petTypeChanged,
     TResult? Function(String breed)? breedChanged,
     TResult? Function(PetColour colour)? colourChanged,
     TResult? Function(double weight)? weightChanged,
+    TResult? Function(String size)? sizeChanged,
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
+    TResult? Function(String description)? descriptionChanged,
+    TResult? Function(String phone)? phoneChanged,
   }) {
     return locationChanged?.call(location);
   }
@@ -1613,12 +2256,16 @@ class _$CreatePostLocationChanged implements CreatePostLocationChanged {
     TResult Function()? initial,
     TResult Function(String postType)? typeChanged,
     TResult Function(String title)? titleChanged,
+    TResult Function(List<String> photos)? uploadPhotos,
     TResult Function(String petType)? petTypeChanged,
     TResult Function(String breed)? breedChanged,
     TResult Function(PetColour colour)? colourChanged,
     TResult Function(double weight)? weightChanged,
+    TResult Function(String size)? sizeChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
+    TResult Function(String description)? descriptionChanged,
+    TResult Function(String phone)? phoneChanged,
     required TResult orElse(),
   }) {
     if (locationChanged != null) {
@@ -1633,12 +2280,17 @@ class _$CreatePostLocationChanged implements CreatePostLocationChanged {
     required TResult Function(CreatePostInitial value) initial,
     required TResult Function(CreatePostTypeChanged value) typeChanged,
     required TResult Function(CreatePostTitleChanged value) titleChanged,
+    required TResult Function(CreatePostPhotosChanged value) uploadPhotos,
     required TResult Function(CreatePostPetTypeChanged value) petTypeChanged,
     required TResult Function(CreatePostBreedChanged value) breedChanged,
     required TResult Function(CreatePostColourChanged value) colourChanged,
     required TResult Function(CreatePostWeightChanged value) weightChanged,
+    required TResult Function(CreatePostSizeChanged value) sizeChanged,
     required TResult Function(CreatePostDateChanged value) dateChanged,
     required TResult Function(CreatePostLocationChanged value) locationChanged,
+    required TResult Function(CreatePostDescriptionChanged value)
+        descriptionChanged,
+    required TResult Function(CreatePostPhoneChanged value) phoneChanged,
   }) {
     return locationChanged(this);
   }
@@ -1649,12 +2301,16 @@ class _$CreatePostLocationChanged implements CreatePostLocationChanged {
     TResult? Function(CreatePostInitial value)? initial,
     TResult? Function(CreatePostTypeChanged value)? typeChanged,
     TResult? Function(CreatePostTitleChanged value)? titleChanged,
+    TResult? Function(CreatePostPhotosChanged value)? uploadPhotos,
     TResult? Function(CreatePostPetTypeChanged value)? petTypeChanged,
     TResult? Function(CreatePostBreedChanged value)? breedChanged,
     TResult? Function(CreatePostColourChanged value)? colourChanged,
     TResult? Function(CreatePostWeightChanged value)? weightChanged,
+    TResult? Function(CreatePostSizeChanged value)? sizeChanged,
     TResult? Function(CreatePostDateChanged value)? dateChanged,
     TResult? Function(CreatePostLocationChanged value)? locationChanged,
+    TResult? Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult? Function(CreatePostPhoneChanged value)? phoneChanged,
   }) {
     return locationChanged?.call(this);
   }
@@ -1665,12 +2321,16 @@ class _$CreatePostLocationChanged implements CreatePostLocationChanged {
     TResult Function(CreatePostInitial value)? initial,
     TResult Function(CreatePostTypeChanged value)? typeChanged,
     TResult Function(CreatePostTitleChanged value)? titleChanged,
+    TResult Function(CreatePostPhotosChanged value)? uploadPhotos,
     TResult Function(CreatePostPetTypeChanged value)? petTypeChanged,
     TResult Function(CreatePostBreedChanged value)? breedChanged,
     TResult Function(CreatePostColourChanged value)? colourChanged,
     TResult Function(CreatePostWeightChanged value)? weightChanged,
+    TResult Function(CreatePostSizeChanged value)? sizeChanged,
     TResult Function(CreatePostDateChanged value)? dateChanged,
     TResult Function(CreatePostLocationChanged value)? locationChanged,
+    TResult Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult Function(CreatePostPhoneChanged value)? phoneChanged,
     required TResult orElse(),
   }) {
     if (locationChanged != null) {
@@ -1691,11 +2351,418 @@ abstract class CreatePostLocationChanged implements CreatePostEvent {
 }
 
 /// @nodoc
+abstract class _$$CreatePostDescriptionChangedCopyWith<$Res> {
+  factory _$$CreatePostDescriptionChangedCopyWith(
+          _$CreatePostDescriptionChanged value,
+          $Res Function(_$CreatePostDescriptionChanged) then) =
+      __$$CreatePostDescriptionChangedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String description});
+}
+
+/// @nodoc
+class __$$CreatePostDescriptionChangedCopyWithImpl<$Res>
+    extends _$CreatePostEventCopyWithImpl<$Res, _$CreatePostDescriptionChanged>
+    implements _$$CreatePostDescriptionChangedCopyWith<$Res> {
+  __$$CreatePostDescriptionChangedCopyWithImpl(
+      _$CreatePostDescriptionChanged _value,
+      $Res Function(_$CreatePostDescriptionChanged) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? description = null,
+  }) {
+    return _then(_$CreatePostDescriptionChanged(
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$CreatePostDescriptionChanged implements CreatePostDescriptionChanged {
+  const _$CreatePostDescriptionChanged({required this.description});
+
+  @override
+  final String description;
+
+  @override
+  String toString() {
+    return 'CreatePostEvent.descriptionChanged(description: $description)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CreatePostDescriptionChanged &&
+            (identical(other.description, description) ||
+                other.description == description));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, description);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CreatePostDescriptionChangedCopyWith<_$CreatePostDescriptionChanged>
+      get copyWith => __$$CreatePostDescriptionChangedCopyWithImpl<
+          _$CreatePostDescriptionChanged>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String postType) typeChanged,
+    required TResult Function(String title) titleChanged,
+    required TResult Function(List<String> photos) uploadPhotos,
+    required TResult Function(String petType) petTypeChanged,
+    required TResult Function(String breed) breedChanged,
+    required TResult Function(PetColour colour) colourChanged,
+    required TResult Function(double weight) weightChanged,
+    required TResult Function(String size) sizeChanged,
+    required TResult Function(DateTime date) dateChanged,
+    required TResult Function(LatLng location) locationChanged,
+    required TResult Function(String description) descriptionChanged,
+    required TResult Function(String phone) phoneChanged,
+  }) {
+    return descriptionChanged(description);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String postType)? typeChanged,
+    TResult? Function(String title)? titleChanged,
+    TResult? Function(List<String> photos)? uploadPhotos,
+    TResult? Function(String petType)? petTypeChanged,
+    TResult? Function(String breed)? breedChanged,
+    TResult? Function(PetColour colour)? colourChanged,
+    TResult? Function(double weight)? weightChanged,
+    TResult? Function(String size)? sizeChanged,
+    TResult? Function(DateTime date)? dateChanged,
+    TResult? Function(LatLng location)? locationChanged,
+    TResult? Function(String description)? descriptionChanged,
+    TResult? Function(String phone)? phoneChanged,
+  }) {
+    return descriptionChanged?.call(description);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String postType)? typeChanged,
+    TResult Function(String title)? titleChanged,
+    TResult Function(List<String> photos)? uploadPhotos,
+    TResult Function(String petType)? petTypeChanged,
+    TResult Function(String breed)? breedChanged,
+    TResult Function(PetColour colour)? colourChanged,
+    TResult Function(double weight)? weightChanged,
+    TResult Function(String size)? sizeChanged,
+    TResult Function(DateTime date)? dateChanged,
+    TResult Function(LatLng location)? locationChanged,
+    TResult Function(String description)? descriptionChanged,
+    TResult Function(String phone)? phoneChanged,
+    required TResult orElse(),
+  }) {
+    if (descriptionChanged != null) {
+      return descriptionChanged(description);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CreatePostInitial value) initial,
+    required TResult Function(CreatePostTypeChanged value) typeChanged,
+    required TResult Function(CreatePostTitleChanged value) titleChanged,
+    required TResult Function(CreatePostPhotosChanged value) uploadPhotos,
+    required TResult Function(CreatePostPetTypeChanged value) petTypeChanged,
+    required TResult Function(CreatePostBreedChanged value) breedChanged,
+    required TResult Function(CreatePostColourChanged value) colourChanged,
+    required TResult Function(CreatePostWeightChanged value) weightChanged,
+    required TResult Function(CreatePostSizeChanged value) sizeChanged,
+    required TResult Function(CreatePostDateChanged value) dateChanged,
+    required TResult Function(CreatePostLocationChanged value) locationChanged,
+    required TResult Function(CreatePostDescriptionChanged value)
+        descriptionChanged,
+    required TResult Function(CreatePostPhoneChanged value) phoneChanged,
+  }) {
+    return descriptionChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(CreatePostInitial value)? initial,
+    TResult? Function(CreatePostTypeChanged value)? typeChanged,
+    TResult? Function(CreatePostTitleChanged value)? titleChanged,
+    TResult? Function(CreatePostPhotosChanged value)? uploadPhotos,
+    TResult? Function(CreatePostPetTypeChanged value)? petTypeChanged,
+    TResult? Function(CreatePostBreedChanged value)? breedChanged,
+    TResult? Function(CreatePostColourChanged value)? colourChanged,
+    TResult? Function(CreatePostWeightChanged value)? weightChanged,
+    TResult? Function(CreatePostSizeChanged value)? sizeChanged,
+    TResult? Function(CreatePostDateChanged value)? dateChanged,
+    TResult? Function(CreatePostLocationChanged value)? locationChanged,
+    TResult? Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult? Function(CreatePostPhoneChanged value)? phoneChanged,
+  }) {
+    return descriptionChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CreatePostInitial value)? initial,
+    TResult Function(CreatePostTypeChanged value)? typeChanged,
+    TResult Function(CreatePostTitleChanged value)? titleChanged,
+    TResult Function(CreatePostPhotosChanged value)? uploadPhotos,
+    TResult Function(CreatePostPetTypeChanged value)? petTypeChanged,
+    TResult Function(CreatePostBreedChanged value)? breedChanged,
+    TResult Function(CreatePostColourChanged value)? colourChanged,
+    TResult Function(CreatePostWeightChanged value)? weightChanged,
+    TResult Function(CreatePostSizeChanged value)? sizeChanged,
+    TResult Function(CreatePostDateChanged value)? dateChanged,
+    TResult Function(CreatePostLocationChanged value)? locationChanged,
+    TResult Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult Function(CreatePostPhoneChanged value)? phoneChanged,
+    required TResult orElse(),
+  }) {
+    if (descriptionChanged != null) {
+      return descriptionChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class CreatePostDescriptionChanged implements CreatePostEvent {
+  const factory CreatePostDescriptionChanged(
+      {required final String description}) = _$CreatePostDescriptionChanged;
+
+  String get description;
+  @JsonKey(ignore: true)
+  _$$CreatePostDescriptionChangedCopyWith<_$CreatePostDescriptionChanged>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$CreatePostPhoneChangedCopyWith<$Res> {
+  factory _$$CreatePostPhoneChangedCopyWith(_$CreatePostPhoneChanged value,
+          $Res Function(_$CreatePostPhoneChanged) then) =
+      __$$CreatePostPhoneChangedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String phone});
+}
+
+/// @nodoc
+class __$$CreatePostPhoneChangedCopyWithImpl<$Res>
+    extends _$CreatePostEventCopyWithImpl<$Res, _$CreatePostPhoneChanged>
+    implements _$$CreatePostPhoneChangedCopyWith<$Res> {
+  __$$CreatePostPhoneChangedCopyWithImpl(_$CreatePostPhoneChanged _value,
+      $Res Function(_$CreatePostPhoneChanged) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? phone = null,
+  }) {
+    return _then(_$CreatePostPhoneChanged(
+      phone: null == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$CreatePostPhoneChanged implements CreatePostPhoneChanged {
+  const _$CreatePostPhoneChanged({required this.phone});
+
+  @override
+  final String phone;
+
+  @override
+  String toString() {
+    return 'CreatePostEvent.phoneChanged(phone: $phone)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CreatePostPhoneChanged &&
+            (identical(other.phone, phone) || other.phone == phone));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, phone);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CreatePostPhoneChangedCopyWith<_$CreatePostPhoneChanged> get copyWith =>
+      __$$CreatePostPhoneChangedCopyWithImpl<_$CreatePostPhoneChanged>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String postType) typeChanged,
+    required TResult Function(String title) titleChanged,
+    required TResult Function(List<String> photos) uploadPhotos,
+    required TResult Function(String petType) petTypeChanged,
+    required TResult Function(String breed) breedChanged,
+    required TResult Function(PetColour colour) colourChanged,
+    required TResult Function(double weight) weightChanged,
+    required TResult Function(String size) sizeChanged,
+    required TResult Function(DateTime date) dateChanged,
+    required TResult Function(LatLng location) locationChanged,
+    required TResult Function(String description) descriptionChanged,
+    required TResult Function(String phone) phoneChanged,
+  }) {
+    return phoneChanged(phone);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String postType)? typeChanged,
+    TResult? Function(String title)? titleChanged,
+    TResult? Function(List<String> photos)? uploadPhotos,
+    TResult? Function(String petType)? petTypeChanged,
+    TResult? Function(String breed)? breedChanged,
+    TResult? Function(PetColour colour)? colourChanged,
+    TResult? Function(double weight)? weightChanged,
+    TResult? Function(String size)? sizeChanged,
+    TResult? Function(DateTime date)? dateChanged,
+    TResult? Function(LatLng location)? locationChanged,
+    TResult? Function(String description)? descriptionChanged,
+    TResult? Function(String phone)? phoneChanged,
+  }) {
+    return phoneChanged?.call(phone);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String postType)? typeChanged,
+    TResult Function(String title)? titleChanged,
+    TResult Function(List<String> photos)? uploadPhotos,
+    TResult Function(String petType)? petTypeChanged,
+    TResult Function(String breed)? breedChanged,
+    TResult Function(PetColour colour)? colourChanged,
+    TResult Function(double weight)? weightChanged,
+    TResult Function(String size)? sizeChanged,
+    TResult Function(DateTime date)? dateChanged,
+    TResult Function(LatLng location)? locationChanged,
+    TResult Function(String description)? descriptionChanged,
+    TResult Function(String phone)? phoneChanged,
+    required TResult orElse(),
+  }) {
+    if (phoneChanged != null) {
+      return phoneChanged(phone);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CreatePostInitial value) initial,
+    required TResult Function(CreatePostTypeChanged value) typeChanged,
+    required TResult Function(CreatePostTitleChanged value) titleChanged,
+    required TResult Function(CreatePostPhotosChanged value) uploadPhotos,
+    required TResult Function(CreatePostPetTypeChanged value) petTypeChanged,
+    required TResult Function(CreatePostBreedChanged value) breedChanged,
+    required TResult Function(CreatePostColourChanged value) colourChanged,
+    required TResult Function(CreatePostWeightChanged value) weightChanged,
+    required TResult Function(CreatePostSizeChanged value) sizeChanged,
+    required TResult Function(CreatePostDateChanged value) dateChanged,
+    required TResult Function(CreatePostLocationChanged value) locationChanged,
+    required TResult Function(CreatePostDescriptionChanged value)
+        descriptionChanged,
+    required TResult Function(CreatePostPhoneChanged value) phoneChanged,
+  }) {
+    return phoneChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(CreatePostInitial value)? initial,
+    TResult? Function(CreatePostTypeChanged value)? typeChanged,
+    TResult? Function(CreatePostTitleChanged value)? titleChanged,
+    TResult? Function(CreatePostPhotosChanged value)? uploadPhotos,
+    TResult? Function(CreatePostPetTypeChanged value)? petTypeChanged,
+    TResult? Function(CreatePostBreedChanged value)? breedChanged,
+    TResult? Function(CreatePostColourChanged value)? colourChanged,
+    TResult? Function(CreatePostWeightChanged value)? weightChanged,
+    TResult? Function(CreatePostSizeChanged value)? sizeChanged,
+    TResult? Function(CreatePostDateChanged value)? dateChanged,
+    TResult? Function(CreatePostLocationChanged value)? locationChanged,
+    TResult? Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult? Function(CreatePostPhoneChanged value)? phoneChanged,
+  }) {
+    return phoneChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CreatePostInitial value)? initial,
+    TResult Function(CreatePostTypeChanged value)? typeChanged,
+    TResult Function(CreatePostTitleChanged value)? titleChanged,
+    TResult Function(CreatePostPhotosChanged value)? uploadPhotos,
+    TResult Function(CreatePostPetTypeChanged value)? petTypeChanged,
+    TResult Function(CreatePostBreedChanged value)? breedChanged,
+    TResult Function(CreatePostColourChanged value)? colourChanged,
+    TResult Function(CreatePostWeightChanged value)? weightChanged,
+    TResult Function(CreatePostSizeChanged value)? sizeChanged,
+    TResult Function(CreatePostDateChanged value)? dateChanged,
+    TResult Function(CreatePostLocationChanged value)? locationChanged,
+    TResult Function(CreatePostDescriptionChanged value)? descriptionChanged,
+    TResult Function(CreatePostPhoneChanged value)? phoneChanged,
+    required TResult orElse(),
+  }) {
+    if (phoneChanged != null) {
+      return phoneChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class CreatePostPhoneChanged implements CreatePostEvent {
+  const factory CreatePostPhoneChanged({required final String phone}) =
+      _$CreatePostPhoneChanged;
+
+  String get phone;
+  @JsonKey(ignore: true)
+  _$$CreatePostPhoneChangedCopyWith<_$CreatePostPhoneChanged> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$CreatePostState {
   Status get status => throw _privateConstructorUsedError;
   PostTypeOption? get postType => throw _privateConstructorUsedError;
   String get postTitle => throw _privateConstructorUsedError;
-  List<String> get photos => throw _privateConstructorUsedError;
+  List<String> get photoPaths => throw _privateConstructorUsedError;
   PetTypeOption? get petType => throw _privateConstructorUsedError;
   String? get breed => throw _privateConstructorUsedError;
   PetColour? get colour => throw _privateConstructorUsedError;
@@ -1703,6 +2770,9 @@ mixin _$CreatePostState {
   String? get size => throw _privateConstructorUsedError;
   DateTime? get dateLastSeen => throw _privateConstructorUsedError;
   LocationLastSeen? get locationLastSeen => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  String? get contactEmail => throw _privateConstructorUsedError;
+  String? get contactPhone => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CreatePostStateCopyWith<CreatePostState> get copyWith =>
@@ -1719,14 +2789,17 @@ abstract class $CreatePostStateCopyWith<$Res> {
       {Status status,
       PostTypeOption? postType,
       String postTitle,
-      List<String> photos,
+      List<String> photoPaths,
       PetTypeOption? petType,
       String? breed,
       PetColour? colour,
       double? weight,
       String? size,
       DateTime? dateLastSeen,
-      LocationLastSeen? locationLastSeen});
+      LocationLastSeen? locationLastSeen,
+      String? description,
+      String? contactEmail,
+      String? contactPhone});
 
   $PetColourCopyWith<$Res>? get colour;
   $LocationLastSeenCopyWith<$Res>? get locationLastSeen;
@@ -1748,7 +2821,7 @@ class _$CreatePostStateCopyWithImpl<$Res, $Val extends CreatePostState>
     Object? status = null,
     Object? postType = freezed,
     Object? postTitle = null,
-    Object? photos = null,
+    Object? photoPaths = null,
     Object? petType = freezed,
     Object? breed = freezed,
     Object? colour = freezed,
@@ -1756,6 +2829,9 @@ class _$CreatePostStateCopyWithImpl<$Res, $Val extends CreatePostState>
     Object? size = freezed,
     Object? dateLastSeen = freezed,
     Object? locationLastSeen = freezed,
+    Object? description = freezed,
+    Object? contactEmail = freezed,
+    Object? contactPhone = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -1770,9 +2846,9 @@ class _$CreatePostStateCopyWithImpl<$Res, $Val extends CreatePostState>
           ? _value.postTitle
           : postTitle // ignore: cast_nullable_to_non_nullable
               as String,
-      photos: null == photos
-          ? _value.photos
-          : photos // ignore: cast_nullable_to_non_nullable
+      photoPaths: null == photoPaths
+          ? _value.photoPaths
+          : photoPaths // ignore: cast_nullable_to_non_nullable
               as List<String>,
       petType: freezed == petType
           ? _value.petType
@@ -1802,6 +2878,18 @@ class _$CreatePostStateCopyWithImpl<$Res, $Val extends CreatePostState>
           ? _value.locationLastSeen
           : locationLastSeen // ignore: cast_nullable_to_non_nullable
               as LocationLastSeen?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      contactEmail: freezed == contactEmail
+          ? _value.contactEmail
+          : contactEmail // ignore: cast_nullable_to_non_nullable
+              as String?,
+      contactPhone: freezed == contactPhone
+          ? _value.contactPhone
+          : contactPhone // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -1842,14 +2930,17 @@ abstract class _$$_CreatePostStateCopyWith<$Res>
       {Status status,
       PostTypeOption? postType,
       String postTitle,
-      List<String> photos,
+      List<String> photoPaths,
       PetTypeOption? petType,
       String? breed,
       PetColour? colour,
       double? weight,
       String? size,
       DateTime? dateLastSeen,
-      LocationLastSeen? locationLastSeen});
+      LocationLastSeen? locationLastSeen,
+      String? description,
+      String? contactEmail,
+      String? contactPhone});
 
   @override
   $PetColourCopyWith<$Res>? get colour;
@@ -1871,7 +2962,7 @@ class __$$_CreatePostStateCopyWithImpl<$Res>
     Object? status = null,
     Object? postType = freezed,
     Object? postTitle = null,
-    Object? photos = null,
+    Object? photoPaths = null,
     Object? petType = freezed,
     Object? breed = freezed,
     Object? colour = freezed,
@@ -1879,6 +2970,9 @@ class __$$_CreatePostStateCopyWithImpl<$Res>
     Object? size = freezed,
     Object? dateLastSeen = freezed,
     Object? locationLastSeen = freezed,
+    Object? description = freezed,
+    Object? contactEmail = freezed,
+    Object? contactPhone = freezed,
   }) {
     return _then(_$_CreatePostState(
       status: null == status
@@ -1893,9 +2987,9 @@ class __$$_CreatePostStateCopyWithImpl<$Res>
           ? _value.postTitle
           : postTitle // ignore: cast_nullable_to_non_nullable
               as String,
-      photos: null == photos
-          ? _value._photos
-          : photos // ignore: cast_nullable_to_non_nullable
+      photoPaths: null == photoPaths
+          ? _value._photoPaths
+          : photoPaths // ignore: cast_nullable_to_non_nullable
               as List<String>,
       petType: freezed == petType
           ? _value.petType
@@ -1925,6 +3019,18 @@ class __$$_CreatePostStateCopyWithImpl<$Res>
           ? _value.locationLastSeen
           : locationLastSeen // ignore: cast_nullable_to_non_nullable
               as LocationLastSeen?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      contactEmail: freezed == contactEmail
+          ? _value.contactEmail
+          : contactEmail // ignore: cast_nullable_to_non_nullable
+              as String?,
+      contactPhone: freezed == contactPhone
+          ? _value.contactPhone
+          : contactPhone // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -1936,15 +3042,18 @@ class _$_CreatePostState implements _CreatePostState {
       {this.status = Status.initial,
       this.postType,
       this.postTitle = "",
-      final List<String> photos = const [],
+      final List<String> photoPaths = const [],
       this.petType,
       this.breed,
       this.colour,
       this.weight,
       this.size,
       this.dateLastSeen,
-      this.locationLastSeen})
-      : _photos = photos;
+      this.locationLastSeen,
+      this.description,
+      this.contactEmail,
+      this.contactPhone})
+      : _photoPaths = photoPaths;
 
   @override
   @JsonKey()
@@ -1954,12 +3063,12 @@ class _$_CreatePostState implements _CreatePostState {
   @override
   @JsonKey()
   final String postTitle;
-  final List<String> _photos;
+  final List<String> _photoPaths;
   @override
   @JsonKey()
-  List<String> get photos {
+  List<String> get photoPaths {
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_photos);
+    return EqualUnmodifiableListView(_photoPaths);
   }
 
   @override
@@ -1976,10 +3085,16 @@ class _$_CreatePostState implements _CreatePostState {
   final DateTime? dateLastSeen;
   @override
   final LocationLastSeen? locationLastSeen;
+  @override
+  final String? description;
+  @override
+  final String? contactEmail;
+  @override
+  final String? contactPhone;
 
   @override
   String toString() {
-    return 'CreatePostState(status: $status, postType: $postType, postTitle: $postTitle, photos: $photos, petType: $petType, breed: $breed, colour: $colour, weight: $weight, size: $size, dateLastSeen: $dateLastSeen, locationLastSeen: $locationLastSeen)';
+    return 'CreatePostState(status: $status, postType: $postType, postTitle: $postTitle, photoPaths: $photoPaths, petType: $petType, breed: $breed, colour: $colour, weight: $weight, size: $size, dateLastSeen: $dateLastSeen, locationLastSeen: $locationLastSeen, description: $description, contactEmail: $contactEmail, contactPhone: $contactPhone)';
   }
 
   @override
@@ -1992,7 +3107,8 @@ class _$_CreatePostState implements _CreatePostState {
                 other.postType == postType) &&
             (identical(other.postTitle, postTitle) ||
                 other.postTitle == postTitle) &&
-            const DeepCollectionEquality().equals(other._photos, _photos) &&
+            const DeepCollectionEquality()
+                .equals(other._photoPaths, _photoPaths) &&
             (identical(other.petType, petType) || other.petType == petType) &&
             (identical(other.breed, breed) || other.breed == breed) &&
             (identical(other.colour, colour) || other.colour == colour) &&
@@ -2001,7 +3117,13 @@ class _$_CreatePostState implements _CreatePostState {
             (identical(other.dateLastSeen, dateLastSeen) ||
                 other.dateLastSeen == dateLastSeen) &&
             (identical(other.locationLastSeen, locationLastSeen) ||
-                other.locationLastSeen == locationLastSeen));
+                other.locationLastSeen == locationLastSeen) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.contactEmail, contactEmail) ||
+                other.contactEmail == contactEmail) &&
+            (identical(other.contactPhone, contactPhone) ||
+                other.contactPhone == contactPhone));
   }
 
   @override
@@ -2010,14 +3132,17 @@ class _$_CreatePostState implements _CreatePostState {
       status,
       postType,
       postTitle,
-      const DeepCollectionEquality().hash(_photos),
+      const DeepCollectionEquality().hash(_photoPaths),
       petType,
       breed,
       colour,
       weight,
       size,
       dateLastSeen,
-      locationLastSeen);
+      locationLastSeen,
+      description,
+      contactEmail,
+      contactPhone);
 
   @JsonKey(ignore: true)
   @override
@@ -2031,14 +3156,17 @@ abstract class _CreatePostState implements CreatePostState {
       {final Status status,
       final PostTypeOption? postType,
       final String postTitle,
-      final List<String> photos,
+      final List<String> photoPaths,
       final PetTypeOption? petType,
       final String? breed,
       final PetColour? colour,
       final double? weight,
       final String? size,
       final DateTime? dateLastSeen,
-      final LocationLastSeen? locationLastSeen}) = _$_CreatePostState;
+      final LocationLastSeen? locationLastSeen,
+      final String? description,
+      final String? contactEmail,
+      final String? contactPhone}) = _$_CreatePostState;
 
   @override
   Status get status;
@@ -2047,7 +3175,7 @@ abstract class _CreatePostState implements CreatePostState {
   @override
   String get postTitle;
   @override
-  List<String> get photos;
+  List<String> get photoPaths;
   @override
   PetTypeOption? get petType;
   @override
@@ -2062,6 +3190,12 @@ abstract class _CreatePostState implements CreatePostState {
   DateTime? get dateLastSeen;
   @override
   LocationLastSeen? get locationLastSeen;
+  @override
+  String? get description;
+  @override
+  String? get contactEmail;
+  @override
+  String? get contactPhone;
   @override
   @JsonKey(ignore: true)
   _$$_CreatePostStateCopyWith<_$_CreatePostState> get copyWith =>

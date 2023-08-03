@@ -14,6 +14,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
   final Function? onChanged;
+  final double? width;
 
   const CustomTextField({
     super.key,
@@ -27,6 +28,7 @@ class CustomTextField extends StatelessWidget {
     this.maxLines,
     this.minLines,
     this.iconOnPressed,
+    this.width,
   });
 
   @override
@@ -45,7 +47,7 @@ class CustomTextField extends StatelessWidget {
           Row(
             children: [
               SizedBox(
-                width: getProportionateScreenWidth(150),
+                width: width,
                 child: TextFormField(
                   keyboardType: keyboardType,
                   minLines: minLines,
@@ -87,50 +89,6 @@ class CustomTextField extends StatelessWidget {
                   : const SizedBox.shrink(),
             ],
           ),
-          // Row(
-          //   mainAxisSize: MainAxisSize.min,
-          //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-          //   children: [
-          //     TextFormField(
-          //       keyboardType: keyboardType,
-          //       minLines: minLines,
-          //       maxLines: maxLines,
-          //       decoration: InputDecoration(
-          //         border: const OutlineInputBorder(),
-          //         hintText: hintText,
-          //         fillColor: Colors.white,
-          //         filled: true,
-          //       ),
-          //       autovalidateMode: AutovalidateMode.onUserInteraction,
-          //       validator: validator,
-          //     ),
-          //     icon != null
-          //         ? Padding(
-          //             padding: const EdgeInsets.all(8.0),
-          //             child: IconButton(
-          //               onPressed: () {
-          //                 if (iconOnPressed != null) {
-          //                   iconOnPressed!();
-          //                 }
-          //               },
-          //               icon: Icon(
-          //                 icon,
-          //                 color: ConstColors.darkOrange,
-          //               ),
-          //             ),
-          //           )
-          //         : const SizedBox.shrink(),
-          //     extraText != null
-          //         ? Padding(
-          //             padding: const EdgeInsets.all(defaultPadding),
-          //             child: Text(
-          //               extraText!,
-          //               style: const LostPawsText().primarySemiBoldGreen,
-          //             ),
-          //           )
-          //         : const SizedBox.shrink(),
-          //   ],
-          // ),
         ],
       ),
     );

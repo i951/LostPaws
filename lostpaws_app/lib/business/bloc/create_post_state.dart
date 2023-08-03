@@ -8,7 +8,7 @@ class CreatePostState with _$CreatePostState {
     @Default(Status.initial) Status status,
     PostTypeOption? postType,
     @Default("") String postTitle,
-    @Default([]) List<String> photos,
+    @Default([]) List<String> photoPaths,
     PetTypeOption? petType,
     String? breed,
     PetColour? colour,
@@ -16,5 +16,8 @@ class CreatePostState with _$CreatePostState {
     String? size,
     DateTime? dateLastSeen,
     LocationLastSeen? locationLastSeen,
+    String? description,
+    String? contactEmail,
+    String? contactPhone,
   }) = _CreatePostState;
 }

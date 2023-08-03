@@ -12,6 +12,8 @@ import 'package:lostpaws_app/presentation/components/custom_text_field.dart';
 import 'package:lostpaws_app/presentation/components/custom_toggle_buttons.dart';
 import 'package:lostpaws_app/presentation/components/date_picker.dart';
 import 'package:lostpaws_app/presentation/components/location_picker.dart';
+import 'package:lostpaws_app/presentation/components/pet_size_dropdown_menu.dart';
+import 'package:lostpaws_app/presentation/components/pet_size_info.dart';
 import 'package:lostpaws_app/presentation/constants.dart';
 import 'package:lostpaws_app/presentation/routes/home_locations.dart';
 import 'package:lostpaws_app/presentation/size_config.dart';
@@ -27,7 +29,6 @@ class CreatePostingScreen extends StatefulWidget {
 
 class _CreatePostingScreenState extends State<CreatePostingScreen> {
   bool isLoading = false;
-  String? selectedSize;
   final datePicker = const DatePicker();
   Color pickerColor = Color(PetColours.values.first.hexValue);
 
@@ -219,19 +220,22 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                       const LostPawsText().primaryRegularGreen,
                                 ),
                                 TextFormField(
-                                  keyboardType: TextInputType.text,
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    hintText: 'Golden Retriever',
-                                    fillColor: Colors.white,
-                                    filled: true,
-                                  ),
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  validator: FormBuilderValidators.compose([
-                                    FormBuilderValidators.required(),
-                                  ]),
-                                ),
+                                    keyboardType: TextInputType.text,
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      hintText: 'Golden Retriever',
+                                      fillColor: Colors.white,
+                                      filled: true,
+                                    ),
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    validator: FormBuilderValidators.compose([
+                                      FormBuilderValidators.required(),
+                                    ]),
+                                    onChanged: (breed) => context
+                                        .read<CreatePostBloc>()
+                                        .add(CreatePostBreedChanged(
+                                            breed: breed))),
                                 const SizedBox(
                                   height: defaultPadding,
                                 ),
@@ -370,12 +374,15 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                   hintText: '12.5',
                                   keyboardType: TextInputType.text,
                                   validator: FormBuilderValidators.compose([
-                                    FormBuilderValidators.required(),
+                                    FormBuilderValidators.numeric(
+                                        errorText:
+                                            'Please enter a valid number'),
                                   ]),
                                   extraText: "kg",
-                                  onChanged: () {
-                                    // TODO
-                                  },
+                                  onChanged: (weight) => context
+                                      .read<CreatePostBloc>()
+                                      .add(CreatePostWeightChanged(
+                                          weight: weight)),
                                 ),
                                 Text(
                                   "Weight",
@@ -423,58 +430,24 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Container(
-                                      height: getProportionateScreenHeight(50),
-                                      width: getProportionateScreenWidth(160),
-                                      decoration: BoxDecoration(
-                                        color: Colors.transparent,
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(
-                                          color: ConstColors.lightGrey
-                                              .withOpacity(0.5),
+                                        height:
+                                            getProportionateScreenHeight(50),
+                                        width: getProportionateScreenWidth(160),
+                                        decoration: BoxDecoration(
+                                          color: Colors.transparent,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border: Border.all(
+                                            color: ConstColors.lightGrey
+                                                .withOpacity(0.5),
+                                          ),
                                         ),
-                                      ),
-                                      child: DropdownButton(
-                                        isExpanded: true,
-                                        value: selectedSize,
-                                        icon: const Icon(Icons.arrow_drop_down),
-                                        iconSize: 42,
-                                        underline: const SizedBox(),
-                                        borderRadius: BorderRadius.circular(10),
-                                        items: const [
-                                          DropdownMenuItem(
-                                            value: "value",
-                                            child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: defaultPadding),
-                                              child: Text("Small"),
-                                            ),
-                                          ),
-                                          DropdownMenuItem(
-                                            value: "value",
-                                            child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: defaultPadding),
-                                              child: Text("Medium"),
-                                            ),
-                                          ),
-                                        ],
-                                        onChanged: (String? size) {
-                                          setState(() {
-                                            selectedSize = size;
-                                            print("selected $size");
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.info,
-                                        color: ConstColors.darkGreen,
-                                      ),
-                                      onPressed: () {
-                                        // TODO: show info exapmle
-                                      },
-                                    ),
+                                        child: PetSizeDropdownMenu(
+                                          handleOnChanged: (size) {
+                                            print(size);
+                                          },
+                                        )),
+                                    const PetSizeInfo(),
                                   ],
                                 ),
                                 Row(
@@ -767,16 +740,21 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                 ),
                                 TextFormField(
                                   keyboardType: TextInputType.text,
-                                  maxLines: 10,
+                                  maxLines: 30,
                                   minLines: 5,
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
+                                  decoration: InputDecoration(
+                                    border: const OutlineInputBorder(),
+                                    hintStyle:
+                                        const LostPawsText().primaryRegularGrey,
                                     hintText:
-                                        'Saw a sad hungry doggo at Minoru Park. '
-                                        'Had dark brown eyes. No collar indicating any information '
-                                        'so took it home with me. Text me if it\'s yours',
+                                        'Enter more details about the time, date, and '
+                                        'place where the animal was last seen.\n\n'
+                                        'You may also provide info about the animal\'s '
+                                        'appearance, such as its colour(s), size, and '
+                                        'any other unique features.',
                                     fillColor: Colors.white,
                                     filled: true,
+                                    contentPadding: const EdgeInsets.all(8.0),
                                   ),
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
@@ -785,14 +763,57 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                   ]),
                                 ),
                                 CustomTextField(
-                                  title: "Contact Email",
+                                  title: "Weight",
+                                  hintText: '12.5',
+                                  width: 120,
                                   keyboardType: TextInputType.text,
-                                  hintText: 'example@email.com',
+                                  validator: FormBuilderValidators.compose([
+                                    FormBuilderValidators.numeric(
+                                        errorText:
+                                            'Please enter a valid number'),
+                                  ]),
+                                  extraText: "kg",
+                                  onChanged: (weight) => context
+                                      .read<CreatePostBloc>()
+                                      .add(CreatePostWeightChanged(
+                                          weight: weight)),
+                                ),
+                                Text(
+                                  'Contact Email',
+                                  style: LostPawsText().primaryRegularGreen,
+                                ),
+                                SizedBox(height: 8.0),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'example@email.com',
+                                      style: LostPawsText().primarySemiBold,
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(
+                                        Icons.info,
+                                        color: ConstColors.darkGreen,
+                                      ),
+                                      onPressed: () {
+                                        print("pressed");
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                CustomTextField(
+                                  title: "Phone",
+                                  keyboardType: TextInputType.text,
+                                  width: MediaQuery.of(context).size.width -
+                                      (defaultPadding * 4),
+                                  hintText: '6041234567',
                                   validator: FormBuilderValidators.compose([
                                     FormBuilderValidators.required(),
                                   ]),
-                                  onChanged: () {
-                                    // TODO
+                                  onChanged: (phone) {
+                                    context.read<CreatePostBloc>().add(
+                                        CreatePostPhoneChanged(phone: phone));
                                   },
                                 ),
                                 Row(

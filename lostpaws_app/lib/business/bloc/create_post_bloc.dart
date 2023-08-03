@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lostpaws_app/data/models/location_last_seen.dart';
@@ -41,12 +40,16 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     on<CreatePostInitial>(onCreatePostInitial);
     on<CreatePostTypeChanged>(onCreatePostTypeChanged);
     on<CreatePostTitleChanged>(onCreatePostTitleChanged);
+    on<CreatePostPhotosChanged>(onCreatePostPhotosChanged);
     on<CreatePostPetTypeChanged>(onCreatePostPetTypeChanged);
     on<CreatePostBreedChanged>(onCreatePostBreedChanged);
     on<CreatePostColourChanged>(onCreatePostColourChanged);
     on<CreatePostWeightChanged>(onCreatePostWeightChanged);
+    on<CreatePostSizeChanged>(onCreatePostSizeChanged);
     on<CreatePostDateChanged>(onCreatePostDateChanged);
     on<CreatePostLocationChanged>(onCreatePostLocationChanged);
+    on<CreatePostDescriptionChanged>(onCreatePostDescriptionChanged);
+    on<CreatePostPhoneChanged>(onCreatePostPhoneChanged);
   }
 
   void onCreatePostInitial(
@@ -78,6 +81,13 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     emit(state.copyWith(postTitle: event.title));
 
     print("state's title: ${state.postTitle}");
+  }
+
+  void onCreatePostPhotosChanged(
+    CreatePostPhotosChanged event,
+    Emitter<CreatePostState> emit,
+  ) {
+    print("Bloc is uploading photos...");
   }
 
   void onCreatePostPetTypeChanged(
@@ -122,7 +132,16 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   void onCreatePostWeightChanged(
     CreatePostWeightChanged event,
     Emitter<CreatePostState> emit,
-  ) {}
+  ) {
+    emit(state.copyWith(weight: event.weight));
+  }
+
+  void onCreatePostSizeChanged(
+    CreatePostSizeChanged event,
+    Emitter<CreatePostState> emit,
+  ) {
+    emit(state.copyWith(size: event.size));
+  }
 
   void onCreatePostDateChanged(
     CreatePostDateChanged event,
@@ -159,5 +178,20 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
         ),
       ),
     );
+  }
+
+  void onCreatePostDescriptionChanged(
+    CreatePostDescriptionChanged event,
+    Emitter<CreatePostState> emit,
+  ) {
+    emit(state.copyWith(description: event.description));
+    print(state.description);
+  }
+
+  void onCreatePostPhoneChanged(
+    CreatePostPhoneChanged event,
+    Emitter<CreatePostState> emit,
+  ) {
+    print(event.phone);
   }
 }

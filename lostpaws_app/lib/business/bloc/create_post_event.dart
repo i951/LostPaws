@@ -12,7 +12,8 @@ class CreatePostEvent with _$CreatePostEvent {
     required String title,
   }) = CreatePostTitleChanged;
 
-  // TODO: events for uploading photos
+  const factory CreatePostEvent.uploadPhotos({required List<String> photos}) =
+      CreatePostPhotosChanged;
 
   const factory CreatePostEvent.petTypeChanged({
     required String petType,
@@ -30,7 +31,9 @@ class CreatePostEvent with _$CreatePostEvent {
     required double weight,
   }) = CreatePostWeightChanged;
 
-  // TODO: event for size of animal
+  const factory CreatePostEvent.sizeChanged({
+    required String size,
+  }) = CreatePostSizeChanged;
 
   const factory CreatePostEvent.dateChanged({
     required DateTime date,
@@ -39,4 +42,12 @@ class CreatePostEvent with _$CreatePostEvent {
   const factory CreatePostEvent.locationChanged({
     required LatLng location,
   }) = CreatePostLocationChanged;
+
+  const factory CreatePostEvent.descriptionChanged({
+    required String description,
+  }) = CreatePostDescriptionChanged;
+
+  const factory CreatePostEvent.phoneChanged({
+    required String phone,
+  }) = CreatePostPhoneChanged;
 }
