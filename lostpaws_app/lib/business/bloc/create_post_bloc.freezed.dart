@@ -30,7 +30,7 @@ mixin _$CreatePostEvent {
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
     required TResult Function(String description) descriptionChanged,
-    required TResult Function(String phone) phoneChanged,
+    required TResult Function(String phone, int phonePart) phoneChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,7 +47,7 @@ mixin _$CreatePostEvent {
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
     TResult? Function(String description)? descriptionChanged,
-    TResult? Function(String phone)? phoneChanged,
+    TResult? Function(String phone, int phonePart)? phoneChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -64,7 +64,7 @@ mixin _$CreatePostEvent {
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
     TResult Function(String description)? descriptionChanged,
-    TResult Function(String phone)? phoneChanged,
+    TResult Function(String phone, int phonePart)? phoneChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -191,7 +191,7 @@ class _$CreatePostInitial implements CreatePostInitial {
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
     required TResult Function(String description) descriptionChanged,
-    required TResult Function(String phone) phoneChanged,
+    required TResult Function(String phone, int phonePart) phoneChanged,
   }) {
     return initial();
   }
@@ -211,7 +211,7 @@ class _$CreatePostInitial implements CreatePostInitial {
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
     TResult? Function(String description)? descriptionChanged,
-    TResult? Function(String phone)? phoneChanged,
+    TResult? Function(String phone, int phonePart)? phoneChanged,
   }) {
     return initial?.call();
   }
@@ -231,7 +231,7 @@ class _$CreatePostInitial implements CreatePostInitial {
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
     TResult Function(String description)? descriptionChanged,
-    TResult Function(String phone)? phoneChanged,
+    TResult Function(String phone, int phonePart)? phoneChanged,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -388,7 +388,7 @@ class _$CreatePostTypeChanged implements CreatePostTypeChanged {
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
     required TResult Function(String description) descriptionChanged,
-    required TResult Function(String phone) phoneChanged,
+    required TResult Function(String phone, int phonePart) phoneChanged,
   }) {
     return typeChanged(postType);
   }
@@ -408,7 +408,7 @@ class _$CreatePostTypeChanged implements CreatePostTypeChanged {
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
     TResult? Function(String description)? descriptionChanged,
-    TResult? Function(String phone)? phoneChanged,
+    TResult? Function(String phone, int phonePart)? phoneChanged,
   }) {
     return typeChanged?.call(postType);
   }
@@ -428,7 +428,7 @@ class _$CreatePostTypeChanged implements CreatePostTypeChanged {
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
     TResult Function(String description)? descriptionChanged,
-    TResult Function(String phone)? phoneChanged,
+    TResult Function(String phone, int phonePart)? phoneChanged,
     required TResult orElse(),
   }) {
     if (typeChanged != null) {
@@ -590,7 +590,7 @@ class _$CreatePostTitleChanged implements CreatePostTitleChanged {
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
     required TResult Function(String description) descriptionChanged,
-    required TResult Function(String phone) phoneChanged,
+    required TResult Function(String phone, int phonePart) phoneChanged,
   }) {
     return titleChanged(title);
   }
@@ -610,7 +610,7 @@ class _$CreatePostTitleChanged implements CreatePostTitleChanged {
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
     TResult? Function(String description)? descriptionChanged,
-    TResult? Function(String phone)? phoneChanged,
+    TResult? Function(String phone, int phonePart)? phoneChanged,
   }) {
     return titleChanged?.call(title);
   }
@@ -630,7 +630,7 @@ class _$CreatePostTitleChanged implements CreatePostTitleChanged {
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
     TResult Function(String description)? descriptionChanged,
-    TResult Function(String phone)? phoneChanged,
+    TResult Function(String phone, int phonePart)? phoneChanged,
     required TResult orElse(),
   }) {
     if (titleChanged != null) {
@@ -798,7 +798,7 @@ class _$CreatePostPhotosChanged implements CreatePostPhotosChanged {
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
     required TResult Function(String description) descriptionChanged,
-    required TResult Function(String phone) phoneChanged,
+    required TResult Function(String phone, int phonePart) phoneChanged,
   }) {
     return uploadPhotos(photos);
   }
@@ -818,7 +818,7 @@ class _$CreatePostPhotosChanged implements CreatePostPhotosChanged {
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
     TResult? Function(String description)? descriptionChanged,
-    TResult? Function(String phone)? phoneChanged,
+    TResult? Function(String phone, int phonePart)? phoneChanged,
   }) {
     return uploadPhotos?.call(photos);
   }
@@ -838,7 +838,7 @@ class _$CreatePostPhotosChanged implements CreatePostPhotosChanged {
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
     TResult Function(String description)? descriptionChanged,
-    TResult Function(String phone)? phoneChanged,
+    TResult Function(String phone, int phonePart)? phoneChanged,
     required TResult orElse(),
   }) {
     if (uploadPhotos != null) {
@@ -1001,7 +1001,7 @@ class _$CreatePostPetTypeChanged implements CreatePostPetTypeChanged {
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
     required TResult Function(String description) descriptionChanged,
-    required TResult Function(String phone) phoneChanged,
+    required TResult Function(String phone, int phonePart) phoneChanged,
   }) {
     return petTypeChanged(petType);
   }
@@ -1021,7 +1021,7 @@ class _$CreatePostPetTypeChanged implements CreatePostPetTypeChanged {
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
     TResult? Function(String description)? descriptionChanged,
-    TResult? Function(String phone)? phoneChanged,
+    TResult? Function(String phone, int phonePart)? phoneChanged,
   }) {
     return petTypeChanged?.call(petType);
   }
@@ -1041,7 +1041,7 @@ class _$CreatePostPetTypeChanged implements CreatePostPetTypeChanged {
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
     TResult Function(String description)? descriptionChanged,
-    TResult Function(String phone)? phoneChanged,
+    TResult Function(String phone, int phonePart)? phoneChanged,
     required TResult orElse(),
   }) {
     if (petTypeChanged != null) {
@@ -1203,7 +1203,7 @@ class _$CreatePostBreedChanged implements CreatePostBreedChanged {
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
     required TResult Function(String description) descriptionChanged,
-    required TResult Function(String phone) phoneChanged,
+    required TResult Function(String phone, int phonePart) phoneChanged,
   }) {
     return breedChanged(breed);
   }
@@ -1223,7 +1223,7 @@ class _$CreatePostBreedChanged implements CreatePostBreedChanged {
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
     TResult? Function(String description)? descriptionChanged,
-    TResult? Function(String phone)? phoneChanged,
+    TResult? Function(String phone, int phonePart)? phoneChanged,
   }) {
     return breedChanged?.call(breed);
   }
@@ -1243,7 +1243,7 @@ class _$CreatePostBreedChanged implements CreatePostBreedChanged {
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
     TResult Function(String description)? descriptionChanged,
-    TResult Function(String phone)? phoneChanged,
+    TResult Function(String phone, int phonePart)? phoneChanged,
     required TResult orElse(),
   }) {
     if (breedChanged != null) {
@@ -1415,7 +1415,7 @@ class _$CreatePostColourChanged implements CreatePostColourChanged {
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
     required TResult Function(String description) descriptionChanged,
-    required TResult Function(String phone) phoneChanged,
+    required TResult Function(String phone, int phonePart) phoneChanged,
   }) {
     return colourChanged(colour);
   }
@@ -1435,7 +1435,7 @@ class _$CreatePostColourChanged implements CreatePostColourChanged {
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
     TResult? Function(String description)? descriptionChanged,
-    TResult? Function(String phone)? phoneChanged,
+    TResult? Function(String phone, int phonePart)? phoneChanged,
   }) {
     return colourChanged?.call(colour);
   }
@@ -1455,7 +1455,7 @@ class _$CreatePostColourChanged implements CreatePostColourChanged {
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
     TResult Function(String description)? descriptionChanged,
-    TResult Function(String phone)? phoneChanged,
+    TResult Function(String phone, int phonePart)? phoneChanged,
     required TResult orElse(),
   }) {
     if (colourChanged != null) {
@@ -1617,7 +1617,7 @@ class _$CreatePostWeightChanged implements CreatePostWeightChanged {
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
     required TResult Function(String description) descriptionChanged,
-    required TResult Function(String phone) phoneChanged,
+    required TResult Function(String phone, int phonePart) phoneChanged,
   }) {
     return weightChanged(weight);
   }
@@ -1637,7 +1637,7 @@ class _$CreatePostWeightChanged implements CreatePostWeightChanged {
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
     TResult? Function(String description)? descriptionChanged,
-    TResult? Function(String phone)? phoneChanged,
+    TResult? Function(String phone, int phonePart)? phoneChanged,
   }) {
     return weightChanged?.call(weight);
   }
@@ -1657,7 +1657,7 @@ class _$CreatePostWeightChanged implements CreatePostWeightChanged {
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
     TResult Function(String description)? descriptionChanged,
-    TResult Function(String phone)? phoneChanged,
+    TResult Function(String phone, int phonePart)? phoneChanged,
     required TResult orElse(),
   }) {
     if (weightChanged != null) {
@@ -1819,7 +1819,7 @@ class _$CreatePostSizeChanged implements CreatePostSizeChanged {
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
     required TResult Function(String description) descriptionChanged,
-    required TResult Function(String phone) phoneChanged,
+    required TResult Function(String phone, int phonePart) phoneChanged,
   }) {
     return sizeChanged(size);
   }
@@ -1839,7 +1839,7 @@ class _$CreatePostSizeChanged implements CreatePostSizeChanged {
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
     TResult? Function(String description)? descriptionChanged,
-    TResult? Function(String phone)? phoneChanged,
+    TResult? Function(String phone, int phonePart)? phoneChanged,
   }) {
     return sizeChanged?.call(size);
   }
@@ -1859,7 +1859,7 @@ class _$CreatePostSizeChanged implements CreatePostSizeChanged {
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
     TResult Function(String description)? descriptionChanged,
-    TResult Function(String phone)? phoneChanged,
+    TResult Function(String phone, int phonePart)? phoneChanged,
     required TResult orElse(),
   }) {
     if (sizeChanged != null) {
@@ -2021,7 +2021,7 @@ class _$CreatePostDateChanged implements CreatePostDateChanged {
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
     required TResult Function(String description) descriptionChanged,
-    required TResult Function(String phone) phoneChanged,
+    required TResult Function(String phone, int phonePart) phoneChanged,
   }) {
     return dateChanged(date);
   }
@@ -2041,7 +2041,7 @@ class _$CreatePostDateChanged implements CreatePostDateChanged {
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
     TResult? Function(String description)? descriptionChanged,
-    TResult? Function(String phone)? phoneChanged,
+    TResult? Function(String phone, int phonePart)? phoneChanged,
   }) {
     return dateChanged?.call(date);
   }
@@ -2061,7 +2061,7 @@ class _$CreatePostDateChanged implements CreatePostDateChanged {
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
     TResult Function(String description)? descriptionChanged,
-    TResult Function(String phone)? phoneChanged,
+    TResult Function(String phone, int phonePart)? phoneChanged,
     required TResult orElse(),
   }) {
     if (dateChanged != null) {
@@ -2225,7 +2225,7 @@ class _$CreatePostLocationChanged implements CreatePostLocationChanged {
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
     required TResult Function(String description) descriptionChanged,
-    required TResult Function(String phone) phoneChanged,
+    required TResult Function(String phone, int phonePart) phoneChanged,
   }) {
     return locationChanged(location);
   }
@@ -2245,7 +2245,7 @@ class _$CreatePostLocationChanged implements CreatePostLocationChanged {
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
     TResult? Function(String description)? descriptionChanged,
-    TResult? Function(String phone)? phoneChanged,
+    TResult? Function(String phone, int phonePart)? phoneChanged,
   }) {
     return locationChanged?.call(location);
   }
@@ -2265,7 +2265,7 @@ class _$CreatePostLocationChanged implements CreatePostLocationChanged {
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
     TResult Function(String description)? descriptionChanged,
-    TResult Function(String phone)? phoneChanged,
+    TResult Function(String phone, int phonePart)? phoneChanged,
     required TResult orElse(),
   }) {
     if (locationChanged != null) {
@@ -2430,7 +2430,7 @@ class _$CreatePostDescriptionChanged implements CreatePostDescriptionChanged {
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
     required TResult Function(String description) descriptionChanged,
-    required TResult Function(String phone) phoneChanged,
+    required TResult Function(String phone, int phonePart) phoneChanged,
   }) {
     return descriptionChanged(description);
   }
@@ -2450,7 +2450,7 @@ class _$CreatePostDescriptionChanged implements CreatePostDescriptionChanged {
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
     TResult? Function(String description)? descriptionChanged,
-    TResult? Function(String phone)? phoneChanged,
+    TResult? Function(String phone, int phonePart)? phoneChanged,
   }) {
     return descriptionChanged?.call(description);
   }
@@ -2470,7 +2470,7 @@ class _$CreatePostDescriptionChanged implements CreatePostDescriptionChanged {
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
     TResult Function(String description)? descriptionChanged,
-    TResult Function(String phone)? phoneChanged,
+    TResult Function(String phone, int phonePart)? phoneChanged,
     required TResult orElse(),
   }) {
     if (descriptionChanged != null) {
@@ -2561,7 +2561,7 @@ abstract class _$$CreatePostPhoneChangedCopyWith<$Res> {
           $Res Function(_$CreatePostPhoneChanged) then) =
       __$$CreatePostPhoneChangedCopyWithImpl<$Res>;
   @useResult
-  $Res call({String phone});
+  $Res call({String phone, int phonePart});
 }
 
 /// @nodoc
@@ -2576,12 +2576,17 @@ class __$$CreatePostPhoneChangedCopyWithImpl<$Res>
   @override
   $Res call({
     Object? phone = null,
+    Object? phonePart = null,
   }) {
     return _then(_$CreatePostPhoneChanged(
       phone: null == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String,
+      phonePart: null == phonePart
+          ? _value.phonePart
+          : phonePart // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -2589,14 +2594,23 @@ class __$$CreatePostPhoneChangedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$CreatePostPhoneChanged implements CreatePostPhoneChanged {
-  const _$CreatePostPhoneChanged({required this.phone});
+  const _$CreatePostPhoneChanged(
+      {required this.phone, required this.phonePart});
 
   @override
   final String phone;
 
+  /// An integer value representing which part of a 10-digit phone number
+  /// [phone] refers to.
+  ///
+  /// 0 refers to the first three digits, 1 refers to the following three
+  /// digits, and 2 refers to the last four digits in a 10-digit phone number.
+  @override
+  final int phonePart;
+
   @override
   String toString() {
-    return 'CreatePostEvent.phoneChanged(phone: $phone)';
+    return 'CreatePostEvent.phoneChanged(phone: $phone, phonePart: $phonePart)';
   }
 
   @override
@@ -2604,11 +2618,13 @@ class _$CreatePostPhoneChanged implements CreatePostPhoneChanged {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CreatePostPhoneChanged &&
-            (identical(other.phone, phone) || other.phone == phone));
+            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.phonePart, phonePart) ||
+                other.phonePart == phonePart));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, phone);
+  int get hashCode => Object.hash(runtimeType, phone, phonePart);
 
   @JsonKey(ignore: true)
   @override
@@ -2632,9 +2648,9 @@ class _$CreatePostPhoneChanged implements CreatePostPhoneChanged {
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(LatLng location) locationChanged,
     required TResult Function(String description) descriptionChanged,
-    required TResult Function(String phone) phoneChanged,
+    required TResult Function(String phone, int phonePart) phoneChanged,
   }) {
-    return phoneChanged(phone);
+    return phoneChanged(phone, phonePart);
   }
 
   @override
@@ -2652,9 +2668,9 @@ class _$CreatePostPhoneChanged implements CreatePostPhoneChanged {
     TResult? Function(DateTime date)? dateChanged,
     TResult? Function(LatLng location)? locationChanged,
     TResult? Function(String description)? descriptionChanged,
-    TResult? Function(String phone)? phoneChanged,
+    TResult? Function(String phone, int phonePart)? phoneChanged,
   }) {
-    return phoneChanged?.call(phone);
+    return phoneChanged?.call(phone, phonePart);
   }
 
   @override
@@ -2672,11 +2688,11 @@ class _$CreatePostPhoneChanged implements CreatePostPhoneChanged {
     TResult Function(DateTime date)? dateChanged,
     TResult Function(LatLng location)? locationChanged,
     TResult Function(String description)? descriptionChanged,
-    TResult Function(String phone)? phoneChanged,
+    TResult Function(String phone, int phonePart)? phoneChanged,
     required TResult orElse(),
   }) {
     if (phoneChanged != null) {
-      return phoneChanged(phone);
+      return phoneChanged(phone, phonePart);
     }
     return orElse();
   }
@@ -2748,10 +2764,18 @@ class _$CreatePostPhoneChanged implements CreatePostPhoneChanged {
 }
 
 abstract class CreatePostPhoneChanged implements CreatePostEvent {
-  const factory CreatePostPhoneChanged({required final String phone}) =
-      _$CreatePostPhoneChanged;
+  const factory CreatePostPhoneChanged(
+      {required final String phone,
+      required final int phonePart}) = _$CreatePostPhoneChanged;
 
   String get phone;
+
+  /// An integer value representing which part of a 10-digit phone number
+  /// [phone] refers to.
+  ///
+  /// 0 refers to the first three digits, 1 refers to the following three
+  /// digits, and 2 refers to the last four digits in a 10-digit phone number.
+  int get phonePart;
   @JsonKey(ignore: true)
   _$$CreatePostPhoneChangedCopyWith<_$CreatePostPhoneChanged> get copyWith =>
       throw _privateConstructorUsedError;
@@ -2772,7 +2796,9 @@ mixin _$CreatePostState {
   LocationLastSeen? get locationLastSeen => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   String? get contactEmail => throw _privateConstructorUsedError;
-  String? get contactPhone => throw _privateConstructorUsedError;
+  String? get contactPhoneStart => throw _privateConstructorUsedError;
+  String? get contactPhoneMiddle => throw _privateConstructorUsedError;
+  String? get contactPhoneEnd => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CreatePostStateCopyWith<CreatePostState> get copyWith =>
@@ -2799,7 +2825,9 @@ abstract class $CreatePostStateCopyWith<$Res> {
       LocationLastSeen? locationLastSeen,
       String? description,
       String? contactEmail,
-      String? contactPhone});
+      String? contactPhoneStart,
+      String? contactPhoneMiddle,
+      String? contactPhoneEnd});
 
   $PetColourCopyWith<$Res>? get colour;
   $LocationLastSeenCopyWith<$Res>? get locationLastSeen;
@@ -2831,7 +2859,9 @@ class _$CreatePostStateCopyWithImpl<$Res, $Val extends CreatePostState>
     Object? locationLastSeen = freezed,
     Object? description = freezed,
     Object? contactEmail = freezed,
-    Object? contactPhone = freezed,
+    Object? contactPhoneStart = freezed,
+    Object? contactPhoneMiddle = freezed,
+    Object? contactPhoneEnd = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -2886,9 +2916,17 @@ class _$CreatePostStateCopyWithImpl<$Res, $Val extends CreatePostState>
           ? _value.contactEmail
           : contactEmail // ignore: cast_nullable_to_non_nullable
               as String?,
-      contactPhone: freezed == contactPhone
-          ? _value.contactPhone
-          : contactPhone // ignore: cast_nullable_to_non_nullable
+      contactPhoneStart: freezed == contactPhoneStart
+          ? _value.contactPhoneStart
+          : contactPhoneStart // ignore: cast_nullable_to_non_nullable
+              as String?,
+      contactPhoneMiddle: freezed == contactPhoneMiddle
+          ? _value.contactPhoneMiddle
+          : contactPhoneMiddle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      contactPhoneEnd: freezed == contactPhoneEnd
+          ? _value.contactPhoneEnd
+          : contactPhoneEnd // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -2940,7 +2978,9 @@ abstract class _$$_CreatePostStateCopyWith<$Res>
       LocationLastSeen? locationLastSeen,
       String? description,
       String? contactEmail,
-      String? contactPhone});
+      String? contactPhoneStart,
+      String? contactPhoneMiddle,
+      String? contactPhoneEnd});
 
   @override
   $PetColourCopyWith<$Res>? get colour;
@@ -2972,7 +3012,9 @@ class __$$_CreatePostStateCopyWithImpl<$Res>
     Object? locationLastSeen = freezed,
     Object? description = freezed,
     Object? contactEmail = freezed,
-    Object? contactPhone = freezed,
+    Object? contactPhoneStart = freezed,
+    Object? contactPhoneMiddle = freezed,
+    Object? contactPhoneEnd = freezed,
   }) {
     return _then(_$_CreatePostState(
       status: null == status
@@ -3027,9 +3069,17 @@ class __$$_CreatePostStateCopyWithImpl<$Res>
           ? _value.contactEmail
           : contactEmail // ignore: cast_nullable_to_non_nullable
               as String?,
-      contactPhone: freezed == contactPhone
-          ? _value.contactPhone
-          : contactPhone // ignore: cast_nullable_to_non_nullable
+      contactPhoneStart: freezed == contactPhoneStart
+          ? _value.contactPhoneStart
+          : contactPhoneStart // ignore: cast_nullable_to_non_nullable
+              as String?,
+      contactPhoneMiddle: freezed == contactPhoneMiddle
+          ? _value.contactPhoneMiddle
+          : contactPhoneMiddle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      contactPhoneEnd: freezed == contactPhoneEnd
+          ? _value.contactPhoneEnd
+          : contactPhoneEnd // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -3052,7 +3102,9 @@ class _$_CreatePostState implements _CreatePostState {
       this.locationLastSeen,
       this.description,
       this.contactEmail,
-      this.contactPhone})
+      this.contactPhoneStart,
+      this.contactPhoneMiddle,
+      this.contactPhoneEnd})
       : _photoPaths = photoPaths;
 
   @override
@@ -3090,11 +3142,15 @@ class _$_CreatePostState implements _CreatePostState {
   @override
   final String? contactEmail;
   @override
-  final String? contactPhone;
+  final String? contactPhoneStart;
+  @override
+  final String? contactPhoneMiddle;
+  @override
+  final String? contactPhoneEnd;
 
   @override
   String toString() {
-    return 'CreatePostState(status: $status, postType: $postType, postTitle: $postTitle, photoPaths: $photoPaths, petType: $petType, breed: $breed, colour: $colour, weight: $weight, size: $size, dateLastSeen: $dateLastSeen, locationLastSeen: $locationLastSeen, description: $description, contactEmail: $contactEmail, contactPhone: $contactPhone)';
+    return 'CreatePostState(status: $status, postType: $postType, postTitle: $postTitle, photoPaths: $photoPaths, petType: $petType, breed: $breed, colour: $colour, weight: $weight, size: $size, dateLastSeen: $dateLastSeen, locationLastSeen: $locationLastSeen, description: $description, contactEmail: $contactEmail, contactPhoneStart: $contactPhoneStart, contactPhoneMiddle: $contactPhoneMiddle, contactPhoneEnd: $contactPhoneEnd)';
   }
 
   @override
@@ -3122,8 +3178,12 @@ class _$_CreatePostState implements _CreatePostState {
                 other.description == description) &&
             (identical(other.contactEmail, contactEmail) ||
                 other.contactEmail == contactEmail) &&
-            (identical(other.contactPhone, contactPhone) ||
-                other.contactPhone == contactPhone));
+            (identical(other.contactPhoneStart, contactPhoneStart) ||
+                other.contactPhoneStart == contactPhoneStart) &&
+            (identical(other.contactPhoneMiddle, contactPhoneMiddle) ||
+                other.contactPhoneMiddle == contactPhoneMiddle) &&
+            (identical(other.contactPhoneEnd, contactPhoneEnd) ||
+                other.contactPhoneEnd == contactPhoneEnd));
   }
 
   @override
@@ -3142,7 +3202,9 @@ class _$_CreatePostState implements _CreatePostState {
       locationLastSeen,
       description,
       contactEmail,
-      contactPhone);
+      contactPhoneStart,
+      contactPhoneMiddle,
+      contactPhoneEnd);
 
   @JsonKey(ignore: true)
   @override
@@ -3166,7 +3228,9 @@ abstract class _CreatePostState implements CreatePostState {
       final LocationLastSeen? locationLastSeen,
       final String? description,
       final String? contactEmail,
-      final String? contactPhone}) = _$_CreatePostState;
+      final String? contactPhoneStart,
+      final String? contactPhoneMiddle,
+      final String? contactPhoneEnd}) = _$_CreatePostState;
 
   @override
   Status get status;
@@ -3195,7 +3259,11 @@ abstract class _CreatePostState implements CreatePostState {
   @override
   String? get contactEmail;
   @override
-  String? get contactPhone;
+  String? get contactPhoneStart;
+  @override
+  String? get contactPhoneMiddle;
+  @override
+  String? get contactPhoneEnd;
   @override
   @JsonKey(ignore: true)
   _$$_CreatePostStateCopyWith<_$_CreatePostState> get copyWith =>

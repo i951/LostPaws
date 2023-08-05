@@ -104,6 +104,16 @@ class LostPawsText extends ThemeExtension<LostPawsText> {
     );
   }
 
+  /// Regular semibold text, 16pt semiBold.
+  TextStyle get primarySemiBoldWhite {
+    return const TextStyle(
+      fontWeight: FontWeight.w600,
+      fontSize: 16,
+      height: 1.5,
+      color: Colors.white,
+    );
+  }
+
   /// Regular semibold text in dark green, 16pt semiBold.
   TextStyle get primarySemiBoldGreen {
     return const TextStyle(

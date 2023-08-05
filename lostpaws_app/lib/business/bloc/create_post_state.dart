@@ -18,6 +18,8 @@ class CreatePostState with _$CreatePostState {
     LocationLastSeen? locationLastSeen,
     String? description,
     String? contactEmail,
-    String? contactPhone,
+    String? contactPhoneStart,
+    String? contactPhoneMiddle,
+    String? contactPhoneEnd,
   }) = _CreatePostState;
 }

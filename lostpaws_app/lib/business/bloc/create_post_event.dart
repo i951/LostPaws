@@ -49,5 +49,12 @@ class CreatePostEvent with _$CreatePostEvent {
 
   const factory CreatePostEvent.phoneChanged({
     required String phone,
+
+    /// An integer value representing which part of a 10-digit phone number
+    /// [phone] refers to.
+    ///
+    /// 0 refers to the first three digits, 1 refers to the following three
+    /// digits, and 2 refers to the last four digits in a 10-digit phone number.
+    required int phonePart,
   }) = CreatePostPhoneChanged;
 }

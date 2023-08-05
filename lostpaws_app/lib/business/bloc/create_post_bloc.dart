@@ -185,13 +185,24 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     Emitter<CreatePostState> emit,
   ) {
     emit(state.copyWith(description: event.description));
-    print(state.description);
   }
 
   void onCreatePostPhoneChanged(
     CreatePostPhoneChanged event,
     Emitter<CreatePostState> emit,
   ) {
-    print(event.phone);
+    switch (event.phonePart) {
+      case 0:
+        emit(state.copyWith(contactPhoneStart: event.phone));
+        break;
+      case 1:
+        emit(state.copyWith(contactPhoneMiddle: event.phone));
+        break;
+      case 2:
+        emit(state.copyWith(contactPhoneEnd: event.phone));
+        break;
+      default:
+        throw UnimplementedError('Invalid value for variable phonePart');
+    }
   }
 }
