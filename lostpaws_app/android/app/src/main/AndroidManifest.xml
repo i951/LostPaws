@@ -9,7 +9,11 @@
 
     <!-- Permissions options for allowing the app to access the internet -->
     <uses-permission android:name="android.permission.INTERNET"/>
-   
+
+    <!-- Permissions options for allowing access to media gallery -->
+   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
+   <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+
    <application
         android:label="lostpaws_app"
         android:name="${applicationName}"

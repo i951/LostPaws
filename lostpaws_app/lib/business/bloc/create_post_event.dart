@@ -28,7 +28,7 @@ class CreatePostEvent with _$CreatePostEvent {
   }) = CreatePostColourChanged;
 
   const factory CreatePostEvent.weightChanged({
-    required double weight,
+    required String weight,
   }) = CreatePostWeightChanged;
 
   const factory CreatePostEvent.sizeChanged({
@@ -57,4 +57,12 @@ class CreatePostEvent with _$CreatePostEvent {
     /// digits, and 2 refers to the last four digits in a 10-digit phone number.
     required int phonePart,
   }) = CreatePostPhoneChanged;
+
+  const factory CreatePostEvent.setAutovalidate() = CreatePostSetAutovalidate;
+
+  const factory CreatePostEvent.sendToServer({
+    required String? userName,
+    required String userId,
+    required String contactEmail,
+  }) = CreatePostSendToServer;
 }

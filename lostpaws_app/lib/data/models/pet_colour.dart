@@ -80,7 +80,7 @@ enum PetColours {
 
   red(
     0xFFFF5722,
-    "red",
+    "Red",
   );
 
   final int hexValue;

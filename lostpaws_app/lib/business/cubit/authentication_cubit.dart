@@ -95,6 +95,8 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       final UserCredential authResult =
           await FirebaseAuth.instance.signInWithCredential(credential);
 
+      print("Check if user's name exists: ${authResult.user!.displayName!}");
+
       emit(state.copyWith(
         status: LoginFormStatus.submissionSuccess,
         errorMessage: null,

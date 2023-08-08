@@ -1,4 +1,6 @@
-import 'package:beamer/beamer.dart';
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -8,8 +10,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:lostpaws_app/business/bloc/create_post_bloc.dart';
+import 'package:lostpaws_app/business/cubit/authentication_cubit.dart';
 import 'package:lostpaws_app/data/models/pet_colour.dart';
-import 'package:lostpaws_app/presentation/components/custom_text_field.dart';
 import 'package:lostpaws_app/presentation/components/custom_toggle_buttons.dart';
 import 'package:lostpaws_app/presentation/components/date_picker.dart';
 import 'package:lostpaws_app/presentation/components/location_picker.dart';
@@ -17,7 +19,6 @@ import 'package:lostpaws_app/presentation/components/pet_size_dropdown_menu.dart
 import 'package:lostpaws_app/presentation/components/pet_size_info.dart';
 import 'package:lostpaws_app/presentation/components/custom_tooltip.dart';
 import 'package:lostpaws_app/presentation/constants.dart';
-import 'package:lostpaws_app/presentation/routes/home_locations.dart';
 import 'package:lostpaws_app/presentation/size_config.dart';
 import 'package:lostpaws_app/presentation/theme/lostpaws_text.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -30,9 +31,11 @@ class CreatePostingScreen extends StatefulWidget {
 }
 
 class _CreatePostingScreenState extends State<CreatePostingScreen> {
+  final _formkey = GlobalKey<FormState>();
   bool isLoading = false;
   final ImagePicker picker = ImagePicker();
-  List<XFile> images = [];
+  List<XFile> pickedImages = [];
+  List<String> pickedImagePaths = [];
   final datePicker = const DatePicker();
   Color pickerColor = Color(PetColours.values.first.hexValue);
 
@@ -99,6 +102,7 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                   SizedBox(
                     width: getProportionateScreenWidth(300),
                     child: Form(
+                      key: _formkey,
                       child: BlocProvider(
                         create: (context) => CreatePostBloc(),
                         child: BlocBuilder<CreatePostBloc, CreatePostState>(
@@ -132,8 +136,9 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                     fillColor: Colors.white,
                                     filled: true,
                                   ),
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
+                                  autovalidateMode: state.autoValidate
+                                      ? AutovalidateMode.onUserInteraction
+                                      : null,
                                   validator: FormBuilderValidators.compose([
                                     FormBuilderValidators.required(),
                                   ]),
@@ -173,8 +178,93 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                   children: [
                                     ElevatedButton(
                                       onPressed: () async {
-                                        images = await picker.pickMultiImage();
-                                        print('picking image');
+                                        var permissionsGranted = false;
+
+                                        if (Platform.isAndroid) {
+                                          final androidInfo =
+                                              await DeviceInfoPlugin()
+                                                  .androidInfo;
+                                          if (androidInfo.version.sdkInt <=
+                                              32) {
+                                            if (await Permission.storage
+                                                .request()
+                                                .isGranted) {
+                                              permissionsGranted = true;
+                                            }
+                                          } else {
+                                            if (await Permission.photos
+                                                .request()
+                                                .isGranted) {
+                                              permissionsGranted = true;
+                                            }
+                                          }
+                                        } else if (Platform.isIOS) {
+                                          // TODO: handle other platforms
+                                        }
+
+                                        if (permissionsGranted) {
+                                          // Check for MainActivity destruction
+                                          // https://pub.dev/packages/image_picker
+                                          final LostDataResponse response =
+                                              await picker.retrieveLostData();
+
+                                          if (response.isEmpty) {
+                                            // No data lost, open image picker
+                                            final images =
+                                                await picker.pickMultiImage();
+
+                                            setState(() {
+                                              for (var image in images) {
+                                                if (!pickedImages
+                                                    .contains(image)) {
+                                                  pickedImages.add(image);
+                                                  pickedImagePaths
+                                                      .add(image.path);
+
+                                                  context
+                                                      .read<CreatePostBloc>()
+                                                      .add(CreatePostEvent
+                                                          .uploadPhotos(
+                                                              photos:
+                                                                  pickedImagePaths));
+                                                }
+                                              }
+                                            });
+                                          }
+
+                                          // Data was lost, so retrieve it first
+                                          final List<XFile>? files =
+                                              response.files;
+
+                                          if (files != null) {
+                                            setState(() async {
+                                              pickedImages = List.from(files);
+                                            });
+                                          } else {
+                                            // TODO: handle error
+                                            print(response.exception);
+                                          }
+                                        } else {
+                                          if (mounted) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'Storage permissions are denied, please '
+                                                  'allow access to photos to continue.',
+                                                  style: const LostPawsText()
+                                                      .primaryRegularWhite,
+                                                ),
+                                                action: SnackBarAction(
+                                                  label: 'GO TO SETTINGS',
+                                                  onPressed: () async {
+                                                    await openAppSettings();
+                                                  },
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        }
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor:
@@ -201,6 +291,38 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                     ),
                                   ],
                                 ),
+                                pickedImages.isEmpty
+                                    ? const Padding(
+                                        padding: EdgeInsets.all(8.0))
+                                    : Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: defaultPadding),
+                                        child: SizedBox(
+                                          height: 100,
+                                          child: ListView.builder(
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount:
+                                                  pickedImagePaths.length,
+                                              itemBuilder: (context, index) {
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          right:
+                                                              defaultPadding),
+                                                  child: SizedBox(
+                                                    width: 100,
+                                                    height: 100,
+                                                    child: Image.file(
+                                                      File(pickedImagePaths[
+                                                          index]),
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
+                                        ),
+                                      ),
                                 Text(
                                   "Pet Type",
                                   style:
@@ -233,8 +355,9 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                       fillColor: Colors.white,
                                       filled: true,
                                     ),
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
+                                    autovalidateMode: state.autoValidate
+                                        ? AutovalidateMode.onUserInteraction
+                                        : null,
                                     validator: FormBuilderValidators.compose([
                                       FormBuilderValidators.required(),
                                     ]),
@@ -374,21 +497,44 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                       : '',
                                   style: const LostPawsText().primarySemiBold,
                                 ),
-                                CustomTextField(
-                                  title: "Weight",
-                                  hintText: '4.5',
-                                  width: 120,
-                                  keyboardType: TextInputType.text,
-                                  validator: FormBuilderValidators.compose([
-                                    FormBuilderValidators.numeric(
-                                        errorText:
-                                            'Please enter a valid number'),
-                                  ]),
-                                  extraText: "kg",
-                                  onChanged: (weight) => context
-                                      .read<CreatePostBloc>()
-                                      .add(CreatePostWeightChanged(
-                                          weight: weight)),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: TextFormField(
+                                        keyboardType: const TextInputType
+                                            .numberWithOptions(decimal: true),
+                                        decoration: const InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          hintText: '4.5',
+                                          fillColor: Colors.white,
+                                          filled: true,
+                                        ),
+                                        autovalidateMode: state.autoValidate
+                                            ? AutovalidateMode.onUserInteraction
+                                            : null,
+                                        validator:
+                                            FormBuilderValidators.compose([
+                                          FormBuilderValidators.numeric(
+                                              errorText:
+                                                  'Please enter a valid number.'),
+                                        ]),
+                                        onChanged: (weight) =>
+                                            context.read<CreatePostBloc>().add(
+                                                  CreatePostWeightChanged(
+                                                      weight: weight),
+                                                ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: defaultPadding),
+                                      child: Text(
+                                        'kg',
+                                        style: const LostPawsText()
+                                            .primarySemiBoldGreen,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 Text(
                                   "Size",
@@ -523,8 +669,6 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                                   .requestPermission();
                                               if (permission ==
                                                   LocationPermission.denied) {
-                                                print(
-                                                    'Location permissions are denied');
                                                 if (mounted) {
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(
@@ -725,11 +869,17 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                     filled: true,
                                     contentPadding: const EdgeInsets.all(8.0),
                                   ),
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
+                                  autovalidateMode: state.autoValidate
+                                      ? AutovalidateMode.onUserInteraction
+                                      : null,
                                   validator: FormBuilderValidators.compose([
                                     FormBuilderValidators.required(),
                                   ]),
+                                  onChanged: (description) {
+                                    context.read<CreatePostBloc>().add(
+                                        CreatePostDescriptionChanged(
+                                            description: description));
+                                  },
                                 ),
                                 Text(
                                   'Contact Email',
@@ -741,10 +891,15 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      'example@email.com',
-                                      style:
-                                          const LostPawsText().primarySemiBold,
+                                    BlocBuilder<AuthenticationCubit,
+                                        AuthenticationState>(
+                                      builder: (context, state) {
+                                        return Text(
+                                          state.email,
+                                          style: const LostPawsText()
+                                              .primarySemiBold,
+                                        );
+                                      },
                                     ),
                                     Tooltip(
                                       richMessage: TextSpan(
@@ -799,18 +954,18 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                           fillColor: Colors.white,
                                           filled: true,
                                         ),
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        onChanged: (title) => context
+                                        onChanged: (phone) => context
                                             .read<CreatePostBloc>()
-                                            .add(CreatePostTitleChanged(
-                                                title: title)),
+                                            .add(CreatePostEvent.phoneChanged(
+                                              phone: phone,
+                                              phonePart: 0,
+                                            )),
                                       ),
                                     ),
                                     Text(
                                       ' - ',
-                                      style:
-                                          LostPawsText().primarySemiBoldGreen,
+                                      style: const LostPawsText()
+                                          .primarySemiBoldGreen,
                                     ),
                                     SizedBox(
                                       width: 80,
@@ -822,18 +977,18 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                           fillColor: Colors.white,
                                           filled: true,
                                         ),
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        onChanged: (title) => context
+                                        onChanged: (phone) => context
                                             .read<CreatePostBloc>()
-                                            .add(CreatePostTitleChanged(
-                                                title: title)),
+                                            .add(CreatePostEvent.phoneChanged(
+                                              phone: phone,
+                                              phonePart: 1,
+                                            )),
                                       ),
                                     ),
                                     Text(
                                       ' - ',
-                                      style:
-                                          LostPawsText().primarySemiBoldGreen,
+                                      style: const LostPawsText()
+                                          .primarySemiBoldGreen,
                                     ),
                                     SizedBox(
                                       width: 90,
@@ -845,12 +1000,12 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                           fillColor: Colors.white,
                                           filled: true,
                                         ),
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        onChanged: (title) => context
+                                        onChanged: (phone) => context
                                             .read<CreatePostBloc>()
-                                            .add(CreatePostTitleChanged(
-                                                title: title)),
+                                            .add(CreatePostEvent.phoneChanged(
+                                              phone: phone,
+                                              phonePart: 2,
+                                            )),
                                       ),
                                     ),
                                   ],
@@ -858,33 +1013,73 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                 Row(
                                   children: [
                                     Expanded(
-                                      child: TextButton(
-                                        style: TextButton.styleFrom(
-                                          padding: EdgeInsets.symmetric(
-                                            vertical:
-                                                getProportionateScreenHeight(
-                                                    15),
-                                            horizontal:
-                                                getProportionateScreenWidth(70),
-                                          ),
-                                          backgroundColor:
-                                              ConstColors.darkOrange,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(13),
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          Beamer.of(context, root: true)
-                                              .beamToNamed(
-                                                  HomeLocations.homeRoute);
-                                        },
-                                        child: Text(
-                                          'Post',
-                                          style: const LostPawsText()
-                                              .primarySemiBold,
-                                        ),
-                                      ),
+                                      child: state.status ==
+                                              CreatePostStatus
+                                                  .submissionInProgress
+                                          ? Text("loading...")
+                                          : TextButton(
+                                              style: TextButton.styleFrom(
+                                                padding: EdgeInsets.symmetric(
+                                                  vertical:
+                                                      getProportionateScreenHeight(
+                                                          15),
+                                                  horizontal:
+                                                      getProportionateScreenWidth(
+                                                          70),
+                                                ),
+                                                backgroundColor:
+                                                    ConstColors.darkOrange,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(13),
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                if (!state.autoValidate) {
+                                                  context
+                                                      .read<CreatePostBloc>()
+                                                      .add(
+                                                          const CreatePostSetAutovalidate());
+
+                                                  if (!_formkey.currentState!
+                                                      .validate()) {
+                                                    return;
+                                                  }
+                                                }
+
+                                                final userName = context
+                                                    .read<AuthenticationCubit>()
+                                                    .state
+                                                    .user!
+                                                    .displayName;
+
+                                                final userId = context
+                                                    .read<AuthenticationCubit>()
+                                                    .state
+                                                    .user!
+                                                    .uid;
+
+                                                final contactEmail = context
+                                                    .read<AuthenticationCubit>()
+                                                    .state
+                                                    .email;
+
+                                                context
+                                                    .read<CreatePostBloc>()
+                                                    .add(CreatePostEvent
+                                                        .sendToServer(
+                                                      userName: userName,
+                                                      userId: userId,
+                                                      contactEmail:
+                                                          contactEmail,
+                                                    ));
+                                              },
+                                              child: Text(
+                                                'Post',
+                                                style: const LostPawsText()
+                                                    .primarySemiBold,
+                                              ),
+                                            ),
                                     ),
                                   ],
                                 ),
