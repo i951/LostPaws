@@ -19,6 +19,7 @@ import 'package:lostpaws_app/presentation/components/location_picker.dart';
 import 'package:lostpaws_app/presentation/components/pet_size_dropdown_menu.dart';
 import 'package:lostpaws_app/presentation/components/pet_size_info.dart';
 import 'package:lostpaws_app/presentation/components/custom_tooltip.dart';
+import 'package:lostpaws_app/presentation/components/uploaded_photo_preview.dart';
 import 'package:lostpaws_app/presentation/constants.dart';
 import 'package:lostpaws_app/presentation/size_config.dart';
 import 'package:lostpaws_app/presentation/theme/lostpaws_text.dart';
@@ -259,7 +260,6 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                               pickedImages = List.from(files);
                                             });
                                           } else {
-                                            // TODO: handle error
                                             print(response.exception);
                                           }
                                         } else {
@@ -314,9 +314,9 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                         padding: EdgeInsets.all(8.0))
                                     : Padding(
                                         padding: const EdgeInsets.symmetric(
-                                            vertical: defaultPadding),
+                                            vertical: 10),
                                         child: SizedBox(
-                                          height: 100,
+                                          height: 140,
                                           child: ListView.builder(
                                               shrinkWrap: true,
                                               scrollDirection: Axis.horizontal,
@@ -325,17 +325,27 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                               itemBuilder: (context, index) {
                                                 return Padding(
                                                   padding:
-                                                      const EdgeInsets.only(
-                                                          right:
-                                                              defaultPadding),
-                                                  child: SizedBox(
-                                                    width: 100,
-                                                    height: 100,
-                                                    child: Image.file(
-                                                      File(pickedImagePaths[
-                                                          index]),
-                                                      fit: BoxFit.cover,
-                                                    ),
+                                                      const EdgeInsets.all(8.0),
+                                                  child: UploadedPhotoPreview(
+                                                    imagePath:
+                                                        pickedImagePaths[index],
+                                                    imageIndex: index,
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        pickedImages
+                                                            .removeAt(index);
+                                                        pickedImagePaths
+                                                            .removeAt(index);
+
+                                                        context
+                                                            .read<
+                                                                CreatePostBloc>()
+                                                            .add(CreatePostEvent
+                                                                .uploadPhotos(
+                                                                    photos:
+                                                                        pickedImagePaths));
+                                                      });
+                                                    },
                                                   ),
                                                 );
                                               }),
