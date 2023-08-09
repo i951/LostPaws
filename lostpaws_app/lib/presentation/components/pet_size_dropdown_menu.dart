@@ -5,11 +5,8 @@ import 'package:lostpaws_app/presentation/constants.dart';
 import 'package:lostpaws_app/presentation/theme/lostpaws_text.dart';
 
 class PetSizeDropdownMenu extends StatefulWidget {
-  final void Function(String?)? handleOnChanged;
-
   const PetSizeDropdownMenu({
     super.key,
-    required this.handleOnChanged,
   });
 
   @override
@@ -22,12 +19,14 @@ class _PetSizeDropdownMenuState extends State<PetSizeDropdownMenu> {
   @override
   Widget build(BuildContext context) {
     return DropdownButton(
+      style: const LostPawsText().primaryRegularGrey,
+      dropdownColor: ConstColors.lightOrange,
       isExpanded: true,
       hint: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Text(
           'select size',
-          style: LostPawsText().primarySmallerGrey,
+          style: const LostPawsText().primarySmallerGrey,
         ),
       ),
       value: selectedSize,
@@ -64,13 +63,22 @@ class _PetSizeDropdownMenuState extends State<PetSizeDropdownMenu> {
             child: Text("Large"),
           ),
         ),
+        DropdownMenuItem(
+          value: null,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: defaultPadding),
+            child: Text("N/A"),
+          ),
+        ),
       ],
       onChanged: (size) {
         setState(() {
           selectedSize = size;
         });
 
-        context.read<CreatePostBloc>().add(CreatePostSizeChanged(size: size!));
+        context
+            .read<CreatePostBloc>()
+            .add(CreatePostSizeChanged(size: size ?? ""));
       },
     );
   }

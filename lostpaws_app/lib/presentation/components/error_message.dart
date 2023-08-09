@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lostpaws_app/presentation/constants.dart';
 import 'package:lostpaws_app/presentation/theme/lostpaws_text.dart';
@@ -19,7 +18,9 @@ class ErrorMessage extends StatelessWidget {
           height: 10,
         ),
         Container(
-          padding: const EdgeInsets.all(7),
+          width: MediaQuery.of(context).size.width - 80,
+          height: 80,
+          padding: const EdgeInsets.all(10),
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
             color: ConstColors.red,

@@ -1,10 +1,5 @@
-import 'package:beamer/beamer.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lostpaws_app/business/cubit/authentication_cubit.dart';
 import 'package:lostpaws_app/presentation/constants.dart';
-import 'package:lostpaws_app/presentation/routes/unauthenticated_locations.dart';
 import 'package:lostpaws_app/presentation/size_config.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {

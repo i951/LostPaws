@@ -6,7 +6,6 @@ import 'package:lostpaws_app/presentation/components/navigation_buttons.dart';
 import 'package:lostpaws_app/presentation/constants.dart';
 import 'package:lostpaws_app/presentation/routes/home_locations.dart';
 import 'package:lostpaws_app/presentation/routes/unauthenticated_locations.dart';
-import 'package:lostpaws_app/presentation/size_config.dart';
 import 'package:lostpaws_app/presentation/theme/lostpaws_text.dart';
 
 class CustomNavigationButton extends StatelessWidget {
@@ -137,7 +136,7 @@ class SettingsAlertDialog extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             foregroundColor: Colors.white,
             backgroundColor: ConstColors.mediumGreen,
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),

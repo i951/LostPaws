@@ -22,13 +22,9 @@ void main() async {
   // Make sure Flutter is initialized before calling native code
   WidgetsFlutterBinding.ensureInitialized();
 
-  // TODO: uncomment after. Currently using code below to test with emulator
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  // await Firebase.initializeApp();
-  // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
 
   //Lock the orientation to portrait mode only.
   await SystemChrome.setPreferredOrientations([

@@ -74,6 +74,10 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     } else {
       throw UnimplementedError("Post type not supported");
     }
+
+    final Map<ErrorType, String> newFormErrors = Map.from(state.formErrors);
+    newFormErrors.remove(ErrorType.missingPostType);
+    emit(state.copyWith(formErrors: newFormErrors));
   }
 
   void onCreatePostTitleChanged(
@@ -114,7 +118,9 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
       throw UnimplementedError("Post type not supported");
     }
 
-    print("state's pet type: ${state.petType}");
+    final Map<ErrorType, String> newFormErrors = Map.from(state.formErrors);
+    newFormErrors.remove(ErrorType.missingPetType);
+    emit(state.copyWith(formErrors: newFormErrors));
   }
 
   void onCreatePostBreedChanged(
@@ -149,7 +155,15 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     CreatePostDateChanged event,
     Emitter<CreatePostState> emit,
   ) {
-    emit(state.copyWith(dateLastSeen: event.date));
+    final Map<ErrorType, String> newFormErrors = Map.from(state.formErrors);
+    newFormErrors.remove(ErrorType.missingDate);
+
+    emit(
+      state.copyWith(
+        dateLastSeen: event.date,
+        formErrors: newFormErrors,
+      ),
+    );
   }
 
   Future<void> onCreatePostLocationChanged(
@@ -165,6 +179,9 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
 
     final address = placemarks.first;
 
+    final Map<ErrorType, String> newFormErrors = Map.from(state.formErrors);
+    newFormErrors.remove(ErrorType.missingLocation);
+
     // If any fields are null, set it as an empty string
     emit(
       state.copyWith(
@@ -178,6 +195,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
           country: address.country ?? '',
           postalCode: address.postalCode ?? '',
         ),
+        formErrors: newFormErrors,
       ),
     );
   }
@@ -193,6 +211,11 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     CreatePostPhoneChanged event,
     Emitter<CreatePostState> emit,
   ) {
+    final Map<ErrorType, String> newFormErrors = Map.from(state.formErrors);
+    newFormErrors.remove(ErrorType.invalidPhone);
+
+    emit(state.copyWith(formErrors: newFormErrors));
+
     switch (event.phonePart) {
       case 0:
         emit(state.copyWith(contactPhoneStart: event.phone));
@@ -212,14 +235,57 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     CreatePostSendToServer event,
     Emitter<CreatePostState> emit,
   ) {
-    String? fullContactPhone;
+    if (state.formErrors.isNotEmpty) {
+      return;
+    }
+
+    emit(state.copyWith(status: CreatePostStatus.submissionInProgress));
+
+    final f = DateFormat('yyyy-MM-dd');
+    final formattedDate = f.format(state.dateLastSeen!);
+
+    final jsonString = jsonEncode({
+      "userID": event.userId,
+      "userName": event.userName,
+      "postType": state.postType!.value,
+      "postTitle": state.postTitle,
+      "photos": state.photoPaths, // OPTIONAL, might remove later
+      "petType": state.petType!.value,
+      "breed": state.breed,
+      "colour": state.colour,
+      "weight": state.weight,
+      "size": state.size,
+      "dateLastSeen": formattedDate,
+      "locationLastSeen": state.locationLastSeen,
+      "description": state.description,
+      "contactEmail": event.contactEmail,
+      "contactPhone": state.contactPhoneFull,
+    });
+
+    // TOOD: send to server
+    print(jsonString);
+
+    emit(state.copyWith(status: CreatePostStatus.submissionSuccess));
+  }
+
+  void onCreatePostSetAutovalidate(
+    CreatePostSetAutovalidate event,
+    Emitter<CreatePostState> emit,
+  ) {
+    if (!state.autoValidate ||
+        state.status == CreatePostStatus.submissionFailure) {
+      emit(state.copyWith(autoValidate: true));
+    }
+
+    final Map<ErrorType, String> newFormErrors = Map.from(state.formErrors);
+    String? contactPhoneFull;
 
     // Checking for a valid phone number if user provides a number
     if (state.contactPhoneStart == null &&
         state.contactPhoneMiddle == null &&
         state.contactPhoneEnd == null) {
       // Here the user has chosen to not provide a number
-      fullContactPhone = null;
+      contactPhoneFull = null;
     } else if (state.contactPhoneStart != null &&
         state.contactPhoneStart!.isNotEmpty &&
         state.contactPhoneMiddle != null &&
@@ -235,75 +301,63 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
 
         // Check the length of the digits provided
         if (start < 100 || start > 999 || middle < 100 || middle > 999) {
-          emit(state.copyWith(
-              status: CreatePostStatus.invalidPhone,
-              error: "Please ensure you provide a valid phone number."));
+          newFormErrors[ErrorType.invalidPhone] =
+              "Please ensure you provide a valid phone number according to the format provided.";
         }
         if (end < 1000 || end > 9999) {
-          emit(state.copyWith(
-              status: CreatePostStatus.invalidPhone,
-              error: "Please ensure you provide a valid phone number."));
+          newFormErrors[ErrorType.invalidPhone] =
+              "Please ensure you provide a valid phone number according to the format provided.";
         }
       } catch (_) {
-        emit(state.copyWith(
-          status: CreatePostStatus.invalidPhone,
-          error: "Please enter only numerical values for your phone number.",
-        ));
+        newFormErrors[ErrorType.invalidPhone] =
+            "Please enter only numerical values for your phone number.";
       }
 
-      fullContactPhone = state.contactPhoneStart! +
+      contactPhoneFull = state.contactPhoneStart! +
           state.contactPhoneMiddle! +
           state.contactPhoneEnd!;
     } else {
       // Otherwise, the user has forgotten to fill in one of the phone number
       // fields
-      emit(state.copyWith(
-          status: CreatePostStatus.invalidPhone,
-          error: "Please ensure all phone number fields are filled in."));
+      newFormErrors[ErrorType.invalidPhone] =
+          "Please ensure all phone number fields are filled in.";
     }
 
-    emit(state.copyWith(
-      status: CreatePostStatus.submissionInProgress,
-      error: null,
-    ));
+    // Finally, check all the other fields
+    if (state.postType == null) {
+      newFormErrors[ErrorType.missingPostType] = "Please select a post type.";
+    }
 
-    final f = DateFormat('yyyy-MM-dd');
-    final formattedDate = f.format(
-        state.dateLastSeen == null ? DateTime.now() : state.dateLastSeen!);
+    if (state.petType == null) {
+      newFormErrors[ErrorType.missingPetType] =
+          "Please select the type of animal.";
+    }
 
-    final jsonString = jsonEncode({
-      "userID": event.userId,
-      "userName": event.userName,
-      "postType": state.postType?.value,
-      "postTitle": state.postTitle,
-      "photos": state.photoPaths,
-      "petType": state.petType?.value,
-      "breed": state.breed,
-      "colour": state.colour,
-      "weight": state.weight,
-      "size": state.size,
-      "dateLastSeen": formattedDate,
-      "locationLastSeen": state.locationLastSeen,
-      "description": state.description,
-      "contactEmail": event.contactEmail,
-      "contactPhone": fullContactPhone,
-    });
+    if (state.dateLastSeen == null) {
+      newFormErrors[ErrorType.missingDate] =
+          "Please provide the date you last saw the animal.";
+    }
 
-    print(jsonString);
+    if (state.locationLastSeen == null) {
+      newFormErrors[ErrorType.missingLocation] =
+          "Please select the place where you last saw the animal.";
+    }
 
-    emit(state.copyWith(
-      status: CreatePostStatus.submissionSuccess,
-      error: null,
-    ));
-  }
+    if (newFormErrors.isNotEmpty) {
+      emit(
+        state.copyWith(
+          status: CreatePostStatus.submissionFailure,
+          formErrors: newFormErrors,
+          autoValidate: false,
+        ),
+      );
 
-  void onCreatePostSetAutovalidate(
-    CreatePostSetAutovalidate event,
-    Emitter<CreatePostState> emit,
-  ) {
-    if (!state.autoValidate ||
-        state.status == CreatePostStatus.submissionFailure) {
-      emit(state.copyWith(autoValidate: true));
+      return;
+    } else {
+      emit(state.copyWith(
+        autoValidate: false,
+        contactPhoneFull: contactPhoneFull,
+      ));
     }
   }
 }

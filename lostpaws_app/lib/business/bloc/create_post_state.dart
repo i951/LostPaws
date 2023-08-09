@@ -5,6 +5,13 @@ enum CreatePostStatus {
   submissionInProgress,
   submissionSuccess,
   submissionFailure,
+}
+
+enum ErrorType {
+  missingPostType,
+  missingPetType,
+  missingDate,
+  missingLocation,
   invalidPhone,
 }
 
@@ -12,7 +19,7 @@ enum CreatePostStatus {
 class CreatePostState with _$CreatePostState {
   const factory CreatePostState({
     @Default(CreatePostStatus.initial) CreatePostStatus status,
-    String? error,
+    @Default({}) Map<ErrorType, String> formErrors,
     @Default(false) bool autoValidate,
     PostTypeOption? postType,
     @Default("") String postTitle,
@@ -28,5 +35,6 @@ class CreatePostState with _$CreatePostState {
     String? contactPhoneStart,
     String? contactPhoneMiddle,
     String? contactPhoneEnd,
+    String? contactPhoneFull,
   }) = _CreatePostState;
 }

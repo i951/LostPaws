@@ -3438,7 +3438,7 @@ abstract class CreatePostSendToServer implements CreatePostEvent {
 /// @nodoc
 mixin _$CreatePostState {
   CreatePostStatus get status => throw _privateConstructorUsedError;
-  String? get error => throw _privateConstructorUsedError;
+  Map<ErrorType, String> get formErrors => throw _privateConstructorUsedError;
   bool get autoValidate => throw _privateConstructorUsedError;
   PostTypeOption? get postType => throw _privateConstructorUsedError;
   String get postTitle => throw _privateConstructorUsedError;
@@ -3454,6 +3454,7 @@ mixin _$CreatePostState {
   String? get contactPhoneStart => throw _privateConstructorUsedError;
   String? get contactPhoneMiddle => throw _privateConstructorUsedError;
   String? get contactPhoneEnd => throw _privateConstructorUsedError;
+  String? get contactPhoneFull => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CreatePostStateCopyWith<CreatePostState> get copyWith =>
@@ -3468,7 +3469,7 @@ abstract class $CreatePostStateCopyWith<$Res> {
   @useResult
   $Res call(
       {CreatePostStatus status,
-      String? error,
+      Map<ErrorType, String> formErrors,
       bool autoValidate,
       PostTypeOption? postType,
       String postTitle,
@@ -3483,7 +3484,8 @@ abstract class $CreatePostStateCopyWith<$Res> {
       String? description,
       String? contactPhoneStart,
       String? contactPhoneMiddle,
-      String? contactPhoneEnd});
+      String? contactPhoneEnd,
+      String? contactPhoneFull});
 
   $PetColourCopyWith<$Res>? get colour;
   $LocationLastSeenCopyWith<$Res>? get locationLastSeen;
@@ -3503,7 +3505,7 @@ class _$CreatePostStateCopyWithImpl<$Res, $Val extends CreatePostState>
   @override
   $Res call({
     Object? status = null,
-    Object? error = freezed,
+    Object? formErrors = null,
     Object? autoValidate = null,
     Object? postType = freezed,
     Object? postTitle = null,
@@ -3519,16 +3521,17 @@ class _$CreatePostStateCopyWithImpl<$Res, $Val extends CreatePostState>
     Object? contactPhoneStart = freezed,
     Object? contactPhoneMiddle = freezed,
     Object? contactPhoneEnd = freezed,
+    Object? contactPhoneFull = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as CreatePostStatus,
-      error: freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String?,
+      formErrors: null == formErrors
+          ? _value.formErrors
+          : formErrors // ignore: cast_nullable_to_non_nullable
+              as Map<ErrorType, String>,
       autoValidate: null == autoValidate
           ? _value.autoValidate
           : autoValidate // ignore: cast_nullable_to_non_nullable
@@ -3589,6 +3592,10 @@ class _$CreatePostStateCopyWithImpl<$Res, $Val extends CreatePostState>
           ? _value.contactPhoneEnd
           : contactPhoneEnd // ignore: cast_nullable_to_non_nullable
               as String?,
+      contactPhoneFull: freezed == contactPhoneFull
+          ? _value.contactPhoneFull
+          : contactPhoneFull // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -3627,7 +3634,7 @@ abstract class _$$_CreatePostStateCopyWith<$Res>
   @useResult
   $Res call(
       {CreatePostStatus status,
-      String? error,
+      Map<ErrorType, String> formErrors,
       bool autoValidate,
       PostTypeOption? postType,
       String postTitle,
@@ -3642,7 +3649,8 @@ abstract class _$$_CreatePostStateCopyWith<$Res>
       String? description,
       String? contactPhoneStart,
       String? contactPhoneMiddle,
-      String? contactPhoneEnd});
+      String? contactPhoneEnd,
+      String? contactPhoneFull});
 
   @override
   $PetColourCopyWith<$Res>? get colour;
@@ -3662,7 +3670,7 @@ class __$$_CreatePostStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = null,
-    Object? error = freezed,
+    Object? formErrors = null,
     Object? autoValidate = null,
     Object? postType = freezed,
     Object? postTitle = null,
@@ -3678,16 +3686,17 @@ class __$$_CreatePostStateCopyWithImpl<$Res>
     Object? contactPhoneStart = freezed,
     Object? contactPhoneMiddle = freezed,
     Object? contactPhoneEnd = freezed,
+    Object? contactPhoneFull = freezed,
   }) {
     return _then(_$_CreatePostState(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as CreatePostStatus,
-      error: freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String?,
+      formErrors: null == formErrors
+          ? _value._formErrors
+          : formErrors // ignore: cast_nullable_to_non_nullable
+              as Map<ErrorType, String>,
       autoValidate: null == autoValidate
           ? _value.autoValidate
           : autoValidate // ignore: cast_nullable_to_non_nullable
@@ -3748,6 +3757,10 @@ class __$$_CreatePostStateCopyWithImpl<$Res>
           ? _value.contactPhoneEnd
           : contactPhoneEnd // ignore: cast_nullable_to_non_nullable
               as String?,
+      contactPhoneFull: freezed == contactPhoneFull
+          ? _value.contactPhoneFull
+          : contactPhoneFull // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -3757,7 +3770,7 @@ class __$$_CreatePostStateCopyWithImpl<$Res>
 class _$_CreatePostState implements _CreatePostState {
   const _$_CreatePostState(
       {this.status = CreatePostStatus.initial,
-      this.error,
+      final Map<ErrorType, String> formErrors = const {},
       this.autoValidate = false,
       this.postType,
       this.postTitle = "",
@@ -3772,14 +3785,22 @@ class _$_CreatePostState implements _CreatePostState {
       this.description,
       this.contactPhoneStart,
       this.contactPhoneMiddle,
-      this.contactPhoneEnd})
-      : _photoPaths = photoPaths;
+      this.contactPhoneEnd,
+      this.contactPhoneFull})
+      : _formErrors = formErrors,
+        _photoPaths = photoPaths;
 
   @override
   @JsonKey()
   final CreatePostStatus status;
+  final Map<ErrorType, String> _formErrors;
   @override
-  final String? error;
+  @JsonKey()
+  Map<ErrorType, String> get formErrors {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_formErrors);
+  }
+
   @override
   @JsonKey()
   final bool autoValidate;
@@ -3818,10 +3839,12 @@ class _$_CreatePostState implements _CreatePostState {
   final String? contactPhoneMiddle;
   @override
   final String? contactPhoneEnd;
+  @override
+  final String? contactPhoneFull;
 
   @override
   String toString() {
-    return 'CreatePostState(status: $status, error: $error, autoValidate: $autoValidate, postType: $postType, postTitle: $postTitle, photoPaths: $photoPaths, petType: $petType, breed: $breed, colour: $colour, weight: $weight, size: $size, dateLastSeen: $dateLastSeen, locationLastSeen: $locationLastSeen, description: $description, contactPhoneStart: $contactPhoneStart, contactPhoneMiddle: $contactPhoneMiddle, contactPhoneEnd: $contactPhoneEnd)';
+    return 'CreatePostState(status: $status, formErrors: $formErrors, autoValidate: $autoValidate, postType: $postType, postTitle: $postTitle, photoPaths: $photoPaths, petType: $petType, breed: $breed, colour: $colour, weight: $weight, size: $size, dateLastSeen: $dateLastSeen, locationLastSeen: $locationLastSeen, description: $description, contactPhoneStart: $contactPhoneStart, contactPhoneMiddle: $contactPhoneMiddle, contactPhoneEnd: $contactPhoneEnd, contactPhoneFull: $contactPhoneFull)';
   }
 
   @override
@@ -3830,7 +3853,8 @@ class _$_CreatePostState implements _CreatePostState {
         (other.runtimeType == runtimeType &&
             other is _$_CreatePostState &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.error, error) || other.error == error) &&
+            const DeepCollectionEquality()
+                .equals(other._formErrors, _formErrors) &&
             (identical(other.autoValidate, autoValidate) ||
                 other.autoValidate == autoValidate) &&
             (identical(other.postType, postType) ||
@@ -3855,14 +3879,16 @@ class _$_CreatePostState implements _CreatePostState {
             (identical(other.contactPhoneMiddle, contactPhoneMiddle) ||
                 other.contactPhoneMiddle == contactPhoneMiddle) &&
             (identical(other.contactPhoneEnd, contactPhoneEnd) ||
-                other.contactPhoneEnd == contactPhoneEnd));
+                other.contactPhoneEnd == contactPhoneEnd) &&
+            (identical(other.contactPhoneFull, contactPhoneFull) ||
+                other.contactPhoneFull == contactPhoneFull));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       status,
-      error,
+      const DeepCollectionEquality().hash(_formErrors),
       autoValidate,
       postType,
       postTitle,
@@ -3877,7 +3903,8 @@ class _$_CreatePostState implements _CreatePostState {
       description,
       contactPhoneStart,
       contactPhoneMiddle,
-      contactPhoneEnd);
+      contactPhoneEnd,
+      contactPhoneFull);
 
   @JsonKey(ignore: true)
   @override
@@ -3889,7 +3916,7 @@ class _$_CreatePostState implements _CreatePostState {
 abstract class _CreatePostState implements CreatePostState {
   const factory _CreatePostState(
       {final CreatePostStatus status,
-      final String? error,
+      final Map<ErrorType, String> formErrors,
       final bool autoValidate,
       final PostTypeOption? postType,
       final String postTitle,
@@ -3904,12 +3931,13 @@ abstract class _CreatePostState implements CreatePostState {
       final String? description,
       final String? contactPhoneStart,
       final String? contactPhoneMiddle,
-      final String? contactPhoneEnd}) = _$_CreatePostState;
+      final String? contactPhoneEnd,
+      final String? contactPhoneFull}) = _$_CreatePostState;
 
   @override
   CreatePostStatus get status;
   @override
-  String? get error;
+  Map<ErrorType, String> get formErrors;
   @override
   bool get autoValidate;
   @override
@@ -3940,6 +3968,8 @@ abstract class _CreatePostState implements CreatePostState {
   String? get contactPhoneMiddle;
   @override
   String? get contactPhoneEnd;
+  @override
+  String? get contactPhoneFull;
   @override
   @JsonKey(ignore: true)
   _$$_CreatePostStateCopyWith<_$_CreatePostState> get copyWith =>
