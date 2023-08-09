@@ -7,7 +7,7 @@ const postSchema = mongoose.Schema(
       type: String,
       default: () => uuidv4().replaceAll("-", ""),
     },
-    userID: {
+    uid: {
       type: String,
       required: [true, "is required"],
       index: true,
