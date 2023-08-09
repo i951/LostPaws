@@ -15,6 +15,7 @@ import 'package:lostpaws_app/data/models/pet_colour.dart';
 import 'package:lostpaws_app/presentation/components/custom_toggle_buttons.dart';
 import 'package:lostpaws_app/presentation/components/date_picker.dart';
 import 'package:lostpaws_app/presentation/components/error_message.dart';
+import 'package:lostpaws_app/presentation/components/loading_paw_prints.dart';
 import 'package:lostpaws_app/presentation/components/location_picker.dart';
 import 'package:lostpaws_app/presentation/components/pet_size_dropdown_menu.dart';
 import 'package:lostpaws_app/presentation/components/pet_size_info.dart';
@@ -1120,7 +1121,7 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                 Padding(
                                   padding: const EdgeInsets.only(
                                     top: defaultPadding * 2,
-                                    bottom: defaultPadding,
+                                    bottom: defaultPadding * 3,
                                   ),
                                   child: Row(
                                     children: [
@@ -1128,9 +1129,7 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                         child: state.status ==
                                                 CreatePostStatus
                                                     .submissionInProgress
-                                            ?
-                                            // TODO: replace with loading animation
-                                            const Text("loading...")
+                                            ? const LoadingPawPrints()
                                             : TextButton(
                                                 style: TextButton.styleFrom(
                                                   padding: EdgeInsets.symmetric(

@@ -234,7 +234,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   void onCreatePostSendToServer(
     CreatePostSendToServer event,
     Emitter<CreatePostState> emit,
-  ) {
+  ) async {
     if (state.formErrors.isNotEmpty) {
       return;
     }
@@ -263,6 +263,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     });
 
     // TOOD: send to server
+    await Future.delayed(const Duration(seconds: 8));
     print(jsonString);
 
     emit(state.copyWith(status: CreatePostStatus.submissionSuccess));
