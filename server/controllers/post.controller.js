@@ -1,6 +1,54 @@
 const Post = require("../models/post.model");
 
 const PostController = {
+  createPost: (req, res) => {
+    const {
+      uid,
+      userName,
+      postType,
+      postTitle,
+      photos,
+      petType,
+      breed,
+      colour,
+      weight,
+      size,
+      dateLastSeen,
+      locationLastSeen,
+      description,
+      contactEmail,
+      contactPhone,
+    } = req.body;
+
+    let newPost = Post({
+      uid,
+      name: userName,
+      postType,
+      postTitle,
+      photos,
+      petType,
+      breed,
+      colour,
+      weight,
+      size,
+      dateLastSeen,
+      locationLastSeen,
+      description,
+      contactEmail,
+      contactPhone,
+    });
+
+    newPost.save((err) => {
+      if (err) {
+        console.log("createPost error: " + err);
+        if (err.name === "ValidationError") {
+          return res.status(400).json({ error: err.message });
+        }
+      }
+      console.log("createPost success");
+      return res.status(200).json({ success: true });
+    });
+  },
   getPosts: (req, res) => {
     const postType = req.query.postType;
     const petIsFound = req.query.petIsFound;
@@ -33,44 +81,6 @@ const PostController = {
       });
 
     // return res.status(200).json(postType)
-  },
-  uploadPost: (req, res) => {
-    const {
-      uid,
-      postType,
-      postTitle,
-      petType,
-      petColour,
-      petSize,
-      dateLastSeen,
-      locationLastSeen,
-      contactInfo,
-      additionalInfo,
-    } = req.body;
-
-    let newPost = Post({
-      uid,
-      postType,
-      postTitle,
-      petType,
-      petColour,
-      petSize,
-      dateLastSeen,
-      locationLastSeen,
-      contactInfo,
-      additionalInfo,
-    });
-
-    newPost.save((err) => {
-      if (err) {
-        console.log("uploadPost error: " + err);
-        if (err.name === "ValidationError") {
-          return res.status(400).json({ error: err.message });
-        }
-      }
-      console.log("uploadPost success");
-      return res.status(200).json({ success: true });
-    });
   },
   getPost: (req, res) => {
     const { postID } = req.params;
