@@ -36,6 +36,7 @@ const PostController = {
       description,
       contactEmail,
       contactPhone,
+      petIsFound: false
     });
 
     newPost.save((err) => {
