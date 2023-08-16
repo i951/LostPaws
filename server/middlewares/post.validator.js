@@ -32,8 +32,115 @@ const PostValidator = {
       .isAlpha()
       .withMessage("Name must be alphabetic")
       .bail(),
-    // TODO: finish validating rest of fields
-    check("locationLastSeen.")
+    check("postType")
+      .trim()
+      .escape()
+      .not()
+      .isEmpty()
+      .withMessage("Post type cannot be empty")
+      .bail()
+      .isIn(["LOST", "SIGHTING"])
+      .withMessage("Post type must be either 'LOST' or 'SIGHTING'")
+      .bail(),
+    check("postTitle")
+      .trim()
+      .escape()
+      .not()
+      .isEmpty()
+      .withMessage("Post title cannot be empty")
+      .bail(),
+    check("photos").optional().trim().escape(),
+    check("petType")
+      .trim()
+      .escape()
+      .not()
+      .isEmpty()
+      .withMessage("Pet type cannot be empty")
+      .bail()
+      .isIn([
+        "DOG",
+        "CAT",
+        "BIRD",
+        "BUNNY",
+        "REPTILE",
+        "AMPHIBIAN",
+        "RODENT",
+        "OTHER",
+      ])
+      .withMessage("Invalid pet type")
+      .bail(),
+    check("breed")
+      .trim()
+      .not()
+      .isEmpty()
+      .withMessage("Breed cannot be empty")
+      .bail()
+      .isString()
+      .withMessage("Breed must be a string")
+      .bail(),
+    check("colour")
+      .not()
+      .isEmpty()
+      .withMessage("Colour cannot be empty")
+      .bail(),
+    check("colour.hexValue")
+      .not()
+      .isEmpty()
+      .withMessage("HexValue cannot be empty")
+      .bail()
+      .isString()
+      .withMessage("HexValue must be a string")
+      .bail(),
+    check("colour.colourName")
+      .not()
+      .isEmpty()
+      .withMessage("ColourName cannot be empty")
+      .bail()
+      .isIn([
+        "Chocolate Brown",
+        "Tan Brown",
+        "Cream",
+        "Gold",
+        "Orange",
+        "Yellow Orange",
+        "Yellow",
+        "Lime Green",
+        "Light Green",
+        "Green",
+        "White",
+        "Black",
+        "Grey",
+        "Light Blue",
+        "Dark Blue",
+        "Red",
+      ])
+      .withMessage("Invalid colourName")
+      .bail(),
+    check("weight")
+      .not()
+      .isEmpty()
+      .withMessage("Weight cannot be empty")
+      .bail()
+      .isString()
+      .withMessage("Weight must be a string")
+      .bail(),
+    check("size")
+      .not()
+      .isEmpty()
+      .withMessage("Size cannot be empty")
+      .bail()
+      .isString()
+      .withMessage("Size must be a string")
+      .bail()
+      .isIn([
+        "Mini",
+        "Small",
+        "Medium",
+        "Large",
+      ])
+      .withMessage("Invalid size")
+      .bail(),
+    check("locationLastSeen")
       .not()
       .isEmpty()
       .withMessage("Location cannot be empty")
@@ -105,7 +212,7 @@ const PostValidator = {
       .isEmpty()
       .withMessage("Postal code cannot be empty")
       .bail()
-      .isAlphanumeric('en-US', {ignore: ' '})
+      .isAlphanumeric("en-US", { ignore: " " })
       .withMessage("Invalid characters")
       .bail()
       .isLength({ min: 7, max: 7 })
