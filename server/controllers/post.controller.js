@@ -2,7 +2,7 @@ const Post = require("../models/post.model");
 const { getAuth } = require("firebase-admin/auth");
 
 const PostController = {
-  createPost: (req, res) => {
+  createPost: async (req, res) => {
     const {
       idToken,
       userName,
@@ -21,15 +21,14 @@ const PostController = {
       contactPhone,
     } = req.body;
 
-    // TODO: replace uid with idToken to verify user identity
     let checkRevoked = true;
     getAuth()
       .verifyIdToken(idToken, checkRevoked)
-      .then((decodedToken) => {
+      .then(async (decodedToken) => {
         const uid = decodedToken.uid;
 
-        let newPost = Post({
-          uid,
+        const newPost = Post({
+          uid: uid,
           name: userName,
           postType,
           postTitle,
@@ -47,16 +46,18 @@ const PostController = {
           petIsFound: false,
         });
 
-        newPost.save((err) => {
-          if (err) {
-            console.log("createPost error: " + err);
-            if (err.name === "ValidationError") {
-              return res.status(400).json({ error: err.message });
-            }
-          }
+        try {
+          await newPost.save()
           console.log("createPost success");
           return res.status(200).json({ success: true });
-        });
+        } catch (err) {
+          console.log("createPost error: " + err);
+            if (err.name === "ValidationError") {
+              return res.status(400).json({ error: err.message });
+            } else {
+              return res.status(400).json({ error: err });
+            }
+        }
       })
       .catch((error) => {
         console.log("error: ", error.errorInfo.message)
