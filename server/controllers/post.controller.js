@@ -1,9 +1,10 @@
 const Post = require("../models/post.model");
+const { getAuth } = require("firebase-admin/auth");
 
 const PostController = {
   createPost: (req, res) => {
     const {
-      uid,
+      idToken,
       userName,
       postType,
       postTitle,
@@ -20,35 +21,54 @@ const PostController = {
       contactPhone,
     } = req.body;
 
-    let newPost = Post({
-      uid,
-      name: userName,
-      postType,
-      postTitle,
-      photos,
-      petType,
-      breed,
-      colour,
-      weight,
-      size,
-      dateLastSeen,
-      locationLastSeen,
-      description,
-      contactEmail,
-      contactPhone,
-      petIsFound: false
-    });
+    // TODO: replace uid with idToken to verify user identity
+    let checkRevoked = true;
+    getAuth()
+      .verifyIdToken(idToken, checkRevoked)
+      .then((decodedToken) => {
+        const uid = decodedToken.uid;
 
-    newPost.save((err) => {
-      if (err) {
-        console.log("createPost error: " + err);
-        if (err.name === "ValidationError") {
-          return res.status(400).json({ error: err.message });
-        }
-      }
-      console.log("createPost success");
-      return res.status(200).json({ success: true });
-    });
+        let newPost = Post({
+          uid,
+          name: userName,
+          postType,
+          postTitle,
+          photos,
+          petType,
+          breed,
+          colour,
+          weight,
+          size,
+          dateLastSeen,
+          locationLastSeen,
+          description,
+          contactEmail,
+          contactPhone,
+          petIsFound: false,
+        });
+
+        newPost.save((err) => {
+          if (err) {
+            console.log("createPost error: " + err);
+            if (err.name === "ValidationError") {
+              return res.status(400).json({ error: err.message });
+            }
+          }
+          console.log("createPost success");
+          return res.status(200).json({ success: true });
+        });
+      })
+      .catch((error) => {
+        console.log("error: ", error.errorInfo.message)
+        return res.status(400).json({ error: error.errorInfo.message });
+        // if (error.code == "auth/id-token-revoked") {
+        //   // Token has been revoked. Inform the user to reauthenticate or signOut() the user.
+        //   return res.status(400).json({ success: false, error: error });
+        // } else {
+        //   // Token is invalid.
+        //   return res.status(400).json({ success: false, error: error });
+        // }
+      });
   },
   getPosts: (req, res) => {
     const postType = req.query.postType;

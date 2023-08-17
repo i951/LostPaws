@@ -1,27 +1,27 @@
-const UserUtils = require("../utils/user.utils");
 const { check, validationResult } = require("express-validator");
 
 const PostValidator = {
   validateCreatePost: [
-    check("uid")
+    check("idToken")
+      // TODO: check if should put idToken in header instead of body
       .trim()
       .escape()
       .not()
       .isEmpty()
-      .withMessage("Uid cannot be empty")
+      .withMessage("IdToken cannot be empty")
       .bail()
       .isLength({ min: 3 })
       .withMessage("Minimum 3 characters required")
-      .bail()
-      .custom(async (uid) => {
-        const existsInDb = await UserUtils.existsInDb(uid);
-        if (existsInDb) {
-          // Will use the below as the error message
-          throw new Error(); //("A user already exists with this user ID");
-        }
-      })
-      .withMessage("A user already exists with this user ID")
       .bail(),
+    // .custom(async (uid) => {
+    //   const existsInDb = await UserUtils.existsInDb(uid);
+    //   if (existsInDb) {
+    //     // Will use the below as the error message
+    //     throw new Error(); //("A user already exists with this user ID");
+    //   }
+    // })
+    // .withMessage("A user already exists with this user ID")
+    // .bail(),
     check("userName")
       .trim()
       .escape()
@@ -29,8 +29,8 @@ const PostValidator = {
       .isEmpty()
       .withMessage("Name cannot be empty")
       .bail()
-      .isAlpha()
-      .withMessage("Name must be alphabetic")
+      .isAlphanumeric("en-US", { ignore: " " })
+      .withMessage("Name must be alphanumeric")
       .bail(),
     check("postType")
       .trim()
@@ -132,12 +132,7 @@ const PostValidator = {
       .isString()
       .withMessage("Size must be a string")
       .bail()
-      .isIn([
-        "Mini",
-        "Small",
-        "Medium",
-        "Large",
-      ])
+      .isIn(["Mini", "Small", "Medium", "Large"])
       .withMessage("Invalid size")
       .bail(),
     check("locationLastSeen")
@@ -173,7 +168,7 @@ const PostValidator = {
       .withMessage("Street cannot be empty")
       .bail()
       .isString()
-      .withMessage("Invalid characters")
+      .withMessage("Must be a string")
       .bail(),
     check("locationLastSeen.city")
       .trim()
@@ -183,7 +178,17 @@ const PostValidator = {
       .withMessage("City cannot be empty")
       .bail()
       .isString()
-      .withMessage("Invalid characters")
+      .withMessage("Must be a string")
+      .bail(),
+    check("locationLastSeen.regionalDistrict")
+      .trim()
+      .escape()
+      .not()
+      .isEmpty()
+      .withMessage("Regional district cannot be empty")
+      .bail()
+      .isString()
+      .withMessage("Must be a string")
       .bail(),
     check("locationLastSeen.province")
       .trim()
@@ -193,7 +198,7 @@ const PostValidator = {
       .withMessage("Province cannot be empty")
       .bail()
       .isString()
-      .withMessage("Invalid characters")
+      .withMessage("Must be a string")
       .bail(),
     check("locationLastSeen.country")
       .trim()
@@ -203,7 +208,7 @@ const PostValidator = {
       .withMessage("Country cannot be empty")
       .bail()
       .isString()
-      .withMessage("Invalid characters")
+      .withMessage("Must be a string")
       .bail(),
     check("locationLastSeen.postalCode")
       .trim()
@@ -245,6 +250,7 @@ const PostValidator = {
       .bail(),
     (req, res, next) => {
       const errors = validationResult(req);
+      console.log("errors.array(): ", errors.array());
       if (!errors.isEmpty())
         return res.status(422).json({ errors: errors.array() });
       next();
