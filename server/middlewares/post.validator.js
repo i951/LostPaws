@@ -88,8 +88,8 @@ const PostValidator = {
       .isEmpty()
       .withMessage("HexValue cannot be empty")
       .bail()
-      .isString()
-      .withMessage("HexValue must be a string")
+      .isInt()
+      .withMessage("HexValue must be an integer")
       .bail(),
     check("colour.colourName")
       .not()
