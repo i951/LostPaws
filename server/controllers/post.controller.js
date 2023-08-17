@@ -47,28 +47,21 @@ const PostController = {
         });
 
         try {
-          await newPost.save()
+          await newPost.save();
           console.log("createPost success");
           return res.status(200).json({ success: true });
         } catch (err) {
           console.log("createPost error: " + err);
-            if (err.name === "ValidationError") {
-              return res.status(400).json({ error: err.message });
-            } else {
-              return res.status(400).json({ error: err });
-            }
+          if (err.name === "ValidationError") {
+            return res.status(400).json({ error: err.message });
+          } else {
+            return res.status(400).json({ error: err });
+          }
         }
       })
       .catch((error) => {
-        console.log("error: ", error.errorInfo.message)
+        console.log("error: ", error.errorInfo.message);
         return res.status(400).json({ error: error.errorInfo.message });
-        // if (error.code == "auth/id-token-revoked") {
-        //   // Token has been revoked. Inform the user to reauthenticate or signOut() the user.
-        //   return res.status(400).json({ success: false, error: error });
-        // } else {
-        //   // Token is invalid.
-        //   return res.status(400).json({ success: false, error: error });
-        // }
       });
   },
   getPosts: (req, res) => {
