@@ -1,6 +1,69 @@
 const Post = require("../models/post.model");
+const { getAuth } = require("firebase-admin/auth");
 
 const PostController = {
+  createPost: async (req, res) => {
+    const {
+      idToken,
+      userName,
+      postType,
+      postTitle,
+      photos,
+      petType,
+      breed,
+      colour,
+      weight,
+      size,
+      dateLastSeen,
+      locationLastSeen,
+      description,
+      contactEmail,
+      contactPhone,
+    } = req.body;
+
+    let checkRevoked = true;
+    getAuth()
+      .verifyIdToken(idToken, checkRevoked)
+      .then(async (decodedToken) => {
+        const uid = decodedToken.uid;
+
+        const newPost = Post({
+          uid: uid,
+          name: userName,
+          postType,
+          postTitle,
+          photos,
+          petType,
+          breed,
+          colour,
+          weight,
+          size,
+          dateLastSeen,
+          locationLastSeen,
+          description,
+          contactEmail,
+          contactPhone,
+          petIsFound: false,
+        });
+
+        try {
+          await newPost.save();
+          console.log("createPost success");
+          return res.status(200).json({ success: true });
+        } catch (err) {
+          console.log("createPost error: " + err);
+          if (err.name === "ValidationError") {
+            return res.status(400).json({ error: err.message });
+          } else {
+            return res.status(400).json({ error: err });
+          }
+        }
+      })
+      .catch((error) => {
+        console.log("error: ", error.errorInfo.message);
+        return res.status(400).json({ error: error.errorInfo.message });
+      });
+  },
   getPosts: (req, res) => {
     const postType = req.query.postType;
     const petIsFound = req.query.petIsFound;
@@ -33,44 +96,6 @@ const PostController = {
       });
 
     // return res.status(200).json(postType)
-  },
-  uploadPost: (req, res) => {
-    const {
-      uid,
-      postType,
-      postTitle,
-      petType,
-      petColour,
-      petSize,
-      dateLastSeen,
-      locationLastSeen,
-      contactInfo,
-      additionalInfo,
-    } = req.body;
-
-    let newPost = Post({
-      uid,
-      postType,
-      postTitle,
-      petType,
-      petColour,
-      petSize,
-      dateLastSeen,
-      locationLastSeen,
-      contactInfo,
-      additionalInfo,
-    });
-
-    newPost.save((err) => {
-      if (err) {
-        console.log("uploadPost error: " + err);
-        if (err.name === "ValidationError") {
-          return res.status(400).json({ error: err.message });
-        }
-      }
-      console.log("uploadPost success");
-      return res.status(200).json({ success: true });
-    });
   },
   getPost: (req, res) => {
     const { postID } = req.params;

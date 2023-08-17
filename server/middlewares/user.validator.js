@@ -56,6 +56,7 @@ const UserValidator = {
     },
   ],
   validateLogin: [
+    // TODO: check if should put idToken in header instead of body
     check("idToken")
       .not()
       .isEmpty()
