@@ -1,7 +1,7 @@
 const { check, validationResult } = require("express-validator");
 
 const PostValidator = {
-  validateCreatePost: [
+  validatePost: [
     check("idToken")
       // TODO: check if should put idToken in header instead of body
       .trim()

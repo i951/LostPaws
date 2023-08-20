@@ -64,6 +64,124 @@ const PostController = {
         return res.status(400).json({ error: error.errorInfo.message });
       });
   },
+  // TODO: remove
+  editPostOld: (req, res) => {
+    const { uid, postID } = req.params;
+    const {
+      postType,
+      postTitle,
+      petType,
+      petColour,
+      petSize,
+      dateLastSeen,
+      locationLastSeen,
+      contactInfo,
+      additionalInfo,
+    } = req.body;
+
+    Post.findOneAndUpdate(
+      { uid: uid, _id: postID },
+      {
+        postType: postType,
+        postTitle: postTitle,
+        petType: petType,
+        petColour: petColour,
+        petSize: petSize,
+        dateLastSeen: dateLastSeen,
+        locationLastSeen: locationLastSeen,
+        contactInfo: contactInfo,
+        additionalInfo: additionalInfo,
+      },
+      { new: true },
+      (err, result) => {
+        if (err) {
+          console.log("editPost error: ", err);
+          return res.status(400).json({ error: err });
+        }
+        console.log("editPost success");
+        return res.status(200).json({ success: true });
+      }
+    );
+  },
+  editPost: async (req, res) => {
+    const { postId } = req.params;
+    const {
+      idToken,
+      userName,
+      postType,
+      postTitle,
+      photos,
+      petType,
+      breed,
+      colour,
+      weight,
+      size,
+      dateLastSeen,
+      locationLastSeen,
+      description,
+      contactEmail,
+      contactPhone,
+    } = req.body;
+
+    let checkRevoked = true;
+    getAuth()
+      .verifyIdToken(idToken, checkRevoked)
+      .then(async (decodedToken) => {
+        const uid = decodedToken.uid;
+
+        const newPost = Post({
+          uid: uid,
+          name: userName,
+          postType,
+          postTitle,
+          photos,
+          petType,
+          breed,
+          colour,
+          weight,
+          size,
+          dateLastSeen,
+          locationLastSeen,
+          description,
+          contactEmail,
+          contactPhone,
+          petIsFound: false,
+        });
+
+        try {
+          await Post.findOneAndUpdate(
+            { _id: postId },
+            {
+              uid: uid,
+              name: userName,
+              postType,
+              postTitle,
+              photos,
+              petType,
+              breed,
+              colour,
+              weight,
+              size,
+              dateLastSeen,
+              locationLastSeen,
+              description,
+              contactEmail,
+              contactPhone,
+              petIsFound: false,
+            }
+          );
+          console.log("editPost success");
+          return res.status(200).json({ success: true });
+        } catch (err) {
+          console.log("editPost error: " + err);
+          if (err.name === "ValidationError") {
+            return res.status(400).json({ error: err.message });
+          } else {
+            return res.status(400).json({ error: err });
+          }
+        }
+      });
+  },
   getPosts: (req, res) => {
     const postType = req.query.postType;
     const petIsFound = req.query.petIsFound;
@@ -104,44 +222,6 @@ const PostController = {
       if (err) return res.status(400).json({ err: err });
       return res.status(200).json(post);
     });
-  },
-  editPost: (req, res) => {
-    const { uid, postID } = req.params;
-    const {
-      postType,
-      postTitle,
-      petType,
-      petColour,
-      petSize,
-      dateLastSeen,
-      locationLastSeen,
-      contactInfo,
-      additionalInfo,
-    } = req.body;
-
-    Post.findOneAndUpdate(
-      { uid: uid, _id: postID },
-      {
-        postType: postType,
-        postTitle: postTitle,
-        petType: petType,
-        petColour: petColour,
-        petSize: petSize,
-        dateLastSeen: dateLastSeen,
-        locationLastSeen: locationLastSeen,
-        contactInfo: contactInfo,
-        additionalInfo: additionalInfo,
-      },
-      { new: true },
-      (err, result) => {
-        if (err) {
-          console.log("editPost error: ", err);
-          return res.status(400).json({ error: err });
-        }
-        console.log("editPost success");
-        return res.status(200).json({ success: true });
-      }
-    );
   },
   deletePost: (req, res) => {
     const { uid, postID } = req.params;
