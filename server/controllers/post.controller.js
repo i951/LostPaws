@@ -242,6 +242,22 @@ const PostController = {
         return res.status(200).json(posts);
       });
   },
+  getRecentlyLostPets: (req, res) => {
+    const { postID } = req.params;
+
+    Post.find({ postType: 'LOST', petIsFound: false })
+      .select({ /* Select necessary fields for the response */ })
+      .sort({ dateLastSeen: -1 }) // Sort by the most recent posts
+      .limit(5)  
+      .exec((err, posts) => {
+        if (err) {
+          console.log("Error fetching recently lost pets:", err);
+          return res.status(500).json({ success: false, error: err });
+        }
+        return res.status(200).json({ success: true, recentlyLostPets: posts });
+      });
+  },
+
 };
 
 module.exports = PostController;

@@ -11,5 +11,6 @@ router
 // .post("/:uid/:postID", PostController.editPost)
 // .delete("/:uid/:postID", PostController.deletePost) // TODO check correct uid
 // .get("/:uid", PostController.getUserPosts);
+// router.get('/recently-lost-pets', PostController.getRecentlyLostPets);
 
 module.exports = router;
