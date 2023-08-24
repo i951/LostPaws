@@ -246,8 +246,8 @@ const PostController = {
     const { postID } = req.params;
 
     Post.find({ postType: 'LOST', petIsFound: false })
-      .select({ /* Select necessary fields for the response */ })
-      .sort({ dateLastSeen: -1 }) // Sort by the most recent posts
+      .select({ postTitle: 1, locationLastSeen: 1, dateLastSeen: 1 })
+      .sort({ dateLastSeen: -1 })
       .limit(5)  
       .exec((err, posts) => {
         if (err) {
@@ -255,6 +255,21 @@ const PostController = {
           return res.status(500).json({ success: false, error: err });
         }
         return res.status(200).json({ success: true, recentlyLostPets: posts });
+      });
+  },
+  getAnimalSightingPosts: (req, res) => {
+    const { postID } = req.params;
+
+    Post.find({ postType: 'SIGHTING'})
+      .select({ postTitle: 1, locationLastSeen: 1, dateLastSeen: 1 })
+      .sort({ dateLastSeen: -1 })
+      .limit(5)  
+      .exec((err, posts) => {
+        if (err) {
+          console.log("Error fetching animal sightings:", err);
+          return res.status(500).json({ success: false, error: err });
+        }
+        return res.status(200).json({ success: true, animalSightingPosts: posts });
       });
   },
 
