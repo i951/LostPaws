@@ -27,6 +27,16 @@ class LostPawsText extends ThemeExtension<LostPawsText> {
     );
   }
 
+  /// The primary title style for main titles, 24pt bold.
+  TextStyle get primaryTitleBoldWhite {
+    return const TextStyle(
+      fontWeight: FontWeight.w800,
+      fontSize: 24,
+      height: 1.2,
+      color: Colors.white,
+    );
+  }
+
   /// The primary title style for main titles, 24pt semiBold.
   TextStyle get primaryTitle {
     return const TextStyle(

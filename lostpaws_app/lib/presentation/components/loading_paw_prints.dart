@@ -79,7 +79,7 @@ class _LoadingPawPrintsState extends State<LoadingPawPrints>
                   ),
                 ),
                 Text(
-                  "loading...",
+                  "Posting...",
                   style: const LostPawsText().primarySemiBoldGreen,
                 ),
               ],
