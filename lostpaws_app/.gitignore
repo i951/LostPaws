@@ -45,3 +45,11 @@ app.*.map.json
 
 # API Keys related
 android/app/src/main/res/values/secrets.xml
+
+# Other operating systems
+README.md
+ios/*
+linux/*
+macos/*
+web/*
+windows/*
