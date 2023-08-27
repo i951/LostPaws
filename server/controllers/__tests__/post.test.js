@@ -90,7 +90,7 @@ describe("POST: /posts route to create post", () => {
   });
 });
 
-describe("POST: /posts route to edit post", () => {
+describe("POST: /posts/:postId route to edit post", () => {
   it("empty fields", async () => {
     const postId = "postId";
     const payload = {
@@ -133,7 +133,6 @@ describe("POST: /posts route to edit post", () => {
   it("valid fields", async () => {
     const postId = "postId";
     const payload = validPayload;
-    console.log("payload: ", payload)
 
     const res = await supertest(app)
       .post("/posts/" + postId)
@@ -141,5 +140,46 @@ describe("POST: /posts route to edit post", () => {
     expect(res.status).to.equal(400);
     expect(res.headers["content-type"]).to.have.string("json");
     expect(res.body).to.have.property("error");
+  });
+});
+
+describe("GET: /posts/:postId route to get post", () => {
+  it("empty postId", async () => {
+    const postId = "";
+
+    const res = await supertest(app).get("/posts/" + postId);
+
+    expect(res.status).to.equal(404);
+    expect(res.headers["content-type"]).to.have.string("text/html");
+  });
+
+  it("invalid characters in postId", async () => {
+    const postId = " &()^";
+
+    const res = await supertest(app).get("/posts/" + postId);
+
+    expect(res.status).to.equal(422);
+    expect(res.headers["content-type"]).to.have.string("json");
+    expect(res.body).to.have.property("errors");
+  });
+
+  it("postId not in database", async () => {
+    const postId = "postIdddd43467";
+
+    const res = await supertest(app).get("/posts/" + postId);
+
+    expect(res.status).to.equal(404);
+    expect(res.headers["content-type"]).to.have.string("json");
+    expect(res.body).to.have.property("error");
+  });
+
+  it("valid postId", async () => {
+    const postId = "7ddff783b3e54f47a7678888805e8a44";
+
+    const res = await supertest(app).get("/posts/" + postId);
+
+    expect(res.status).to.equal(200);
+    expect(res.headers["content-type"]).to.have.string("json");
+    expect(res.body).to.have.property("post");
   });
 });
