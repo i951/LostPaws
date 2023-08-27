@@ -89,3 +89,57 @@ describe("POST: /posts route to create post", () => {
     expect(res.body).to.have.property("error");
   });
 });
+
+describe("POST: /posts route to edit post", () => {
+  it("empty fields", async () => {
+    const postId = "postId";
+    const payload = {
+      idToken: "",
+      userName: "",
+      postType: "",
+      postTitle: "",
+      photos: "",
+      petType: "",
+      breed: "",
+      colour: { hexValue: "", colourName: "" },
+      weight: "",
+      size: "",
+      dateLastSeen: "",
+      locationLastSeen: {
+        latitude: "",
+        longitude: "",
+        street: "",
+        city: "",
+        regionalDistrict: "",
+        province: "",
+        country: "",
+        postalCode: "",
+      },
+      description: "",
+      contactEmail: "",
+      contactPhone: "",
+    };
+
+    const res = await supertest(app)
+      .post("/posts/" + postId)
+      .send(payload);
+    expect(res.status).to.equal(422);
+    expect(res.headers["content-type"]).to.have.string("json");
+    expect(res.body).to.have.property("errors");
+    expect(res.body.errors).to.have.length(20);
+    expect(res.body.errors[0].path).to.equal("idToken");
+  });
+
+  it("valid fields", async () => {
+    const postId = "postId";
+    const payload = validPayload;
+    console.log("payload: ", payload)
+
+    const res = await supertest(app)
+      .post("/posts/" + postId)
+      .send(payload);
+    expect(res.status).to.equal(400);
+    expect(res.headers["content-type"]).to.have.string("json");
+    expect(res.body).to.have.property("error");
+  });
+});

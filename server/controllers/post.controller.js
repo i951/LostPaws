@@ -64,45 +64,6 @@ const PostController = {
         return res.status(400).json({ error: error.errorInfo.message });
       });
   },
-  // TODO: remove
-  editPostOld: (req, res) => {
-    const { uid, postID } = req.params;
-    const {
-      postType,
-      postTitle,
-      petType,
-      petColour,
-      petSize,
-      dateLastSeen,
-      locationLastSeen,
-      contactInfo,
-      additionalInfo,
-    } = req.body;
-
-    Post.findOneAndUpdate(
-      { uid: uid, _id: postID },
-      {
-        postType: postType,
-        postTitle: postTitle,
-        petType: petType,
-        petColour: petColour,
-        petSize: petSize,
-        dateLastSeen: dateLastSeen,
-        locationLastSeen: locationLastSeen,
-        contactInfo: contactInfo,
-        additionalInfo: additionalInfo,
-      },
-      { new: true },
-      (err, result) => {
-        if (err) {
-          console.log("editPost error: ", err);
-          return res.status(400).json({ error: err });
-        }
-        console.log("editPost success");
-        return res.status(200).json({ success: true });
-      }
-    );
-  },
   editPost: async (req, res) => {
     const { postId } = req.params;
     const {
@@ -128,25 +89,6 @@ const PostController = {
       .verifyIdToken(idToken, checkRevoked)
       .then(async (decodedToken) => {
         const uid = decodedToken.uid;
-
-        const newPost = Post({
-          uid: uid,
-          name: userName,
-          postType,
-          postTitle,
-          photos,
-          petType,
-          breed,
-          colour,
-          weight,
-          size,
-          dateLastSeen,
-          locationLastSeen,
-          description,
-          contactEmail,
-          contactPhone,
-          petIsFound: false,
-        });
 
         try {
           await Post.findOneAndUpdate(
@@ -180,6 +122,10 @@ const PostController = {
             return res.status(400).json({ error: err });
           }
         }
+      })
+      .catch((error) => {
+        console.log("error: ", error.errorInfo.message);
+        return res.status(400).json({ error: error.errorInfo.message });
       });
   },
   getPosts: (req, res) => {
