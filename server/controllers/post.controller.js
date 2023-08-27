@@ -128,6 +128,29 @@ const PostController = {
         return res.status(400).json({ error: error.errorInfo.message });
       });
   },
+  getPost: async (req, res) => {
+    const { postId } = req.params;
+
+    try {
+      let post = await Post.findOne({ _id: postId });
+      console.log("post: ", post);
+      console.log("getPost success");
+      if (post) return res.status(200).json({ success: true, post: post });
+      else return res.status(404).json({ error: "Post not found" });
+    } catch (err) {
+      console.log("getPost error: " + err);
+      if (err.name === "ValidationError") {
+        return res.status(400).json({ error: err.message });
+      } else {
+        return res.status(400).json({ error: err });
+      }
+    }
+
+    // Post.findOne({ _id: postID }).exec((err, post) => {
+    //   if (err) return res.status(400).json({ err: err });
+    //   return res.status(200).json(post);
+    // });
+  },
   getPosts: (req, res) => {
     const postType = req.query.postType;
     const petIsFound = req.query.petIsFound;
@@ -160,14 +183,6 @@ const PostController = {
       });
 
     // return res.status(200).json(postType)
-  },
-  getPost: (req, res) => {
-    const { postID } = req.params;
-
-    Post.findOne({ _id: postID }).exec((err, post) => {
-      if (err) return res.status(400).json({ err: err });
-      return res.status(200).json(post);
-    });
   },
   deletePost: (req, res) => {
     const { uid, postID } = req.params;

@@ -90,7 +90,7 @@ describe("POST: /posts route to create post", () => {
   });
 });
 
-describe("POST: /posts route to edit post", () => {
+describe("POST: /posts/:postId route to edit post", () => {
   it("empty fields", async () => {
     const postId = "postId";
     const payload = {
@@ -133,12 +133,33 @@ describe("POST: /posts route to edit post", () => {
   it("valid fields", async () => {
     const postId = "postId";
     const payload = validPayload;
-    console.log("payload: ", payload)
 
     const res = await supertest(app)
       .post("/posts/" + postId)
       .send(payload);
     expect(res.status).to.equal(400);
+    expect(res.headers["content-type"]).to.have.string("json");
+    expect(res.body).to.have.property("error");
+  });
+});
+
+describe("GET: /posts/:postId route to get post", () => {
+  it("empty postId", async () => {
+    const postId = "d";
+
+    const res = await supertest(app)
+      .get("/posts/" + postId)
+    expect(res.status).to.equal(404);
+    expect(res.headers["content-type"]).to.have.string("json");
+    expect(res.body).to.have.property("error");
+  });
+
+  it("invalid postId", async () => {
+    const postId = "postId";
+
+    const res = await supertest(app)
+      .get("/posts/" + postId)
+    expect(res.status).to.equal(404);
     expect(res.headers["content-type"]).to.have.string("json");
     expect(res.body).to.have.property("error");
   });
