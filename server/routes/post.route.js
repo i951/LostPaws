@@ -6,7 +6,7 @@ const PostValidator = require("../middlewares/post.validator");
 router
   .post("/", PostValidator.validatePost, PostController.createPost)
   .post("/:postId", PostValidator.validatePost, PostController.editPost)
-  .get("/:postID", PostController.getPost);
+  .get("/:postId", PostValidator.validateGetPost, PostController.getPost);
 // .get("/", PostController.getPosts)
 // .get("/:postID", PostController.getPost)
 // .post("/:uid/:postID", PostController.editPost)

@@ -145,22 +145,41 @@ describe("POST: /posts/:postId route to edit post", () => {
 
 describe("GET: /posts/:postId route to get post", () => {
   it("empty postId", async () => {
-    const postId = "d";
+    const postId = "";
 
-    const res = await supertest(app)
-      .get("/posts/" + postId)
+    const res = await supertest(app).get("/posts/" + postId);
+
+    expect(res.status).to.equal(404);
+    expect(res.headers["content-type"]).to.have.string("text/html");
+  });
+
+  it("invalid characters in postId", async () => {
+    const postId = " &()^";
+
+    const res = await supertest(app).get("/posts/" + postId);
+
+    expect(res.status).to.equal(422);
+    expect(res.headers["content-type"]).to.have.string("json");
+    expect(res.body).to.have.property("errors");
+  });
+
+  it("postId not in database", async () => {
+    const postId = "postIdddd43467";
+
+    const res = await supertest(app).get("/posts/" + postId);
+
     expect(res.status).to.equal(404);
     expect(res.headers["content-type"]).to.have.string("json");
     expect(res.body).to.have.property("error");
   });
 
-  it("invalid postId", async () => {
-    const postId = "postId";
+  it("valid postId", async () => {
+    const postId = "7ddff783b3e54f47a7678888805e8a44";
 
-    const res = await supertest(app)
-      .get("/posts/" + postId)
-    expect(res.status).to.equal(404);
+    const res = await supertest(app).get("/posts/" + postId);
+
+    expect(res.status).to.equal(200);
     expect(res.headers["content-type"]).to.have.string("json");
-    expect(res.body).to.have.property("error");
+    expect(res.body).to.have.property("post");
   });
 });

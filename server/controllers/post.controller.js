@@ -145,11 +145,6 @@ const PostController = {
         return res.status(400).json({ error: err });
       }
     }
-
-    // Post.findOne({ _id: postID }).exec((err, post) => {
-    //   if (err) return res.status(400).json({ err: err });
-    //   return res.status(200).json(post);
-    // });
   },
   getPosts: (req, res) => {
     const postType = req.query.postType;

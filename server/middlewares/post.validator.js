@@ -247,6 +247,25 @@ const PostValidator = {
       next();
     },
   ],
+  validateGetPost: [
+    check("postId")
+      .trim()
+      .escape()
+      .not()
+      .isEmpty()
+      .withMessage("postId cannot be empty")
+      .bail()
+      .isAlphanumeric()
+      .withMessage("postId must be alphanumeric")
+      .bail(),
+    (req, res, next) => {
+      const errors = validationResult(req);
+      console.log("here errors.array(): ", errors.array());
+      if (!errors.isEmpty())
+        return res.status(422).json({ errors: errors.array() });
+      next();
+    },
+  ],
 };
 
 module.exports = PostValidator;
