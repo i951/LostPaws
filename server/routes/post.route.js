@@ -4,11 +4,12 @@ const PostController = require("../controllers/post.controller");
 const PostValidator = require("../middlewares/post.validator");
 
 router
-  // .get("/", PostController.getPosts)
-  .post("/", PostValidator.validateCreatePost, PostController.createPost)
-  // .get("/:postID", PostController.getPost)
-  // .post("/:uid/:postID", PostController.editPost)
-  // .delete("/:uid/:postID", PostController.deletePost) // TODO check correct uid 
-  // .get("/:uid", PostController.getUserPosts); 
+  .post("/", PostValidator.validatePost, PostController.createPost)
+  .post("/:postId", PostValidator.validatePost, PostController.editPost);
+// .get("/", PostController.getPosts)
+// .get("/:postID", PostController.getPost)
+// .post("/:uid/:postID", PostController.editPost)
+// .delete("/:uid/:postID", PostController.deletePost) // TODO check correct uid
+// .get("/:uid", PostController.getUserPosts);
 
 module.exports = router;
