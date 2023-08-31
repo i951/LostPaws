@@ -162,15 +162,18 @@ const PostController = {
       console.log("allPosts: ", allPosts);
       let lat2, lon2;
       let nearbyPosts = [];
-      allPosts.array.forEach((post) => {
+      allPosts.forEach((post) => {
         lat2 = post.locationLastSeen.latitude;
         lon2 = post.locationLastSeen.longitude;
         let dist = PostUtils.distance(latitude, longitude, lat2, lon2);
-        if (dist <= 3) {
+        console.log("dist: ", dist)
+        if (dist <= 5) {
+          console.log("Nearby post detected (within 5km)")
           nearbyPosts.push(post);
         }
       });
       console.log("getNearbyPosts success");
+      console.log("nearbyPosts: ", nearbyPosts)
       return res.status(200).json({ success: true, nearbyPosts: nearbyPosts });
     } catch (err) {
       console.log("getNearbyPosts error: " + err);
