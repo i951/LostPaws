@@ -308,7 +308,7 @@ class _MapViewScreenState extends State<MapViewScreen> {
       Expanded(
         child: GestureDetector(
           onTap: () {
-            print("Bring user to full posting with title: $title");
+            Beamer.of(context).beamToNamed(HomeLocations.viewFullPostingRoute);
           },
           child: Container(
             decoration: BoxDecoration(
