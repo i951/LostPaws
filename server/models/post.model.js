@@ -7,60 +7,97 @@ const postSchema = mongoose.Schema(
       type: String,
       default: () => uuidv4().replaceAll("-", ""),
     },
-    userID: {
+    uid: {
       type: String,
       required: [true, "is required"],
       index: true,
     },
+    name: {
+      type: String,
+      required: [true, "is required"],
+    },
     postType: {
       type: String,
-      // enum: ['posting', 'sighting'],
-      default: "sighting",
+      enum: ["LOST", "SIGHTING"],
+      default: "No post type provided",
+      required: [true, "is required"],
     },
     postTitle: {
       type: String,
       default: "Post title",
+      required: [true, "is required"],
     },
-    petIsFound: {
-      type: Boolean,
-      default: false,
-    },
-    petName: {
-      type: String,
-      default: "No name provided",
+    photos: {
+      type: Array,
+      required: [true, "is required"],
     },
     petType: {
       type: String,
-      // enum: ['dog', 'bird', 'bunny', 'reptile', 'amphibian', 'cat', 'rodent', 'other'],
-      default: "Other",
+      enum: [
+        "DOG",
+        "CAT",
+        "BIRD",
+        "BUNNY",
+        "REPTILE",
+        "AMPHIBIAN",
+        "RODENT",
+        "OTHER",
+      ],
+      default: "No pet type provided",
+      required: [true, "is required"],
     },
-    petColour: {
+    breed: {
       type: String,
-      default: "No colour provided",
+      default: "No breed provided",
+      required: [true, "is required"],
     },
-    petSize: {
+    colour: {
+      type: mongoose.SchemaTypes.Mixed,
+      required: [true, "is required"],
+    },
+    weight: {
       type: String,
+      default: "No weight provided",
+      required: [true, "is required"],
+    },
+    size: {
+      type: String,
+      enum: [
+        "Mini",
+        "Small",
+        "Medium",
+        "Large",
+      ],
       default: "No size provided",
+      required: [true, "is required"],
     },
     dateLastSeen: {
       type: String,
       default: "No date provided",
+      required: [true, "is required"],
     },
     locationLastSeen: {
-      type: String,
-      default: "No location provided",
+      type: mongoose.SchemaTypes.Mixed,
+      required: [true, "is required"],
     },
-    contactInfo: {
+    description: {
       type: String,
-      default: "No contact provided",
+      default: "No description provided",
+      required: [true, "is required"],
     },
-    additionalInfo: {
+    contactEmail: {
       type: String,
-      default: "",
+      default: "No email provided",
+      required: [true, "is required"],
     },
-    petImage: {
+    contactPhone: {
       type: String,
-      default: "",
+      default: "No phone provided",
+      required: [true, "is required"],
+    },
+    petIsFound: {
+      type: Boolean,
+      default: false,
     },
   },
   {
@@ -69,18 +106,18 @@ const postSchema = mongoose.Schema(
 );
 
 postSchema.path("postType").validate((postType) => {
-  let postTypes = ["posting", "sighting"];
+  let postTypes = ["lost", "sighting"];
   return postTypes.includes(postType.toLowerCase());
 }, "Invalid postType");
 
 postSchema.path("petType").validate((petType) => {
   let petTypes = [
     "dog",
+    "cat",
     "bird",
     "bunny",
     "reptile",
     "amphibian",
-    "cat",
     "rodent",
     "other",
   ];

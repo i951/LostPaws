@@ -1,44 +1,43 @@
 require("dotenv").config();
-const http = require("http");
+require("./utils/firebase");
+const https = require("https");
 const express = require("express");
-const mongoose = require("mongoose");
-
-// Routes
-const userRouter = require("./routes/user.route.js");
-const postRouter = require("./routes/post.route.js");
-
-// MongoDB
-const uri = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.qafmunu.mongodb.net/?retryWrites=true&w=majority`;
-mongoose.set("strictQuery", false);
-try {
-  mongoose.connect(
-    uri,
-    { useNewUrlParser: true, useUnifiedTopology: true },
-    () => {
-      console.log("MongoDB connected");
-    }
-  );
-} catch (error) {
-  console.log("Could not connect to MongoDB");
-}
-
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const options = {
+  key: process.env.KEY.replace(/\\n/g, "\n"),
+  cert: process.env.CERT.replace(/\\n/g, "\n"),
+};
+
+const port = 5205;
+const server = https.createServer(options, app);
+
+// Routes
+const userRouter = require("./routes/user.route.js");
+const postRouter = require("./routes/post.route.js");
+
 app.use("/users", userRouter);
 app.use("/posts", postRouter);
 
-const port = 5205;
-const server = http.createServer(app);
+// Connect to database and start server
+const mongooseSetup = require("./utils/mongoose.js");
+mongooseSetup
+  .dbconnect()
+  .once("open", () => {
+    console.log("MongoDB connected!");
+    server.listen(port);
+  })
+  .on("error", (err) => console.log("Error connecting to MongoDB!"));
 
-// Start server
-server.listen(port);
 server.on("listening", () => {
-  console.log("Listening on port", port);
+  console.log("Server listening on port", port);
 });
 
 app.get("/", (req, res) => {
   res.send("ʕ ·(エ)· ʔ");
 });
+
+module.exports = app;

@@ -1,14 +1,18 @@
 const express = require("express");
-const postController = require("../controllers/post.controller");
 const router = express.Router();
+const PostController = require("../controllers/post.controller");
+const PostValidator = require("../middlewares/post.validator");
 
 router
-  .get("/", postController.getPosts)
-  .post("/", postController.uploadPost)
-  .get("/:postID", postController.getPost)
-  .post("/:userID/:postID", postController.editPost)
-  .delete("/:userID/:postID", postController.deletePost) // TODO check correct userID 
-  .get("/:userID", postController.getUserPosts);
-
+  .post("/", PostValidator.validatePost, PostController.createPost)
+  .post("/:postId", PostValidator.validatePost, PostController.editPost)
+  .get("/:postId", PostValidator.validateGetPost, PostController.getPost)
+  .get("/nearby/posts", PostController.getNearbyPosts)
+  .get("/user/:uid", PostController.getUserPosts);
+// .get("/", PostController.getPosts)
+// .get("/:postID", PostController.getPost)
+// .post("/:uid/:postID", PostController.editPost)
+// .delete("/:uid/:postID", PostController.deletePost) // TODO check correct uid
+// .get("/:uid", PostController.getUserPosts);
 
 module.exports = router;

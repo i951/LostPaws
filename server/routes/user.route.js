@@ -1,7 +1,13 @@
 const express = require("express");
-const userController = require("../controllers/user.controller");
 const router = express.Router();
+const UserController = require("../controllers/user.controller");
+const UserValidator = require("../middlewares/user.validator");
 
-router.get("/", userController.getPet);
+router
+  .post("/", UserValidator.validateCreateUser, UserController.createUser)
+  .post("/login", UserValidator.validateLogin, UserController.login)
+  .get("/:uid", UserValidator.validateGetProfle, UserController.getProfile)
+  .post("/edit", UserValidator.validateEditProfile, UserController.editProfile)
+  // .get("/", UserController.getPet);
 
 module.exports = router;
