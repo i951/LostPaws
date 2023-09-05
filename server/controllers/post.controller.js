@@ -184,6 +184,23 @@ const PostController = {
       }
     }
   },
+  getUserPosts: async (req, res) => {
+    const { uid } = req.params;
+
+    try {
+      let userPosts = await Post.find({ uid: uid });
+      console.log("userPosts: ", userPosts);
+      console.log("getUserPosts success");
+      return res.status(200).json({ success: true, userPosts: userPosts });
+    } catch (err) {
+      console.log("getUserPosts error: " + err);
+      if (err.name === "ValidationError") {
+        return res.status(400).json({ error: err.message });
+      } else {
+        return res.status(400).json({ error: err });
+      }
+    }
+  },
   // getPosts: (req, res) => {
   //   const postType = req.query.postType;
   //   const petIsFound = req.query.petIsFound;
