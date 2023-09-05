@@ -22,16 +22,6 @@ const UserController = {
         return res.status(400).json({ error: err.message });
       }
     }
-    // newUser.save((err) => {
-    //   if (err) {
-    //     console.log("createUser error: " + err);
-    //     if (err.name === "ValidationError") {
-    //       return res.status(400).json({ error: err.message });
-    //     }
-    //   }
-    //   console.log("createUser success");
-    //   return res.status(200).json({ success: true });
-    // });
   },
   login: (req, res) => {
     const { idToken } = req.body;
@@ -61,13 +51,6 @@ const UserController = {
       })
       .catch((error) => {
         return res.status(400).json({ success: false, error: error });
-        // if (error.code == "auth/id-token-revoked") {
-        //   // Token has been revoked. Inform the user to reauthenticate or signOut() the user.
-        //   return res.status(400).json({ success: false, error: error });
-        // } else {
-        //   // Token is invalid.
-        //   return res.status(400).json({ success: false, error: error });
-        // }
       });
   },
   getProfile: (req, res) => {
@@ -87,17 +70,8 @@ const UserController = {
   },
   // TODO: integration test with idToken from frontend
   editProfile: (req, res) => {
-    // let { idToken, name, email } = req.body;
     let { uid, name, email } = req.body;
-    // decide if frontend should update userrecord in firebase and then call server api to update userrecord in our db
-    // or if frontend makes single api to server, and server updates userrecord in both firebase and own db ==> better
-    // general: frontend should only do createuser call directly to firebase, rest is thru server apis and server will do rest of work
-    // let checkRevoked = true;
-    // getAuth()
-    //   .verifyIdToken(idToken, checkRevoked)
-    //   .then((decodedToken) => {
-    //     const uid = decodedToken.uid;
-
+    
     getAuth()
       .updateUser(uid, {
         email: email,
