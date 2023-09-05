@@ -1,3 +1,6 @@
+*.pem 
+*.json
+
 # Logs
 logs
 *.log
