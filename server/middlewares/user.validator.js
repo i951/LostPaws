@@ -31,9 +31,6 @@ const UserValidator = {
       .bail()
       .isLength({ min: 3 })
       .withMessage("Minimum 3 characters required!")
-      .bail()
-      .isAlpha()
-      .withMessage("Name must be alphabetic!")
       .bail(),
     check("email")
       .trim()
