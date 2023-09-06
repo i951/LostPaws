@@ -1,4 +1,6 @@
-import 'package:beamer/beamer.dart';
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -8,16 +10,18 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:lostpaws_app/business/bloc/create_post_bloc.dart';
+import 'package:lostpaws_app/business/cubit/authentication_cubit.dart';
 import 'package:lostpaws_app/data/models/pet_colour.dart';
-import 'package:lostpaws_app/presentation/components/custom_text_field.dart';
 import 'package:lostpaws_app/presentation/components/custom_toggle_buttons.dart';
 import 'package:lostpaws_app/presentation/components/date_picker.dart';
+import 'package:lostpaws_app/presentation/components/error_message.dart';
+import 'package:lostpaws_app/presentation/components/loading_paw_prints.dart';
 import 'package:lostpaws_app/presentation/components/location_picker.dart';
 import 'package:lostpaws_app/presentation/components/pet_size_dropdown_menu.dart';
 import 'package:lostpaws_app/presentation/components/pet_size_info.dart';
 import 'package:lostpaws_app/presentation/components/custom_tooltip.dart';
+import 'package:lostpaws_app/presentation/components/uploaded_photo_preview.dart';
 import 'package:lostpaws_app/presentation/constants.dart';
-import 'package:lostpaws_app/presentation/routes/home_locations.dart';
 import 'package:lostpaws_app/presentation/size_config.dart';
 import 'package:lostpaws_app/presentation/theme/lostpaws_text.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -30,9 +34,11 @@ class CreatePostingScreen extends StatefulWidget {
 }
 
 class _CreatePostingScreenState extends State<CreatePostingScreen> {
+  final _formkey = GlobalKey<FormState>();
   bool isLoading = false;
   final ImagePicker picker = ImagePicker();
-  List<XFile> images = [];
+  List<XFile> pickedImages = [];
+  List<String> pickedImagePaths = [];
   final datePicker = const DatePicker();
   Color pickerColor = Color(PetColours.values.first.hexValue);
 
@@ -99,6 +105,7 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                   SizedBox(
                     width: getProportionateScreenWidth(300),
                     child: Form(
+                      key: _formkey,
                       child: BlocProvider(
                         create: (context) => CreatePostBloc(),
                         child: BlocBuilder<CreatePostBloc, CreatePostState>(
@@ -107,9 +114,15 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Post Type",
-                                    style: const LostPawsText()
-                                        .primaryRegularGreen),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: defaultPadding,
+                                    bottom: defaultPadding / 2,
+                                  ),
+                                  child: Text("Post Type",
+                                      style: const LostPawsText()
+                                          .primaryRegularGreen),
+                                ),
                                 CustomToggleButtons(
                                   toggleType: ToggleType.post,
                                   multiselect: false,
@@ -118,22 +131,34 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                     PostTypeOption.sighting.value,
                                   ],
                                 ),
-                                Text(
-                                  "Post Title",
-                                  style:
-                                      const LostPawsText().primaryRegularGreen,
+                                state.formErrors
+                                        .containsKey(ErrorType.missingPostType)
+                                    ? ErrorMessage(
+                                        error: state.formErrors[
+                                            ErrorType.missingPostType]!)
+                                    : const SizedBox(height: defaultPadding),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: defaultPadding,
+                                    bottom: defaultPadding / 2,
+                                  ),
+                                  child: Text(
+                                    "Post Title",
+                                    style: const LostPawsText()
+                                        .primaryRegularGreen,
+                                  ),
                                 ),
                                 TextFormField(
                                   enabled: true,
                                   keyboardType: TextInputType.emailAddress,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    hintText: 'Golden Retriever at Broadmoor',
                                     fillColor: Colors.white,
                                     filled: true,
                                   ),
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
+                                  autovalidateMode: state.autoValidate
+                                      ? AutovalidateMode.onUserInteraction
+                                      : null,
                                   validator: FormBuilderValidators.compose([
                                     FormBuilderValidators.required(),
                                   ]),
@@ -173,8 +198,92 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                   children: [
                                     ElevatedButton(
                                       onPressed: () async {
-                                        images = await picker.pickMultiImage();
-                                        print('picking image');
+                                        var permissionsGranted = false;
+
+                                        if (Platform.isAndroid) {
+                                          final androidInfo =
+                                              await DeviceInfoPlugin()
+                                                  .androidInfo;
+                                          if (androidInfo.version.sdkInt <=
+                                              32) {
+                                            if (await Permission.storage
+                                                .request()
+                                                .isGranted) {
+                                              permissionsGranted = true;
+                                            }
+                                          } else {
+                                            if (await Permission.photos
+                                                .request()
+                                                .isGranted) {
+                                              permissionsGranted = true;
+                                            }
+                                          }
+                                        } else if (Platform.isIOS) {
+                                          // TODO: handle other platforms
+                                        }
+
+                                        if (permissionsGranted) {
+                                          // Check for MainActivity destruction
+                                          // https://pub.dev/packages/image_picker
+                                          final LostDataResponse response =
+                                              await picker.retrieveLostData();
+
+                                          if (response.isEmpty) {
+                                            // No data lost, open image picker
+                                            final images =
+                                                await picker.pickMultiImage();
+
+                                            setState(() {
+                                              for (var image in images) {
+                                                if (!pickedImages
+                                                    .contains(image)) {
+                                                  pickedImages.add(image);
+                                                  pickedImagePaths
+                                                      .add(image.path);
+
+                                                  context
+                                                      .read<CreatePostBloc>()
+                                                      .add(CreatePostEvent
+                                                          .uploadPhotos(
+                                                              photos:
+                                                                  pickedImagePaths));
+                                                }
+                                              }
+                                            });
+                                          }
+
+                                          // Data was lost, so retrieve it first
+                                          final List<XFile>? files =
+                                              response.files;
+
+                                          if (files != null) {
+                                            setState(() async {
+                                              pickedImages = List.from(files);
+                                            });
+                                          } else {
+                                            print(response.exception);
+                                          }
+                                        } else {
+                                          if (mounted) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'Storage permissions are denied, please '
+                                                  'allow access to photos to continue.',
+                                                  style: const LostPawsText()
+                                                      .primaryRegularWhite,
+                                                ),
+                                                action: SnackBarAction(
+                                                  label: 'GO TO SETTINGS',
+                                                  onPressed: () async {
+                                                    await openAppSettings();
+                                                  },
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        }
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor:
@@ -201,10 +310,58 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                     ),
                                   ],
                                 ),
-                                Text(
-                                  "Pet Type",
-                                  style:
-                                      const LostPawsText().primaryRegularGreen,
+                                pickedImages.isEmpty
+                                    ? const Padding(
+                                        padding: EdgeInsets.all(8.0))
+                                    : Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        child: SizedBox(
+                                          height: 140,
+                                          child: ListView.builder(
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount:
+                                                  pickedImagePaths.length,
+                                              itemBuilder: (context, index) {
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: UploadedPhotoPreview(
+                                                    imagePath:
+                                                        pickedImagePaths[index],
+                                                    imageIndex: index,
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        pickedImages
+                                                            .removeAt(index);
+                                                        pickedImagePaths
+                                                            .removeAt(index);
+
+                                                        context
+                                                            .read<
+                                                                CreatePostBloc>()
+                                                            .add(CreatePostEvent
+                                                                .uploadPhotos(
+                                                                    photos:
+                                                                        pickedImagePaths));
+                                                      });
+                                                    },
+                                                  ),
+                                                );
+                                              }),
+                                        ),
+                                      ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: defaultPadding,
+                                    bottom: defaultPadding / 2,
+                                  ),
+                                  child: Text(
+                                    "Pet Type",
+                                    style: const LostPawsText()
+                                        .primaryRegularGreen,
+                                  ),
                                 ),
                                 CustomToggleButtons(
                                   toggleType: ToggleType.pet,
@@ -220,24 +377,30 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                     PetTypeOption.other.value,
                                   ],
                                 ),
-                                Text(
-                                  "Breed (fill in N/A if unsure)",
-                                  style:
-                                      const LostPawsText().primaryRegularGreen,
+                                state.formErrors
+                                        .containsKey(ErrorType.missingPetType)
+                                    ? ErrorMessage(
+                                        error: state.formErrors[
+                                            ErrorType.missingPetType]!)
+                                    : const SizedBox(height: defaultPadding),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: defaultPadding,
+                                    bottom: defaultPadding / 2,
+                                  ),
+                                  child: Text(
+                                    "Breed (optional)",
+                                    style: const LostPawsText()
+                                        .primaryRegularGreen,
+                                  ),
                                 ),
                                 TextFormField(
                                     keyboardType: TextInputType.text,
                                     decoration: const InputDecoration(
                                       border: OutlineInputBorder(),
-                                      hintText: 'Golden Retriever',
                                       fillColor: Colors.white,
                                       filled: true,
                                     ),
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    validator: FormBuilderValidators.compose([
-                                      FormBuilderValidators.required(),
-                                    ]),
                                     onChanged: (breed) => context
                                         .read<CreatePostBloc>()
                                         .add(CreatePostBreedChanged(
@@ -249,10 +412,16 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      "Colour",
-                                      style: const LostPawsText()
-                                          .primaryRegularGreen,
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: defaultPadding,
+                                        bottom: defaultPadding / 2,
+                                      ),
+                                      child: Text(
+                                        "Colour (optional)",
+                                        style: const LostPawsText()
+                                            .primaryRegularGreen,
+                                      ),
                                     ),
                                     IconButton(
                                       onPressed: () {
@@ -374,26 +543,65 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                       : '',
                                   style: const LostPawsText().primarySemiBold,
                                 ),
-                                CustomTextField(
-                                  title: "Weight",
-                                  hintText: '4.5',
-                                  width: 120,
-                                  keyboardType: TextInputType.text,
-                                  validator: FormBuilderValidators.compose([
-                                    FormBuilderValidators.numeric(
-                                        errorText:
-                                            'Please enter a valid number'),
-                                  ]),
-                                  extraText: "kg",
-                                  onChanged: (weight) => context
-                                      .read<CreatePostBloc>()
-                                      .add(CreatePostWeightChanged(
-                                          weight: weight)),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: defaultPadding,
+                                    bottom: defaultPadding / 2,
+                                  ),
+                                  child: Text(
+                                    'Weight (optional)',
+                                    style: const LostPawsText()
+                                        .primaryRegularGreen,
+                                  ),
                                 ),
-                                Text(
-                                  "Size",
-                                  style:
-                                      const LostPawsText().primaryRegularGreen,
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: TextFormField(
+                                        keyboardType: const TextInputType
+                                            .numberWithOptions(decimal: true),
+                                        decoration: const InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          fillColor: Colors.white,
+                                          filled: true,
+                                        ),
+                                        autovalidateMode: state.autoValidate
+                                            ? AutovalidateMode.onUserInteraction
+                                            : null,
+                                        validator:
+                                            FormBuilderValidators.compose([
+                                          FormBuilderValidators.numeric(
+                                              errorText:
+                                                  'Please enter a valid number.'),
+                                        ]),
+                                        onChanged: (weight) =>
+                                            context.read<CreatePostBloc>().add(
+                                                  CreatePostWeightChanged(
+                                                      weight: weight),
+                                                ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: defaultPadding),
+                                      child: Text(
+                                        'kg',
+                                        style: const LostPawsText()
+                                            .primarySemiBoldGreen,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: defaultPadding,
+                                    bottom: defaultPadding / 2,
+                                  ),
+                                  child: Text(
+                                    "Size (optional)",
+                                    style: const LostPawsText()
+                                        .primaryRegularGreen,
+                                  ),
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -411,188 +619,163 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                                 .withOpacity(0.5),
                                           ),
                                         ),
-                                        child: PetSizeDropdownMenu(
-                                          handleOnChanged: (size) {
-                                            print(size);
-                                          },
-                                        )),
+                                        child: const PetSizeDropdownMenu()),
                                     const PetSizeInfo(),
                                   ],
                                 ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 8.0),
-                                          child: Text(
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: defaultPadding,
+                                    bottom: defaultPadding / 2,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
                                             "Date Last Seen",
                                             style: const LostPawsText()
                                                 .primaryRegularGreen,
                                           ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              DateFormat(
-                                                      DateFormat.YEAR_MONTH_DAY)
-                                                  .format(
-                                                state.dateLastSeen ??
-                                                    DateTime.now(),
-                                              ),
-                                              style: const LostPawsText()
-                                                  .primarySemiBold,
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (_) => BlocProvider.value(
-                                            value:
-                                                context.read<CreatePostBloc>(),
-                                            child: Dialog(
-                                              insetPadding:
-                                                  const EdgeInsets.all(
-                                                      defaultPadding),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                              child: SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width -
-                                                    (defaultPadding * 2),
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height -
-                                                    (defaultPadding * 18),
-                                                child: const Padding(
-                                                  padding: EdgeInsets.all(8.0),
-                                                  child: DatePicker(),
+                                        ],
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (_) => BlocProvider.value(
+                                              value: context
+                                                  .read<CreatePostBloc>(),
+                                              child: Dialog(
+                                                insetPadding:
+                                                    const EdgeInsets.all(
+                                                        defaultPadding),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                                child: SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width -
+                                                      (defaultPadding * 2),
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height -
+                                                      (defaultPadding * 18),
+                                                  child: const Padding(
+                                                    padding:
+                                                        EdgeInsets.all(8.0),
+                                                    child: DatePicker(),
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        );
-                                      },
-                                      icon: const Icon(
-                                        Icons.calendar_month_rounded,
-                                        color: ConstColors.darkOrange,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "Location Last Seen",
-                                          style: const LostPawsText()
-                                              .primaryRegularGreen,
+                                          );
+                                        },
+                                        icon: const Icon(
+                                          Icons.calendar_month_rounded,
+                                          color: ConstColors.darkOrange,
                                         ),
-                                        IconButton(
-                                          onPressed: () async {
-                                            setState(() {
-                                              isLoading = true;
-                                            });
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                state.formErrors
+                                        .containsKey(ErrorType.missingDate)
+                                    ? ErrorMessage(
+                                        error: state
+                                            .formErrors[ErrorType.missingDate]!)
+                                    : Text(
+                                        state.dateLastSeen != null
+                                            ? DateFormat(
+                                                    DateFormat.YEAR_MONTH_DAY)
+                                                .format(
+                                                state.dateLastSeen!,
+                                              )
+                                            : "",
+                                        style: const LostPawsText()
+                                            .primarySemiBold,
+                                      ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: defaultPadding,
+                                    bottom: defaultPadding / 2,
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Location Last Seen",
+                                            style: const LostPawsText()
+                                                .primaryRegularGreen,
+                                          ),
+                                          IconButton(
+                                            onPressed: () async {
+                                              setState(() {
+                                                isLoading = true;
+                                              });
 
-                                            // Check if location services are enabled
-                                            bool serviceEnabled;
-                                            LocationPermission permission;
+                                              // Check if location services are enabled
+                                              bool serviceEnabled;
+                                              LocationPermission permission;
 
-                                            permission = await Geolocator
-                                                .checkPermission();
-
-                                            if (permission ==
-                                                LocationPermission.denied) {
                                               permission = await Geolocator
-                                                  .requestPermission();
+                                                  .checkPermission();
+
                                               if (permission ==
                                                   LocationPermission.denied) {
-                                                print(
-                                                    'Location permissions are denied');
-                                                if (mounted) {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    SnackBar(
-                                                      content: Text(
-                                                        'Location permissions are denied, please '
-                                                        'allow location access to continue.',
-                                                        style: const LostPawsText()
-                                                            .primaryRegularWhite,
+                                                permission = await Geolocator
+                                                    .requestPermission();
+                                                if (permission ==
+                                                    LocationPermission.denied) {
+                                                  if (mounted) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                          'Location permissions are denied, please '
+                                                          'allow location access to continue.',
+                                                          style: const LostPawsText()
+                                                              .primaryRegularWhite,
+                                                        ),
                                                       ),
-                                                    ),
-                                                  );
+                                                    );
+                                                  }
                                                 }
                                               }
-                                            }
 
-                                            if (permission ==
-                                                LocationPermission
-                                                    .deniedForever) {
-                                              print(
-                                                  'Location permissions are permanently denied, '
-                                                  'we cannot request permissions.');
-                                              if (mounted) {
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                                  SnackBar(
-                                                    content: Text(
-                                                      'Location permissions are permanently denied, '
-                                                      'please go to settings and allow location access.',
-                                                      style: const LostPawsText()
-                                                          .primaryRegularWhite,
-                                                    ),
-                                                    action: SnackBarAction(
-                                                      label: 'GO TO SETTINGS',
-                                                      onPressed: () async {
-                                                        await openAppSettings();
-
-                                                        setState(() {
-                                                          isLoading = false;
-                                                        });
-                                                      },
-                                                    ),
-                                                  ),
-                                                );
-                                              }
-                                            } else {
-                                              serviceEnabled = await Geolocator
-                                                  .isLocationServiceEnabled();
-
-                                              if (!serviceEnabled) {
-                                                print(
-                                                    'Location services are disabled.');
+                                              if (permission ==
+                                                  LocationPermission
+                                                      .deniedForever) {
+                                                setState(() {
+                                                  isLoading = false;
+                                                });
 
                                                 if (mounted) {
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(
                                                     SnackBar(
                                                       content: Text(
-                                                        'Location services are disabled, please enable '
-                                                        'location services to continue.',
+                                                        'Location permissions are permanently denied, '
+                                                        'please go to settings and allow location access.',
                                                         style: const LostPawsText()
                                                             .primaryRegularWhite,
                                                       ),
                                                       action: SnackBarAction(
                                                         label: 'GO TO SETTINGS',
                                                         onPressed: () async {
-                                                          await Geolocator
-                                                              .openLocationSettings();
+                                                          await openAppSettings();
 
                                                           setState(() {
                                                             isLoading = false;
@@ -602,110 +785,162 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                                     ),
                                                   );
                                                 }
-                                              }
+                                              } else {
+                                                serviceEnabled = await Geolocator
+                                                    .isLocationServiceEnabled();
 
-                                              final position = await Geolocator
-                                                  .getCurrentPosition(
-                                                      desiredAccuracy:
-                                                          LocationAccuracy
-                                                              .high);
+                                                if (!serviceEnabled) {
+                                                  setState(() {
+                                                    isLoading = false;
+                                                  });
 
-                                              final userLocation = LatLng(
-                                                  position.latitude,
-                                                  position.longitude);
+                                                  if (mounted) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                          'Location services are disabled, please enable '
+                                                          'location services to continue.',
+                                                          style: const LostPawsText()
+                                                              .primaryRegularWhite,
+                                                        ),
+                                                        action: SnackBarAction(
+                                                          label:
+                                                              'GO TO SETTINGS',
+                                                          onPressed: () async {
+                                                            await Geolocator
+                                                                .openLocationSettings();
 
-                                              if (mounted) {
-                                                final dialogWidth =
-                                                    MediaQuery.of(context)
-                                                            .size
-                                                            .width -
-                                                        (defaultPadding * 2);
-
-                                                final dialogHeight =
-                                                    MediaQuery.of(context)
-                                                            .size
-                                                            .height -
-                                                        (defaultPadding * 8);
-
-                                                showDialog(
-                                                  context: context,
-                                                  builder: (_) =>
-                                                      BlocProvider.value(
-                                                    value: context
-                                                        .read<CreatePostBloc>(),
-                                                    child: Dialog(
-                                                      insetPadding:
-                                                          const EdgeInsets.all(
-                                                              defaultPadding),
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
+                                                            setState(() {
+                                                              isLoading = false;
+                                                            });
+                                                          },
+                                                        ),
                                                       ),
-                                                      child: SizedBox(
-                                                        width: dialogWidth,
-                                                        height: dialogHeight,
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: LocationPicker(
-                                                            dialogWidth:
-                                                                dialogWidth,
-                                                            dialogHeight:
-                                                                dialogHeight,
-                                                            userLocation:
-                                                                userLocation,
+                                                    );
+                                                  }
+                                                }
+
+                                                final position =
+                                                    await Geolocator
+                                                        .getCurrentPosition(
+                                                            desiredAccuracy:
+                                                                LocationAccuracy
+                                                                    .high);
+
+                                                final userLocation = LatLng(
+                                                    position.latitude,
+                                                    position.longitude);
+
+                                                if (mounted) {
+                                                  final dialogWidth =
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width -
+                                                          (defaultPadding * 2);
+
+                                                  final dialogHeight =
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .height -
+                                                          (defaultPadding * 8);
+
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (_) =>
+                                                        BlocProvider.value(
+                                                      value: context.read<
+                                                          CreatePostBloc>(),
+                                                      child: Dialog(
+                                                        insetPadding:
+                                                            const EdgeInsets
+                                                                    .all(
+                                                                defaultPadding),
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(20),
+                                                        ),
+                                                        child: SizedBox(
+                                                          width: dialogWidth,
+                                                          height: dialogHeight,
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child:
+                                                                LocationPicker(
+                                                              dialogWidth:
+                                                                  dialogWidth,
+                                                              dialogHeight:
+                                                                  dialogHeight,
+                                                              userLocation:
+                                                                  userLocation,
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
-                                                );
+                                                  );
 
-                                                setState(() {
-                                                  isLoading = false;
-                                                });
+                                                  setState(() {
+                                                    isLoading = false;
+                                                  });
+                                                }
                                               }
-                                            }
-                                          },
-                                          icon: isLoading
-                                              ? const SizedBox.square(
-                                                  dimension: 20,
-                                                  child:
-                                                      CircularProgressIndicator(
+                                            },
+                                            icon: isLoading
+                                                ? const SizedBox.square(
+                                                    dimension: 20,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      color: ConstColors
+                                                          .darkOrange,
+                                                    ),
+                                                  )
+                                                : const Icon(
+                                                    Icons
+                                                        .add_location_alt_outlined,
                                                     color:
                                                         ConstColors.darkOrange,
                                                   ),
-                                                )
-                                              : const Icon(
-                                                  Icons
-                                                      .add_location_alt_outlined,
-                                                  color: ConstColors.darkOrange,
-                                                ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            state.locationLastSeen == null
-                                                ? ''
-                                                : '${state.locationLastSeen!.street}, ${state.locationLastSeen!.city}, ${state.locationLastSeen!.province}, ${state.locationLastSeen!.postalCode}',
-                                            style: const LostPawsText()
-                                                .primarySemiBold,
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                        ],
+                                      ),
+                                      state.formErrors.containsKey(
+                                              ErrorType.missingLocation)
+                                          ? ErrorMessage(
+                                              error: state.formErrors[
+                                                  ErrorType.missingLocation]!)
+                                          : Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                    state.locationLastSeen ==
+                                                            null
+                                                        ? ''
+                                                        : '${state.locationLastSeen!.street}, ${state.locationLastSeen!.city}, ${state.locationLastSeen!.province}, ${state.locationLastSeen!.postalCode}',
+                                                    style: const LostPawsText()
+                                                        .primarySemiBold,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                    ],
+                                  ),
                                 ),
-                                Text(
-                                  "Description (add any additional info)",
-                                  style:
-                                      const LostPawsText().primaryRegularGreen,
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: defaultPadding,
+                                    bottom: defaultPadding / 2,
+                                  ),
+                                  child: Text(
+                                    "Description",
+                                    style: const LostPawsText()
+                                        .primaryRegularGreen,
+                                  ),
                                 ),
                                 TextFormField(
                                   keyboardType: TextInputType.text,
@@ -725,26 +960,42 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                     filled: true,
                                     contentPadding: const EdgeInsets.all(8.0),
                                   ),
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
+                                  autovalidateMode: state.autoValidate
+                                      ? AutovalidateMode.onUserInteraction
+                                      : null,
                                   validator: FormBuilderValidators.compose([
                                     FormBuilderValidators.required(),
                                   ]),
+                                  onChanged: (description) {
+                                    context.read<CreatePostBloc>().add(
+                                        CreatePostDescriptionChanged(
+                                            description: description));
+                                  },
                                 ),
-                                Text(
-                                  'Contact Email',
-                                  style:
-                                      const LostPawsText().primaryRegularGreen,
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: defaultPadding,
+                                    bottom: defaultPadding / 2,
+                                  ),
+                                  child: Text(
+                                    'Contact Email',
+                                    style: const LostPawsText()
+                                        .primaryRegularGreen,
+                                  ),
                                 ),
-                                const SizedBox(height: 8.0),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      'example@email.com',
-                                      style:
-                                          const LostPawsText().primarySemiBold,
+                                    BlocBuilder<AuthenticationCubit,
+                                        AuthenticationState>(
+                                      builder: (context, state) {
+                                        return Text(
+                                          state.email,
+                                          style: const LostPawsText()
+                                              .primarySemiBold,
+                                        );
+                                      },
                                     ),
                                     Tooltip(
                                       richMessage: TextSpan(
@@ -780,10 +1031,16 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                     ),
                                   ],
                                 ),
-                                Text(
-                                  'Contact Phone Number (optional)',
-                                  style:
-                                      const LostPawsText().primaryRegularGreen,
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: defaultPadding,
+                                    bottom: defaultPadding / 2,
+                                  ),
+                                  child: Text(
+                                    'Contact Phone Number (optional)',
+                                    style: const LostPawsText()
+                                        .primaryRegularGreen,
+                                  ),
                                 ),
                                 Row(
                                   mainAxisAlignment:
@@ -799,18 +1056,18 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                           fillColor: Colors.white,
                                           filled: true,
                                         ),
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        onChanged: (title) => context
+                                        onChanged: (phone) => context
                                             .read<CreatePostBloc>()
-                                            .add(CreatePostTitleChanged(
-                                                title: title)),
+                                            .add(CreatePostEvent.phoneChanged(
+                                              phone: phone,
+                                              phonePart: 0,
+                                            )),
                                       ),
                                     ),
                                     Text(
                                       ' - ',
-                                      style:
-                                          LostPawsText().primarySemiBoldGreen,
+                                      style: const LostPawsText()
+                                          .primarySemiBoldGreen,
                                     ),
                                     SizedBox(
                                       width: 80,
@@ -822,18 +1079,18 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                           fillColor: Colors.white,
                                           filled: true,
                                         ),
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        onChanged: (title) => context
+                                        onChanged: (phone) => context
                                             .read<CreatePostBloc>()
-                                            .add(CreatePostTitleChanged(
-                                                title: title)),
+                                            .add(CreatePostEvent.phoneChanged(
+                                              phone: phone,
+                                              phonePart: 1,
+                                            )),
                                       ),
                                     ),
                                     Text(
                                       ' - ',
-                                      style:
-                                          LostPawsText().primarySemiBoldGreen,
+                                      style: const LostPawsText()
+                                          .primarySemiBoldGreen,
                                     ),
                                     SizedBox(
                                       width: 90,
@@ -845,48 +1102,107 @@ class _CreatePostingScreenState extends State<CreatePostingScreen> {
                                           fillColor: Colors.white,
                                           filled: true,
                                         ),
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        onChanged: (title) => context
+                                        onChanged: (phone) => context
                                             .read<CreatePostBloc>()
-                                            .add(CreatePostTitleChanged(
-                                                title: title)),
+                                            .add(CreatePostEvent.phoneChanged(
+                                              phone: phone,
+                                              phonePart: 2,
+                                            )),
                                       ),
                                     ),
                                   ],
                                 ),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: TextButton(
-                                        style: TextButton.styleFrom(
-                                          padding: EdgeInsets.symmetric(
-                                            vertical:
-                                                getProportionateScreenHeight(
-                                                    15),
-                                            horizontal:
-                                                getProportionateScreenWidth(70),
-                                          ),
-                                          backgroundColor:
-                                              ConstColors.darkOrange,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(13),
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          Beamer.of(context, root: true)
-                                              .beamToNamed(
-                                                  HomeLocations.homeRoute);
-                                        },
-                                        child: Text(
-                                          'Post',
-                                          style: const LostPawsText()
-                                              .primarySemiBold,
-                                        ),
+                                state.formErrors
+                                        .containsKey(ErrorType.invalidPhone)
+                                    ? ErrorMessage(
+                                        error: state.formErrors[
+                                            ErrorType.invalidPhone]!)
+                                    : const SizedBox(height: defaultPadding),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: defaultPadding * 2,
+                                    bottom: defaultPadding * 3,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: state.status ==
+                                                CreatePostStatus
+                                                    .submissionInProgress
+                                            ? const LoadingPawPrints()
+                                            : TextButton(
+                                                style: TextButton.styleFrom(
+                                                  padding: EdgeInsets.symmetric(
+                                                    vertical:
+                                                        getProportionateScreenHeight(
+                                                            15),
+                                                    horizontal:
+                                                        getProportionateScreenWidth(
+                                                            70),
+                                                  ),
+                                                  backgroundColor:
+                                                      ConstColors.darkOrange,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            13),
+                                                  ),
+                                                ),
+                                                onPressed: () {
+                                                  if (!state.autoValidate) {
+                                                    context
+                                                        .read<CreatePostBloc>()
+                                                        .add(
+                                                            const CreatePostSetAutovalidate());
+
+                                                    if (!_formkey.currentState!
+                                                        .validate()) {
+                                                      return;
+                                                    }
+                                                  }
+
+                                                  if (state
+                                                      .formErrors.isEmpty) {
+                                                    final userName = context
+                                                        .read<
+                                                            AuthenticationCubit>()
+                                                        .state
+                                                        .user!
+                                                        .displayName;
+
+                                                    final userId = context
+                                                        .read<
+                                                            AuthenticationCubit>()
+                                                        .state
+                                                        .user!
+                                                        .uid;
+
+                                                    final contactEmail = context
+                                                        .read<
+                                                            AuthenticationCubit>()
+                                                        .state
+                                                        .email;
+
+                                                    context
+                                                        .read<CreatePostBloc>()
+                                                        .add(CreatePostEvent
+                                                            .sendToServer(
+                                                          userName: userName,
+                                                          userId: userId,
+                                                          contactEmail:
+                                                              contactEmail,
+                                                        ));
+                                                  }
+                                                },
+                                                child: Text(
+                                                  'Post',
+                                                  style: const LostPawsText()
+                                                      .primarySemiBold,
+                                                ),
+                                              ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                                 Padding(
                                     padding: EdgeInsets.only(

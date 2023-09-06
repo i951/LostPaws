@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:lostpaws_app/data/models/location_last_seen.dart';
 import 'package:lostpaws_app/data/models/pet_colour.dart';
 
@@ -50,13 +52,15 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     on<CreatePostLocationChanged>(onCreatePostLocationChanged);
     on<CreatePostDescriptionChanged>(onCreatePostDescriptionChanged);
     on<CreatePostPhoneChanged>(onCreatePostPhoneChanged);
+    on<CreatePostSendToServer>(onCreatePostSendToServer);
+    on<CreatePostSetAutovalidate>(onCreatePostSetAutovalidate);
   }
 
   void onCreatePostInitial(
     CreatePostInitial event,
     Emitter<CreatePostState> emit,
   ) {
-    emit(state.copyWith(status: Status.initial));
+    emit(state.copyWith(status: CreatePostStatus.initial));
   }
 
   void onCreatePostTypeChanged(
@@ -71,7 +75,9 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
       throw UnimplementedError("Post type not supported");
     }
 
-    print("state's post type: ${state.postType}");
+    final Map<ErrorType, String> newFormErrors = Map.from(state.formErrors);
+    newFormErrors.remove(ErrorType.missingPostType);
+    emit(state.copyWith(formErrors: newFormErrors));
   }
 
   void onCreatePostTitleChanged(
@@ -79,15 +85,13 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     Emitter<CreatePostState> emit,
   ) {
     emit(state.copyWith(postTitle: event.title));
-
-    print("state's title: ${state.postTitle}");
   }
 
   void onCreatePostPhotosChanged(
     CreatePostPhotosChanged event,
     Emitter<CreatePostState> emit,
   ) {
-    print("Bloc is uploading photos...");
+    emit(state.copyWith(photoPaths: event.photos));
   }
 
   void onCreatePostPetTypeChanged(
@@ -114,13 +118,17 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
       throw UnimplementedError("Post type not supported");
     }
 
-    print("state's pet type: ${state.petType}");
+    final Map<ErrorType, String> newFormErrors = Map.from(state.formErrors);
+    newFormErrors.remove(ErrorType.missingPetType);
+    emit(state.copyWith(formErrors: newFormErrors));
   }
 
   void onCreatePostBreedChanged(
     CreatePostBreedChanged event,
     Emitter<CreatePostState> emit,
-  ) {}
+  ) {
+    emit(state.copyWith(breed: event.breed));
+  }
 
   void onCreatePostColourChanged(
     CreatePostColourChanged event,
@@ -147,7 +155,15 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     CreatePostDateChanged event,
     Emitter<CreatePostState> emit,
   ) {
-    emit(state.copyWith(dateLastSeen: event.date));
+    final Map<ErrorType, String> newFormErrors = Map.from(state.formErrors);
+    newFormErrors.remove(ErrorType.missingDate);
+
+    emit(
+      state.copyWith(
+        dateLastSeen: event.date,
+        formErrors: newFormErrors,
+      ),
+    );
   }
 
   Future<void> onCreatePostLocationChanged(
@@ -163,6 +179,9 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
 
     final address = placemarks.first;
 
+    final Map<ErrorType, String> newFormErrors = Map.from(state.formErrors);
+    newFormErrors.remove(ErrorType.missingLocation);
+
     // If any fields are null, set it as an empty string
     emit(
       state.copyWith(
@@ -176,6 +195,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
           country: address.country ?? '',
           postalCode: address.postalCode ?? '',
         ),
+        formErrors: newFormErrors,
       ),
     );
   }
@@ -191,6 +211,11 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     CreatePostPhoneChanged event,
     Emitter<CreatePostState> emit,
   ) {
+    final Map<ErrorType, String> newFormErrors = Map.from(state.formErrors);
+    newFormErrors.remove(ErrorType.invalidPhone);
+
+    emit(state.copyWith(formErrors: newFormErrors));
+
     switch (event.phonePart) {
       case 0:
         emit(state.copyWith(contactPhoneStart: event.phone));
@@ -203,6 +228,137 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
         break;
       default:
         throw UnimplementedError('Invalid value for variable phonePart');
+    }
+  }
+
+  void onCreatePostSendToServer(
+    CreatePostSendToServer event,
+    Emitter<CreatePostState> emit,
+  ) async {
+    if (state.formErrors.isNotEmpty) {
+      return;
+    }
+
+    emit(state.copyWith(status: CreatePostStatus.submissionInProgress));
+
+    final f = DateFormat('yyyy-MM-dd');
+    final formattedDate = f.format(state.dateLastSeen!);
+
+    final jsonString = jsonEncode({
+      "userID": event.userId,
+      "userName": event.userName,
+      "postType": state.postType!.value,
+      "postTitle": state.postTitle,
+      "photos": state.photoPaths, // OPTIONAL, might remove later
+      "petType": state.petType!.value,
+      "breed": state.breed,
+      "colour": state.colour,
+      "weight": state.weight,
+      "size": state.size,
+      "dateLastSeen": formattedDate,
+      "locationLastSeen": state.locationLastSeen,
+      "description": state.description,
+      "contactEmail": event.contactEmail,
+      "contactPhone": state.contactPhoneFull,
+    });
+
+    // TOOD: send to server
+    await Future.delayed(const Duration(seconds: 8));
+    print(jsonString);
+
+    emit(state.copyWith(status: CreatePostStatus.submissionSuccess));
+  }
+
+  void onCreatePostSetAutovalidate(
+    CreatePostSetAutovalidate event,
+    Emitter<CreatePostState> emit,
+  ) {
+    if (!state.autoValidate ||
+        state.status == CreatePostStatus.submissionFailure) {
+      emit(state.copyWith(autoValidate: true));
+    }
+
+    final Map<ErrorType, String> newFormErrors = Map.from(state.formErrors);
+    String? contactPhoneFull;
+
+    // Checking for a valid phone number if user provides a number
+    if (state.contactPhoneStart == null &&
+        state.contactPhoneMiddle == null &&
+        state.contactPhoneEnd == null) {
+      // Here the user has chosen to not provide a number
+      contactPhoneFull = null;
+    } else if (state.contactPhoneStart != null &&
+        state.contactPhoneStart!.isNotEmpty &&
+        state.contactPhoneMiddle != null &&
+        state.contactPhoneMiddle!.isNotEmpty &&
+        state.contactPhoneEnd != null &&
+        state.contactPhoneEnd!.isNotEmpty) {
+      // Here the user has filled in all the phone number fields, so
+      // check the values are valid numbers
+      try {
+        final start = int.parse(state.contactPhoneStart!);
+        final middle = int.parse(state.contactPhoneMiddle!);
+        final end = int.parse(state.contactPhoneEnd!);
+
+        // Check the length of the digits provided
+        if (start < 100 || start > 999 || middle < 100 || middle > 999) {
+          newFormErrors[ErrorType.invalidPhone] =
+              "Please ensure you provide a valid phone number according to the format provided.";
+        }
+        if (end < 1000 || end > 9999) {
+          newFormErrors[ErrorType.invalidPhone] =
+              "Please ensure you provide a valid phone number according to the format provided.";
+        }
+      } catch (_) {
+        newFormErrors[ErrorType.invalidPhone] =
+            "Please enter only numerical values for your phone number.";
+      }
+
+      contactPhoneFull = state.contactPhoneStart! +
+          state.contactPhoneMiddle! +
+          state.contactPhoneEnd!;
+    } else {
+      // Otherwise, the user has forgotten to fill in one of the phone number
+      // fields
+      newFormErrors[ErrorType.invalidPhone] =
+          "Please ensure all phone number fields are filled in.";
+    }
+
+    // Finally, check all the other fields
+    if (state.postType == null) {
+      newFormErrors[ErrorType.missingPostType] = "Please select a post type.";
+    }
+
+    if (state.petType == null) {
+      newFormErrors[ErrorType.missingPetType] =
+          "Please select the type of animal.";
+    }
+
+    if (state.dateLastSeen == null) {
+      newFormErrors[ErrorType.missingDate] =
+          "Please provide the date you last saw the animal.";
+    }
+
+    if (state.locationLastSeen == null) {
+      newFormErrors[ErrorType.missingLocation] =
+          "Please select the place where you last saw the animal.";
+    }
+
+    if (newFormErrors.isNotEmpty) {
+      emit(
+        state.copyWith(
+          status: CreatePostStatus.submissionFailure,
+          formErrors: newFormErrors,
+          autoValidate: false,
+        ),
+      );
+
+      return;
+    } else {
+      emit(state.copyWith(
+        autoValidate: false,
+        contactPhoneFull: contactPhoneFull,
+      ));
     }
   }
 }
