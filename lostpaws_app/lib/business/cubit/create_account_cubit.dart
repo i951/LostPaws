@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:http/http.dart' as http;
+import 'package:lostpaws_app/presentation/constants.dart';
 
 part 'create_account_state.dart';
 part 'create_account_cubit.freezed.dart';
@@ -85,6 +89,19 @@ class CreateAccountCubit extends Cubit<CreateAccountState> {
         ));
       } else {
         await user.updateDisplayName(state.name);
+
+        final uid = await _firebaseAuth.currentUser!.uid;
+        final response =
+            await http.post(Uri.parse('${ApiConstants.baseUrl}/users'), body: {
+          'uid': uid,
+          'name': state.name,
+          'email': state.email,
+        });
+        
+        final response =
+            await http.get(Uri.parse('${ApiConstants.baseUrl}/users'));
+
+        print(response.body);
         emit(state.copyWith(status: CreateFormStatus.submissionSuccess));
       }
     } on FirebaseAuthException catch (e) {
@@ -113,7 +130,8 @@ class CreateAccountCubit extends Cubit<CreateAccountState> {
         status: CreateFormStatus.submissionFailure,
         errorMessage: errorMessage,
       ));
-    } catch (_) {
+    } catch (e) {
+      print(e);
       emit(state.copyWith(
         status: CreateFormStatus.submissionFailure,
         errorMessage: "An unknown error has occurred. Please try again later.",

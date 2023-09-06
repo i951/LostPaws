@@ -21,3 +21,9 @@ class ConstColors {
   static const Color lightGrey = Color.fromARGB(199, 113, 114, 122);
   static const Color red = Color.fromARGB(198, 247, 139, 139);
 }
+
+class ApiConstants {
+  /// This URI works when the server is being run locally and
+  /// the Android emulator is being used
+  static String baseUrl = 'http://10.0.2.2:5205';
+}
