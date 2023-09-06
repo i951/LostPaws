@@ -25,5 +25,7 @@ class ConstColors {
 class ApiConstants {
   /// This URI works when the server is being run locally and
   /// the Android emulator is being used
-  static String baseUrl = 'http://10.0.2.2:5205';
+  // static String baseUrl = 'http://10.0.2.2:5205';
+  // static String baseUrl = 'https://127.0.0.1:5205';
+  static String baseUrl = 'https://192.168.1.72:5205';
 }

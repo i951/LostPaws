@@ -74,62 +74,24 @@ class CreateAccountCubit extends Cubit<CreateAccountState> {
     }
 
     try {
-      final UserCredential userResult =
-          await _firebaseAuth.createUserWithEmailAndPassword(
-        email: state.email,
-        password: state.password,
-      );
-
-      final User? user = userResult.user;
-
-      if (user == null) {
-        emit(state.copyWith(
-          status: CreateFormStatus.submissionFailure,
-          errorMessage: "The login information you've entered is incorrect.",
-        ));
-      } else {
-        await user.updateDisplayName(state.name);
-
-        final uid = await _firebaseAuth.currentUser!.uid;
-        final response =
-            await http.post(Uri.parse('${ApiConstants.baseUrl}/users'), body: {
-          'uid': uid,
-          'name': state.name,
-          'email': state.email,
-        });
-        
-        final response =
-            await http.get(Uri.parse('${ApiConstants.baseUrl}/users'));
-
-        print(response.body);
-        emit(state.copyWith(status: CreateFormStatus.submissionSuccess));
-      }
-    } on FirebaseAuthException catch (e) {
-      String errorMessage =
-          "An unknown error has occurred. Please try again later.";
-
-      switch (e.code) {
-        case "email-already-in-use":
-          errorMessage = "An account exists already with that email. "
-              "Please sign up with a different email address.";
-          break;
-        case "invalid-email":
-          errorMessage = "Please provide a valid email address.";
-          break;
-        case "weak-password":
-          errorMessage =
-              "Please ensure your password has at least 6 characters.";
-          break;
-        default:
-          "An unknown error has occurred with our servers. Please try again later.";
-          break;
-      }
-      print(e);
-
-      emit(state.copyWith(
-        status: CreateFormStatus.submissionFailure,
-        errorMessage: errorMessage,
-      ));
+      // final response = await http.post(
+      //     Uri.parse('${ApiConstants.baseUrl}/users'),
+      //     headers: <String, String>{
+      //       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      //     },
+      //     body: {
+      //       'uid': "fakeuid",
+      //       'name': state.name,
+      //       'email': state.email,
+      //     });
+      final response = await http
+          .get(Uri.parse('${ApiConstants.baseUrl}/users/fakeuid'), headers: {
+        "Access-Control-Allow-Origin": "*",
+        "content-type":
+            "application/json" // Specify content-type as JSON to prevent empty response body
+      });
+      print(response.body);
+      emit(state.copyWith(status: CreateFormStatus.submissionSuccess));
     } catch (e) {
       print(e);
       emit(state.copyWith(
@@ -137,5 +99,70 @@ class CreateAccountCubit extends Cubit<CreateAccountState> {
         errorMessage: "An unknown error has occurred. Please try again later.",
       ));
     }
+
+    // try {
+    //   final UserCredential userResult =
+    //       await _firebaseAuth.createUserWithEmailAndPassword(
+    //     email: state.email,
+    //     password: state.password,
+    //   );
+
+    //   final User? user = userResult.user;
+
+    //   if (user == null) {
+    //     emit(state.copyWith(
+    //       status: CreateFormStatus.submissionFailure,
+    //       errorMessage: "The login information you've entered is incorrect.",
+    //     ));
+    //   } else {
+    //     await user.updateDisplayName(state.name);
+
+    //     final uid = await _firebaseAuth.currentUser!.uid;
+    //     final response =
+    //         await http.post(Uri.parse('${ApiConstants.baseUrl}/users'), body: {
+    //       'uid': uid,
+    //       'name': state.name,
+    //       'email': state.email,
+    //     });
+
+    //     // final response =
+    //     //     await http.get(Uri.parse('${ApiConstants.baseUrl}/users'));
+
+    //     print(response.body);
+    //     emit(state.copyWith(status: CreateFormStatus.submissionSuccess));
+    //   }
+    // } on FirebaseAuthException catch (e) {
+    //   String errorMessage =
+    //       "An unknown error has occurred. Please try again later.";
+
+    //   switch (e.code) {
+    //     case "email-already-in-use":
+    //       errorMessage = "An account exists already with that email. "
+    //           "Please sign up with a different email address.";
+    //       break;
+    //     case "invalid-email":
+    //       errorMessage = "Please provide a valid email address.";
+    //       break;
+    //     case "weak-password":
+    //       errorMessage =
+    //           "Please ensure your password has at least 6 characters.";
+    //       break;
+    //     default:
+    //       "An unknown error has occurred with our servers. Please try again later.";
+    //       break;
+    //   }
+    //   print(e);
+
+    //   emit(state.copyWith(
+    //     status: CreateFormStatus.submissionFailure,
+    //     errorMessage: errorMessage,
+    //   ));
+    // } catch (e) {
+    //   print(e);
+    //   emit(state.copyWith(
+    //     status: CreateFormStatus.submissionFailure,
+    //     errorMessage: "An unknown error has occurred. Please try again later.",
+    //   ));
+    // }
   }
 }
